@@ -1,0 +1,66 @@
+.es-multi-step-form {
+    font-family: 'Mulish-Regular', $fallbackFont;
+    
+    .es-progressbar {
+        // display: flex;
+        // align-items: center;
+        // justify-content: space-between;
+
+        hr {
+            height: 1px;
+            background: var(--gray200 );
+            margin: 0;
+            width: 56px;
+        }
+        
+        .es-step {
+
+            gap: 12px;
+
+            .es-step-number {
+                background: var(--gray100);
+                color: var(--gray200);
+                border: 1px solid var(--gray200);
+                width: 28px;
+                height: 28px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 100%;
+                font-size: 12px;
+                font-weight: 600;
+            }
+
+            .es-step-title {
+                font-weight: 700;
+                color: var(--gray900);
+                opacity: 0.6;
+                line-height: 28px;
+            }
+
+            &.active {
+                opacity: 1;
+
+                .es-step-number {
+                    background: var(--gray800);
+                    color: white;
+                }
+
+                .es-step-title {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    /* Hide all steps by default: */
+    .es-tab {
+        display: none;
+    }
+
+    .es-navigation-buttons {
+         display: flex;
+         justify-content: center;
+         gap: 20px;
+    }
+}

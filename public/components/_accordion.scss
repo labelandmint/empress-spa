@@ -1,0 +1,38 @@
+.accordion.es-accordion {
+    .accordion-item {
+        border: none;
+
+        .accordion-header {
+            .accordion-button {
+                background: white;
+                box-shadow: none;
+                font-size: 18px;
+                font-weight: 600;
+                color: var(--gray900);
+                padding: 0;
+                line-height: 52px;
+            }
+        }
+
+        .accordion-collapse {
+            margin-top: 4px;
+
+            .accordion-body {
+                padding: 0;
+                display: grid;
+                gap: 16px;
+
+                .accordion-body-item {
+                    background: var(--gray100);
+                    border-radius: 4px;
+                    padding: 16px;
+
+                    .form-check {
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+    }
+}

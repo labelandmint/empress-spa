@@ -1,0 +1,37 @@
+.es-dropdown {
+    .dropdown-toggle {
+        border: none;
+        outline: none;
+        background: transparent;
+        font-family: 'Mulish-Regular', $fallbackFont;
+        font-weight: 600;
+        color: var(--gray900);
+    }
+
+    .dropdown-menu {
+        border: none;
+        
+        .dropdown-item {
+            padding-left: 6px;
+            padding-right: 6px;
+            color: var(--gray-900);
+            font-family: 'Mulish-Regular', $fallbackFont;
+            font-weight: 500;
+
+            &:hover {
+                color: var(--brown500);
+                background: transparent;
+            }
+
+            &.disabled {
+                opacity: .5;
+                cursor: default;
+
+                &:hover {
+                    background: var(--brown500);
+                    opacity: .5;
+                }
+            }
+        }
+    }
+}

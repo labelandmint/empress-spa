@@ -1,0 +1,49 @@
+.es-menu-btn {
+    color: var(--gray900);
+    outline: none;
+    border: none;
+    background: white;
+    font-size: 18px;
+    line-height: 28px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 4px;
+    font-family: 'Mulish-Bold', $fallbackFont;
+    
+
+    &:is(a) {
+        text-decoration: none;
+        display: inline-block;
+        
+        &:hover {
+            color: var(--gray900);
+        }
+    }
+
+    &:hover {
+        background: var(--brown100);
+    }
+
+    svg {
+        path {
+            stroke: var(--gray900);
+        }
+    }
+
+    &.active {
+        background: var(--brown500);
+        color: white;
+
+        &:hover {
+            color: white;
+        }
+
+        svg {
+            path {
+                stroke: white;
+            }
+        }
+    }
+}

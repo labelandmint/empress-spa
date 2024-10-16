@@ -1,0 +1,54 @@
+.es-flatpickr-inline {
+    & ~ .flatpickr-calendar {
+        box-shadow: none !important;
+    }
+}
+
+.flatpickr-calendar {
+
+    .flatpickr-days {
+        .flatpickr-day {
+            
+            font-weight: 600;
+
+            &.selected {
+                background: var(--gray900);
+                border: none;
+                color: white;
+            }
+        }
+
+        .booked {
+            background: var(--gray300);
+            color: white;
+
+            &.prevMonthDay, &.nextMonthDay  {
+                background: var(--gray200);
+            }
+        }
+    }
+
+    .flatpickr-monthSelect-month {
+        &.selected {
+            background: var(--gray900);
+            border: none;
+            color: white;
+        }
+    }
+
+    .flatpickr-monthDropdown-months, .numInput.cur-year {
+        color: var(--gray900);
+        font-weight: 600;
+    }
+}
+
+.flatpickr-calendar {
+
+    .flatpickr-monthSelect-month {
+        &.selected {
+            background: var(--gray900);
+            border: none;
+            color: white;
+        }
+    }
+}

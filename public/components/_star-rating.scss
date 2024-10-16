@@ -1,0 +1,43 @@
+// Reference: https://jsfiddle.net/as88425/qzuhdgxb/
+
+.es-star-rating {
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+
+    /* Hide radio input */
+    input {
+        display: none;
+    }
+
+    label {
+        cursor: pointer;
+        width: 60px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    label:before {
+        content: url("../assets/star-regular.svg");
+    }
+
+    input:checked ~ label,
+    label:hover,
+    label:hover ~ label
+    {
+        &::before {
+            content: url("../assets/star-solid.svg");
+        }
+    }
+    
+    /* Hover highlights */
+    input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
+    input:checked ~ label:hover ~ label, /* highlight previous selected stars for new rating */
+    label:hover ~ input:checked ~ label /* highlight previous selected stars */ 
+    {
+        &::before {
+            content: url("../assets/star-solid.svg");
+        }
+    } 
+}

@@ -1,0 +1,20 @@
+@mixin es-line-height($name, $lineHeight) {
+    .es-leading-#{$name} {
+        line-height: $lineHeight;
+    }
+}
+
+@include es-line-height("3", .75rem); /* 12px */
+@include es-line-height("4", 1rem); /* 16px */
+@include es-line-height("5", 1.25rem); /* 20px */
+@include es-line-height("6", 1.5rem); /* 24px */
+@include es-line-height("7", 1.75rem); /* 28px */
+@include es-line-height("8", 2rem); /* 32px */
+@include es-line-height("9", 2.25rem); /* 36px */
+@include es-line-height("10", 2.5rem); /* 40px */
+@include es-line-height("none", 1);
+@include es-line-height("tight", 1.25);
+@include es-line-height("snug", 1.375);
+@include es-line-height("normal", 1.5rem);
+@include es-line-height("relaxed", 1.625rem);
+@include es-line-height("loose", 2rem);

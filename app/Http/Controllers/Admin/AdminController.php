@@ -102,7 +102,8 @@ class AdminController extends Controller
 
     public function profile()
     {
-        return view('profile.index');
+        $title = 'Profile';
+        return view('profile.index',compact('title'));
     }
 
     public function admin_profile()
@@ -126,9 +127,11 @@ class AdminController extends Controller
             'role'      => $adminUser->user_role,
             'status'    => $adminUser->status, // Include this if you need it in the view
         ];
+        
+         $title = 'Profile';
 
         // Return the profile view with the collected data
-        return view('admin.profile.index', $profileData);
+        return view('admin.profile.index',$profileData, compact('title'));
     }
 
     public function update_admin_profile(Request $request)
@@ -223,6 +226,16 @@ class AdminController extends Controller
             ->withInput();
     }
 
+    // public function admin(Request $request)
+    // {
+    //     $settings = Setting::where('user_id',1)->first();
+    //     $counter = [];
+    //     if($settings){
+    //         $counter = explode(' ',$settings->countdown_timer);
+    //     }
+    //     return view('auth.admin_login',compact('settings','counter'));
+    // }
+
     public function admin(Request $request)
     {
         $settings = Setting::where('user_id',1)->first();
@@ -230,7 +243,25 @@ class AdminController extends Controller
         if($settings){
             $counter = explode(' ',$settings->countdown_timer);
         }
-        return view('auth.admin_login',compact('settings','counter'));
+
+            if ($settings) {
+                $ratio_1 = $settings->ratio_1 ?? 1; // Fallback to 1 if null
+                $ratio_2 = $settings->ratio_2 ?? 1; // Fallback to 1 if null
+                $number = $settings->number ?? 0;
+                $updatedAt = $settings->ratio_update_time;
+
+                $userCount = User::where('user_role', 2)
+                    ->where('created_at', '>', $updatedAt)
+                    ->count();
+                $userdata = ($userCount / $ratio_1) * $ratio_2;
+
+                $remainingSeats = max($number - $userdata, 0);
+            } else {
+                // Default values if no settings are found
+                $remainingSeats = 0;
+            }
+
+        return view('auth.admin_login',compact('settings','counter','remainingSeats'));
     }
 
     public function members(Request $request)
@@ -261,7 +292,6 @@ class AdminController extends Controller
                     });
             })
             ->leftjoin('services', 'services.id', '=', 'bookings.service_id')
-            ->leftjoin('slots','bookings.slot_id','slots.id')
             ->leftjoin('transactions', function ($join) {
                 $join->on('transactions.member_id', '=', 'users.id')
                     ->where('transactions.id', function ($query) {
@@ -272,11 +302,11 @@ class AdminController extends Controller
                     });
             })
             ->where('user_role', 2)
-            ->select('users.id','users.f_name', 'users.l_name', 'subscription_plans.title', 'subscriptions.status', 'services.id AS service_id', 'services.title AS service','services.description AS service_desc', 'bookings.booking_date', 'bookings.id as booking_id', 'transactions.created_at as payment_date', 'users.rating', 'slots.id as slot_id', 'slots.start_time', 'slots.end_time')
+            ->select('users.id','users.f_name', 'users.l_name', 'subscription_plans.title', 'subscriptions.status', 'services.id AS service_id', 'services.title AS service','services.description AS service_desc', 'bookings.booking_date', 'bookings.id as booking_id', 'transactions.created_at as payment_date', 'users.rating', 'bookings.slot_id', 'bookings.booking_start_time', 'bookings.booking_end_time')
             ->get();
 
-
-        return view('admin.members.index', compact('totalMember', 'activeMember', 'pauseMember', 'cancelledMember', 'members'));
+   $title='Members';
+        return view('admin.members.index', compact('title','totalMember', 'activeMember', 'pauseMember', 'cancelledMember', 'members'));
     }
 
     public function exportExcel()
@@ -479,7 +509,7 @@ class AdminController extends Controller
 
     public function addUser(Request $request)
     {
-        
+
 
         // If validation passes, continue with user creation
         $data = $request->all();
@@ -521,9 +551,9 @@ class AdminController extends Controller
                 3 => 'Contractor',
                 4 => 'Staff',
             ];
-            
+
             $user_role = $userRoles[$user->user_role] ?? 'Unknown';
-            
+
             $website_address = $setting->business_website_address;
             $phone = $setting->business_phone_number;
             $email = $setting->business_email_address;
@@ -531,7 +561,7 @@ class AdminController extends Controller
             // Send the welcome email
             Mail::to($user->email)->send(new AddUser($name, $user_role,$website_address, $phone, $email,$resetLink));
 
-        }    
+        }
 
         return redirect()->back()->with('success', 'User added successfully');
     }
@@ -570,7 +600,7 @@ class AdminController extends Controller
         }else{
             BankDetail::create($data);
             return redirect()->back()->with('success','Bank information added successfully');
-        }        
+        }
     }
 
     public function changePassword(Request $request)

@@ -1,3 +1,18 @@
+@php
+    $settings = DB::table('settings')->first();
+    $fullUrl = $settings->business_website_address;
+
+    // Check if the URL starts with http or https, if not add https://
+    if (!preg_match('/^https?:\/\//', $fullUrl)) {
+        $fullUrl = 'https://' . $fullUrl;
+    }
+
+    // Parse the URL to get just the host
+    $parsedUrl = parse_url($fullUrl);
+    $domain = isset($parsedUrl['host']) ? $parsedUrl['host'] : $fullUrl; // Fallback to full URL if parsing fails
+
+@endphp
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 
@@ -7,7 +22,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
+    <link rel="icon" href="{{ url('public/logo.png') }}" type="image/x-icon">
     <!-- Bootstrap CSS v5.2.0 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
@@ -93,7 +108,7 @@
             font-size: 14px;
         }
 
-        
+
       </style>
 </head>
 
@@ -119,13 +134,13 @@
                         </a>
                     </div>
                     <div>
-                        <a href="#" class="text-decoration-none es-text-gray-900 es-font-500">
+                        <a href="{{ $fullUrl }}" class="text-decoration-none es-text-gray-900 es-font-500">
                             <div class="d-flex align-items-center gap-2 gap-md-3">
                                 <img src="{{ url('public/images/left-arrow.png') }}" width="16" height="16"
                                     alt="">
                                 <div>
                                     <span class="d-none d-md-inline-block">Back to&nbsp;</span><span
-                                        class="text-decoration-underline">empressspa.com</span>
+                                        class="text-decoration-underline">{{ $domain}}</span>
                                 </div>
                             </div>
                         </a>

@@ -6,6 +6,7 @@ Use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Setting;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 class SettingController extends Controller
 {
@@ -15,7 +16,9 @@ class SettingController extends Controller
         $user_id = 1;
         $settings = Setting::first();
         $users = User::whereIn('user_role',[1,3,4])->orderBy('id','desc')->get();
-        return view('admin.settings.index',compact('settings','settings','users'));
+        $title='Settings';
+
+        return view('admin.settings.index',compact('title','settings','settings','users'));
     }
 
     public function store(Request $request)
@@ -54,6 +57,8 @@ class SettingController extends Controller
 
             // Add user ID to the data array
             $data['user_id'] = Auth::guard('admin')->user()->id;
+
+             $data['ratio_update_time'] = Carbon::now();
 
             // Check if ID exists to determine if we're updating or creating
             if ($request->id) {

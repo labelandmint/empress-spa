@@ -34,6 +34,7 @@
         <div class="es-header-4 es-font-mulish-bold">Services</div>
         <div class="es-text-gray-500 mt-2"><b>Note:</b> You can select only one service at a time.</div>
         <div class="es-text-gray-500 mt-2 d-none text-danger" id="serviceError">Please select a service to proceed.</div>
+
     </div>
     <div class="card border-0">
         <div class="card-body px-4 pt-4 es-pb-12">
@@ -113,8 +114,14 @@
                                 @endforeach
                             </div>
                         </div>
+                        <div class="es-navigation-buttons">
+                            <button type="button" class="es-btn" id="nextBtn"
+                            onclick="nextPrev(1)"> Next </button>
+                        </div>
+
                     </div>
                     <div class="es-tab es-pt-8">
+                        <div class="es-text-gray-500 mt-2 d-none text-danger" id="dateTimeError">Please select a Date & Time .</div>
                         <div class="es-text-gray-900 es-font-500">
                             Select Date & Time:
                         </div>
@@ -150,6 +157,15 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="es-navigation-buttons">
+                            <button type="button" class="es-btn-outline" id="prevBtn"
+                        onclick="nextPrev(-1)" > Back </button>
+
+                            <button type="button" class="es-btn" id="nextBtn2" onclick="nextPrev(1)" >
+                            Next  </button>
+                        </div>
+
                     </div>
                     <div class="es-tab es-pt-8">
                         <div class="es-text-gray-900 es-font-500">
@@ -201,43 +217,19 @@
                                 </div>
                              </div>
                         </div>
+                    <!-- <div class="es-navigation-buttons">
+                        <button type="button" class="es-btn-outline" id="prevBtn" onclick="nextPrev(-1)"> Back  </button>
+                    </div> -->
+                    <div class="es-navigation-buttons">
+                     <button type="submit" class="es-btn" id="submitBtn" role="button"
+                        data-bs-toggle="modal"> Book </button>
                     </div>
+
+                    </div>
+                     
                 </div>
 
-                <div class="es-navigation-buttons">
-                    <button
-                        type="button"
-                        class="es-btn-outline"
-                        id="prevBtn"
-                        onclick="nextPrev(-1)"
-                    >
-                        Back
-                    </button>
-                    <button
-                        type="button"
-                        class="es-btn"
-                        id="nextBtn"
-                        onclick="nextPrev(1)"
-                    >
-                        Next
-                    </button>
-                    <!-- <button
-                        type="submit"
-                        class="es-btn"
-                        id="submitBtn"
-                    >
-                        Book
-                    </button> -->
-                    <button
-                        type="submit"
-                        class="es-btn"
-                        id="submitBtn"
-                        role="button"
-                        data-bs-toggle="modal"
-                    >
-                        Book
-                    </button>
-                </div>
+               
             </form>
         </div>
     </div>
@@ -338,61 +330,136 @@
     document.getElementById("next-available-slot").innerHTML = moment().format('dddd, Do MMMM')
     document.getElementById("no-slot-message").classList.add("d-none");
 
-    flatpickr(".flatpickr", {
-        altFormat: "F j, Y",
-        dateFormat: "Y-m-d",
-        inline: true,
-        minDate: "today",
+    // flatpickr(".flatpickr", {
+    //     altFormat: "F j, Y",
+    //     dateFormat: "Y-m-d",
+    //     inline: true,
+    //     minDate: "today",
 
-        onChange: function(selectedDates, dateStr, instance) {
-            let date = moment(dateStr).format('MMMM Do, YYYY');
-            var service_id = $('input[name="service_id"]:checked').val();
+    //     onChange: function(selectedDates, dateStr, instance) {
+    //         let date = moment(dateStr).format('MMMM Do, YYYY');
+    //         var service_id = $('input[name="service_id"]:checked').val();
 
-            // AJAX request to get available slots
-            $.ajax({
-                url: "{{ url('services/slots') }}",
-                method: "GET",
-                data: {
-                    date: date,
-                    service_id: service_id // Assuming you're passing a service ID
-                },
-                success: function(response) {
-                    console.log(response); // Log the response to inspect its structure
-                    let slotsContainer = document.getElementById("time-buttons");
-                    slotsContainer.innerHTML = ''; // Clear existing slots
+    //         // AJAX request to get available slots
+    //         $.ajax({
+    //             url: "{{ url('services/slots') }}",
+    //             method: "GET",
+    //             data: {
+    //                 date: date,
+    //                 service_id: service_id // Assuming you're passing a service ID
+    //             },
+    //             success: function(response) {
+    //                 console.log(response); // Log the response to inspect its structure
+    //                 let slotsContainer = document.getElementById("time-buttons");
+    //                 slotsContainer.innerHTML = ''; // Clear existing slots
 
-                    if (response.slots && response.slots.length > 0) { // Check if slots exist
-                        document.getElementById("no-slot-message").classList.add("d-none");
-                        document.getElementById("time-buttons").classList.remove("d-none");
-                        document.getElementById("selected-date").innerHTML = date;
+    //                 if (response.slots && response.slots.length > 0) { // Check if slots exist
+    //                     document.getElementById("no-slot-message").classList.add("d-none");
+    //                     document.getElementById("time-buttons").classList.remove("d-none");
+    //                     document.getElementById("selected-date").innerHTML = date;
 
-                        response.slots.forEach(function(slot, index) {
-                            let startTime = new Date(`1970-01-01T${slot.start_time}`); // Create a date object
-                            let formattedStartTime = startTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    //                     response.slots.forEach(function(slot, index) {
+    //                         let startTime = new Date(`1970-01-01T${slot.start_time}`); // Create a date object
+    //                         let formattedStartTime = startTime.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
-                            let timeSlot = `
-                                <div>
-                                    <input type="radio" class="btn-check" name="slot_id" data-start_time="${slot.start_time}" data-end_time="${slot.end_time}" id="slot${index}" autocomplete="off" value="${slot.id}">
-                                    <label class="es-time-btn" for="slot${index}">
-                                        ${formattedStartTime}
-                                    </label>
-                                </div>
-                            `;
-                            slotsContainer.innerHTML += timeSlot; // Append to the slots container
+    //                         let timeSlot = `
+    //                             <div>
+    //                                 <input type="radio" class="btn-check" name="slot_id" data-start_time="${slot.start_time}" data-end_time="${slot.end_time}" id="slot${index}" autocomplete="off" value="${slot.id}">
+    //                                 <label class="es-time-btn" for="slot${index}">
+    //                                     ${formattedStartTime}
+    //                                 </label>
+    //                             </div>
+    //                         `;
+    //                         slotsContainer.innerHTML += timeSlot; // Append to the slots container
+    //                     });
+    //                 } else {
+    //                     // No slots available
+    //                     document.getElementById("time-buttons").classList.add("d-none");
+    //                     document.getElementById("no-slot-message").classList.remove("d-none");
+    //                 }
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 console.error("AJAX Error: ", status, error);
+    //             }
+    //         });
+
+    //     },
+    // });
+
+
+
+
+flatpickr(".flatpickr", {
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
+            inline: true,
+            minDate: "today", 
+
+            onChange: function(selectedDates, dateStr, instance) {
+                let date = moment(dateStr).format('MMMM Do, YYYY');
+                let selectedDate = moment(dateStr).format('YYYY-MM-DD'); 
+                var service_id = $('input[name="service_id"]:checked').val();
+
+                let currentTime = moment().format('YYYY-MM-DD HH:mm'); 
+                let currentDate = moment().format('YYYY-MM-DD'); 
+                let currentTimeOnly = moment().format('HH:mm'); 
+                $.ajax({
+                    url: "{{ url('services/slots') }}",
+                    method: "GET",
+                    data: {
+                        date: date,
+                        service_id: service_id 
+                    },
+                    success: function(response) {
+                        console.log(response); 
+                        let slotsContainer = document.getElementById("time-buttons");
+                        slotsContainer.innerHTML = ''; 
+
+                        if (response.slots && response.slots.length > 0) { 
+                            document.getElementById("no-slot-message").classList.add("d-none");
+                            document.getElementById("time-buttons").classList.remove("d-none");
+                            document.getElementById("selected-date").innerHTML = date;
+
+                            response.slots.forEach(function(slot, index) {
+                            let slotStartTime = moment(`${selectedDate}T${slot.start_time}`).format('YYYY-MM-DD HH:mm');
+                            let formattedSlotStartTime = moment(slotStartTime).format('h:mm A'); 
+                            if (selectedDate === currentDate) {
+                                if (moment(slotStartTime).isSameOrAfter(currentTime)) {
+                                    let timeSlot = `
+                                        <div>
+                                            <input type="radio" class="btn-check" name="slot_id" data-start_time="${slot.start_time}" data-end_time="${slot.end_time}" id="slot${index}" autocomplete="off" value="${slot.id}">
+                                            <label class="es-time-btn" for="slot${index}">
+                                                ${formattedSlotStartTime}
+                                            </label>
+                                        </div>
+                                    `;
+                                    slotsContainer.innerHTML += timeSlot; 
+                                }
+                            } else {
+                                let timeSlot = `
+                                    <div>
+                                        <input type="radio" class="btn-check" name="slot_id" data-start_time="${slot.start_time}" data-end_time="${slot.end_time}" id="slot${index}" autocomplete="off" value="${slot.id}">
+                                        <label class="es-time-btn" for="slot${index}">
+                                            ${formattedSlotStartTime}
+                                        </label>
+                                    </div>
+                                `;
+                                slotsContainer.innerHTML += timeSlot; 
+                            }
                         });
-                    } else {
-                        // No slots available
-                        document.getElementById("time-buttons").classList.add("d-none");
-                        document.getElementById("no-slot-message").classList.remove("d-none");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX Error: ", status, error);
-                }
-            });
 
-        },
-    });
+                        } else {
+                            document.getElementById("time-buttons").classList.add("d-none");
+                            document.getElementById("no-slot-message").classList.remove("d-none");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error: ", status, error);
+                    }
+                });
+            },
+});
+
 
 
     $(document).on('change', '.btn-check', function() {
@@ -424,20 +491,39 @@
         return new Date(`1970-01-01T${timeString}`).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     }
 
-    $(document).ready(function() {
-        $(document).on('click','#nextBtn',function(e) {
-            var service_id = $('input[name="service_id"]:checked').val();
 
-            // Check if service_id is null
-            if (!service_id) {
-                e.preventDefault();
-                $('#serviceError').removeClass('d-none'); // Show the error message
-                nextPrev(-1);
-            } else {
-                $('#serviceError').addClass('d-none'); // Hide the error message if a service is selected
-            }
-        });
+
+
+   $(document).ready(function() {
+    $(document).on('click', '#nextBtn', function(e) {
+        var service_id = $('input[name="service_id"]:checked').val(); 
+
+        if (!service_id) {
+            e.preventDefault(); 
+            $('#serviceError').removeClass('d-none'); 
+            $('#dateTimeError').addClass('d-none'); 
+            nextPrev(-1);
+            return; 
+        } else {
+            $('#serviceError').addClass('d-none'); 
+        }
     });
+
+ $(document).on('click', '#nextBtn2', function(e) {
+    var booking_date = $('#booking_date').val(); 
+    var selected_time = $('#time-buttons .btn-check:checked').length;  
+
+    if (!booking_date || selected_time === 0) {
+        e.preventDefault();  
+        $('#dateTimeError').removeClass('d-none');  
+        nextPrev(-1);  
+    } else {
+        $('#dateTimeError').addClass('d-none');  
+    }
+});
+
+
+});
 
 </script>
 @endsection

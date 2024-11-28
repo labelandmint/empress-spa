@@ -14,7 +14,7 @@ class CheckPermission
         }else{
             $user = Auth::user();
         }
-        
+
         // Check if the user is authenticated and has the required permission
         if (!$user || !$user->hasPermission($permission)) {
             abort(403, 'Access Denied: Permission required.');

@@ -89,8 +89,8 @@
                                                     data-title="{{ $list->title }}"
                                                     data-description="{{ $list->description }}"
                                                     data-quantity="{{ $list->quantity }}"
-                                                    data-image="{{ $list->image }}" 
-                                                    data-archived_at="{{ $list->archived_at }}" 
+                                                    data-image="{{ $list->image }}"
+                                                    data-archived_at="{{ $list->archived_at }}"
                                                     >
                                                     View/Edit
                                                 </a>
@@ -133,7 +133,7 @@
         aria-labelledby="addProductModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 540px">
             <div class="modal-content position-relative">
-                <button type="button" class="border-0 bg-transparent closeModal position-absolute es-top-6 es-right-6 es-z-50" 
+                <button type="button" class="border-0 bg-transparent closeModal position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
                     <img src="{{ url('public/images/close.png') }}" alt="" />
                 </button>
@@ -247,7 +247,7 @@
                                     </label>
                                     <div class="d-none" id="update-file-preview-container">
                                         <img src="#" alt="Preview Uploaded Image" id="update-photo-preview"
-                                            class="es-h-80 es-mb-3 update-file-preview w-100" />
+                                            class="es-h-100 es-mb-3 update-file-preview w-100" />
                                         <div class="d-flex es-gap-8">
                                             <label for="update_photo_input"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
@@ -314,7 +314,7 @@
                 </button>
                 <div class="card">
                     <div class="card-body p-4">
-                       
+
                             <div class="es-text-lg es-font-600 es-mb-6">View Product</div>
                             <div>
                                 <div>Photo</div>
@@ -498,7 +498,7 @@
 
             function sortTable(ascending) {
                 var $rows = $tbody.find('tr').get();
-                
+
                 $rows.sort(function(a, b) {
                     // Change the index here to the column you want to sort by (0 is Photo, 1 is Title, etc.)
                     var keyA = $(a).find('td').eq(1).text().toLowerCase(); // Assuming sorting by Title

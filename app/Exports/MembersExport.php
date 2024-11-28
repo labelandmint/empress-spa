@@ -44,7 +44,7 @@ class MembersExport implements FromCollection, WithHeadings, WithStyles, WithEve
                     });
             })
             ->where('user_role', 2)
-            ->select('users.f_name', 'users.l_name', 'subscription_plans.title', 'subscriptions.status', 'services.title AS service', 'bookings.booking_date', 'transactions.created_at as payment_date', 'users.rating', 'slots.start_time', 'slots.end_time')
+            ->select('users.f_name', 'users.l_name', 'subscription_plans.title', 'subscriptions.status', 'services.title AS service', 'bookings.booking_date', 'transactions.created_at as payment_date', 'users.rating')
             ->get();
     }
 

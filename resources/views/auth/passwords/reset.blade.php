@@ -175,7 +175,8 @@
 									<div
 										class="es-px-5 es-py-2 bg-white d-flex align-items-center gap-2 rounded-2"
 									>
-										<span class="es-text-xl es-font-600">@if($settings && $settings->number){{$settings->number}} @else 2000 @endif</span>
+										<!--<span class="es-text-xl es-font-600">@if($settings && $settings->number){{$settings->number}} @else 2000 @endif</span>-->
+									<span class="es-text-xl es-font-600">{{$remainingSeats}}</span>
 										<span>Seats Remaining</span>
 									</div>
 								</div>

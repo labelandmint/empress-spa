@@ -52,7 +52,7 @@ class TransactionsExport implements FromCollection, WithHeadings, WithStyles, Wi
     {
         return [
             AfterSheet::class => function(AfterSheet $event) {
-                
+
                 $setting = Setting::first();
                 $subsCount = User::where('user_role',2)->count();
                 $subsCountThisMonth = User::where('user_role',2)
@@ -67,7 +67,7 @@ class TransactionsExport implements FromCollection, WithHeadings, WithStyles, Wi
 
                 $sheet = $event->sheet->getDelegate();
 
-                
+
 
 
 
@@ -108,7 +108,7 @@ class TransactionsExport implements FromCollection, WithHeadings, WithStyles, Wi
                 $sheet->setCellValue('E7', '');
                 $sheet->setCellValue('E8', '');
 
-                
+
 
                 $sheet->setCellValue('F1', '');
                 $sheet->setCellValue('F2', $setting->business_website_address);
@@ -123,6 +123,11 @@ class TransactionsExport implements FromCollection, WithHeadings, WithStyles, Wi
                 // Clear cells from A1 to D8
                 foreach (range('G', 'H') as $col) {
                     foreach (range(1, 8) as $row) {
+                        $sheet->setCellValue($col . $row, ''); // Set each cell in the range to empty
+                    }
+                }
+                foreach (range('H', 'P') as $col) {
+                    foreach (range(1, 22) as $row) {
                         $sheet->setCellValue($col . $row, ''); // Set each cell in the range to empty
                     }
                 }
@@ -178,25 +183,25 @@ class TransactionsExport implements FromCollection, WithHeadings, WithStyles, Wi
                 $sheet->setCellValue('F11', 'Total Last Month: ');
                 $sheet->getStyle('F11')->getFont()->setBold(true);
 
-                $sheet->setCellValue('G11', '$'.$subsAmountLastMonth);     
+                $sheet->setCellValue('G11', '$'.$subsAmountLastMonth);
 
                 // Clear row 12 from A12 to G12
                 foreach (range('A', 'G') as $col) {
                     $sheet->setCellValue($col . '12', ''); // Set each cell in the range to empty
-                } 
+                }
 
                 // Clear row 13 from A13 to G13
                 foreach (range('A', 'G') as $col) {
                     $sheet->setCellValue($col . '13', ''); // Set each cell in the range to empty
-                } 
+                }
 
 
-                $sheet->setCellValue('A14', 'Transactions Summary');  
-                $sheet->getStyle('A14')->getFont()->setBold(true);  
+                $sheet->setCellValue('A14', 'Transactions Summary');
+                $sheet->getStyle('A14')->getFont()->setBold(true);
                 // Clear row 14 from A14 to G14
                 foreach (range('B', 'G') as $col) {
                     $sheet->setCellValue($col . '14', ''); // Set each cell in the range to empty
-                } 
+                }
 
                  // Clear row 15 from A15 to G15
                 foreach (range('A', 'G') as $col) {

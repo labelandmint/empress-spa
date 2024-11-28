@@ -169,9 +169,9 @@
                                         <td>
                                             {{ $member->booking_date ? \Carbon\Carbon::parse($member->booking_date)->format('M d, Y') : 'N/A' }} <br>
 
-                                            @if($member->start_time)
-                                            {{ \Carbon\Carbon::parse($member->start_time)->format('g:i A') }} -
-                                            {{ \Carbon\Carbon::parse($member->end_time)->format('g:i A') }}
+                                            @if($member->booking_start_time)
+                                            {{ \Carbon\Carbon::parse($member->booking_start_time)->format('g:i A') }} -
+                                            {{ \Carbon\Carbon::parse($member->booking_end_time)->format('g:i A') }}
                                             @endif
                                         </td>
                                         <td>{{ $member->payment_date ? \Carbon\Carbon::parse($member->payment_date)->format('M d, Y') : 'N/A' }}</td>

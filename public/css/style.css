@@ -7646,3 +7646,10 @@ body {
     color: white;
     font-size: 16px;
 }
+
+
+.disabled { color: lightgray; /* Change text color to gray */
+pointer-events: none; /* Disable pointer events */
+text-decoration: none; /* Remove underline */
+cursor: not-allowed; /* Change cursor to indicate it's disabled */
+}

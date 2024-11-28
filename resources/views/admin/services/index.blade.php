@@ -14,15 +14,15 @@
             padding: 10px;
         }
 
-        .active>.page-link, .page-link.active {
+        .active>.page-link,
+        .page-link.active {
             background-color: #BB7E45 !important;
             border: 1px solid #BB7E45 !important;
         }
 
-        .page-link  {
-            color : black ;
+        .page-link {
+            color: black;
         }
-
     </style>
 
     <div class="col-lg-9 es-py-8">
@@ -56,20 +56,20 @@
                                     <option value="3">Archived</option>
                                 </select>
                             </div>
-                            @if(auth()->guard('admin')->user()->hasPermission('add_services'))
-                            <div>
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#addServiceModal"
-                                    class="es-link-primary border-0 bg-transparent es-text-lg">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M10 4.16699V15.8337" stroke="#BB7E45" stroke-width="1.8"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M4.16602 10H15.8327" stroke="#BB7E45" stroke-width="1.8"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                    Add Service
-                                </button>
-                            </div>
+                            @if (auth()->guard('admin')->user()->hasPermission('add_services'))
+                                <div>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#addServiceModal"
+                                        class="es-link-primary border-0 bg-transparent es-text-lg">
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M10 4.16699V15.8337" stroke="#BB7E45" stroke-width="1.8"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M4.16602 10H15.8327" stroke="#BB7E45" stroke-width="1.8"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                        Add Service
+                                    </button>
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -90,63 +90,65 @@
                                 </tr>
                             </thead>
                             <tbody id="services-rows">
-                                @if(count($services) > 0)
-                                @foreach ($services as $service)
-                                    <tr>
-                                        <td>{{ $service->title }}</td>
-                                        <td>
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#photoModal"
-                                                data-image="{{ $service->photo ?? url('public/images/services-image.svg') }}"
-                                                class="border-0 es-outline-none bg-transparent p-0 hover-darken-95">
-                                                <img src="{{ $service->photo ?? url('public/images/services-image.svg') }}"
-                                                    width="40" height="40" alt="Service Image" />
-                                            </button>
-                                        </td>
-                                        <td>{{ $service->description }}</td>
-                                        <td>{{ $service->created_at->format('M d, Y') }}</td>
-                                        <!-- Updated to format date -->
-                                        <td>{{ $service->status == 3 ? $service->archived_at->format('M d, Y') : ''}}</td>
-                                        <!-- Example for dynamic date -->
-                                        <td>{{ $service->category->name ?? 'Uncategorized' }}</td>
-                                        <!-- Assuming a relationship exists -->
-                                        <td>{{ $service->session_capacity }}</td>
-                                        <td>{{ $service->session_timeframe }} min</td>
-                                        <td>{{ $service->blockout_time }} min</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                @if(auth()->guard('admin')->user()->hasPermission('edit_services'))
-                                                <a href="#updateServiceModal" class="es-link-primary" data-bs-toggle="modal"
-                                                    data-id="{{ $service->id }}"
-                                                    data-category_id="{{ $service->category_id }}"
-                                                    data-description="{{ $service->description }}"
-                                                    data-title="{{ $service->title }}"
-                                                    data-session_timeframe="{{ $service->session_timeframe }}"
-                                                    data-session_capacity="{{ $service->session_capacity }}"
-                                                    data-blockout_time="{{ $service->blockout_time }}"
-                                                    data-photo="{{ $service->photo ?? '' }}" role="button"
-                                                    data-archived_at="{{ $service->archived_at }}"
-                                                    >
-                                                    View/Edit
-                                                </a>
-                                                @else
-                                                <a href="#viewServiceModal" class="es-link-primary" data-bs-toggle="modal"
-                                                    data-id="{{ $service->id }}"
-                                                    data-category_id="{{ $service->category_id }}"
-                                                    data-description="{{ $service->description }}"
-                                                    data-title="{{ $service->title }}"
-                                                    data-session_timeframe="{{ $service->session_timeframe }}"
-                                                    data-session_capacity="{{ $service->session_capacity }}"
-                                                    data-blockout_time="{{ $service->blockout_time }}"
-                                                    data-photo="{{ $service->photo ?? '' }}" role="button">
-                                                    View
-                                                </a>
-                                                @endif
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                @if (count($services) > 0)
+                                    @foreach ($services as $service)
+                                        <tr>
+                                            <td>{{ $service->title }}</td>
+                                            <td>
+                                                <button type="button" data-bs-toggle="modal" data-bs-target="#photoModal"
+                                                    data-image="{{ $service->photo ?? url('public/images/services-image.svg') }}"
+                                                    class="border-0 es-outline-none bg-transparent p-0 hover-darken-95">
+                                                    <img src="{{ $service->photo ?? url('public/images/services-image.svg') }}"
+                                                        width="40" height="40" alt="Service Image" />
+                                                </button>
+                                            </td>
+                                            <td>{{ $service->description }}</td>
+                                            <td>{{ $service->created_at->format('M d, Y') }}</td>
+                                            <!-- Updated to format date -->
+                                            <td>{{ $service->status == 3 ? $service->archived_at->format('M d, Y') : '' }}
+                                            </td>
+                                            <!-- Example for dynamic date -->
+                                            <td>{{ $service->category->name ?? 'Uncategorized' }}</td>
+                                            <!-- Assuming a relationship exists -->
+                                            <td>{{ $service->session_capacity }}</td>
+                                            <td>{{ $service->session_timeframe }} min</td>
+                                            <td>{{ $service->blockout_time }} min</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    @if (auth()->guard('admin')->user()->hasPermission('edit_services'))
+                                                        <a href="#updateServiceModal" class="es-link-primary"
+                                                            data-bs-toggle="modal" data-id="{{ $service->id }}"
+                                                            data-category_id="{{ $service->category_id }}"
+                                                            data-description="{{ $service->description }}"
+                                                            data-title="{{ $service->title }}"
+                                                            data-session_timeframe="{{ $service->session_timeframe }}"
+                                                            data-session_capacity="{{ $service->session_capacity }}"
+                                                            data-blockout_time="{{ $service->blockout_time }}"
+                                                            data-photo="{{ $service->photo ?? '' }}" role="button"
+                                                            data-archived_at="{{ $service->archived_at }}">
+                                                            View/Edit
+                                                        </a>
+                                                    @else
+                                                        <a href="#viewServiceModal" class="es-link-primary"
+                                                            data-bs-toggle="modal" data-id="{{ $service->id }}"
+                                                            data-category_id="{{ $service->category_id }}"
+                                                            data-description="{{ $service->description }}"
+                                                            data-title="{{ $service->title }}"
+                                                            data-session_timeframe="{{ $service->session_timeframe }}"
+                                                            data-session_capacity="{{ $service->session_capacity }}"
+                                                            data-blockout_time="{{ $service->blockout_time }}"
+                                                            data-photo="{{ $service->photo ?? '' }}" role="button">
+                                                            View
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 @else
-                                <tr class="text-center"><td colspan="10">No Record Found</td></tr>
+                                    <tr class="text-center">
+                                        <td colspan="10">No Record Found</td>
+                                    </tr>
                                 @endif
                             </tbody>
                         </table>
@@ -202,7 +204,7 @@
                                     </label>
                                     <div class="d-none" id="file-preview-container-add-service">
                                         <img src="#" alt="Preview Uploaded Image" id="photo-preview-add-service"
-                                            class="es-h-80 es-mb-3 file-preview" />
+                                            class="img-fluid es-h-80 es-mb-3 file-preview" />
                                         <div class="d-flex es-gap-8">
                                             <label for="photo_input_add_service"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
@@ -226,17 +228,19 @@
                                     placeholder="Description" />
                                 <div class="es-input-error-message"></div>
                             </div>
-                            <div class="es-mb-4">
+                            <div class="es-mb-8">
                                 <label for="addServiceCategory"> Category </label>
+                                <div class="es-input-error-message"></div>
                                 <div class="es-h-13 mt-2">
-                                    <select class="add-service-category form-select" id="addServiceCategory" name="category_id">
+                                    <select class="add-service-category form-select" id="addServiceCategory"
+                                        name="category_id">
                                         <option value=""></option>
-                                        <option value="1">Category 1</option>
-                                        <option value="2">Category 2</option>
-                                        <option value="3">Category 3</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
-                                <div class="es-input-error-message"></div>
+                                
                             </div>
                             <div class="row es-mb-2">
                                 <div class="col-xl-4 mb-4">
@@ -292,7 +296,8 @@
                 </button>
                 <div class="card">
                     <div class="card-body p-4">
-                        <form action="{{url('admin/services/store')}}" class="" method="POST" enctype="multipart/form-data">
+                        <form action="{{ url('admin/services/store') }}" class="" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" hidden id="id" />
                             <input type="hidden" name="photo_url" hidden id="update_photo_url" />
@@ -325,7 +330,7 @@
                                     </label>
                                     <div class="d-none" id="file-preview-container-update-service">
                                         <img src="#" alt="Preview Uploaded Image"
-                                            id="photo-preview-update-service" class="es-h-80 es-mb-3 file-preview" />
+                                            id="photo-preview-update-service" class="img-fluid es-h-80 es-mb-3 file-preview" />
                                         <div class="d-flex es-gap-8">
                                             <label for="photo_input_update_service"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
@@ -345,17 +350,20 @@
                             </div>
                             <div class="es-mb-4">
                                 <label for="description"> Description </label>
-                                <input id="description" name="description" type="text" class="form-control es-input mt-2"
-                                    placeholder="Description" value="Full Set Pink & White (French)" />
+                                <input id="description" name="description" type="text"
+                                    class="form-control es-input mt-2" placeholder="Description"
+                                    value="Full Set Pink & White (French)" />
                                 <div class="es-input-error-message"></div>
                             </div>
                             <div class="es-mb-4">
                                 <label for="addServiceCategory"> Category </label>
                                 <div class="es-h-13 mt-2">
-                                    <select class="form-control update-service-category" name="category_id" id="updateServiceCategory">
-                                        <option value="1">Category 1</option>
-                                        <option value="2">Category 2</option>
-                                        <option value="3">Category 3</option>
+                                    <select class="form-control update-service-category" name="category_id"
+                                        id="category_id">
+                                        <option value=""></option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="es-input-error-message"></div>
@@ -363,8 +371,8 @@
                             <div class="row es-mb-2">
                                 <div class="col-xl-4 mb-4">
                                     <label for="session_capacity"> Session Capacity </label>
-                                    <input id="session_capacity" name="session_capacity" type="number" class="form-control es-input mt-2"
-                                        placeholder="Session Capacity" />
+                                    <input id="session_capacity" name="session_capacity" type="number"
+                                        class="form-control es-input mt-2" placeholder="Session Capacity" />
                                     <div class="es-input-error-message"></div>
                                 </div>
                                 <div class="col-xl-4 mb-4">
@@ -395,7 +403,7 @@
                                 <button type="submit" data-bs-dismiss="modal" class="es-btn">
                                     Save
                                 </button>
-                                <a id="update-archive-button"  class="es-btn-outline no-text-decoration ">
+                                <a id="update-archive-button" class="es-btn-outline no-text-decoration ">
                                     Archive
                                 </a>
                             </div>
@@ -408,60 +416,62 @@
 
     <!-- View Service Modal -->
     <div class="modal fade" data-bs-backdrop="static" id="viewServiceModal" tabindex="-1" role="dialog"
-         aria-labelledby="viewServiceModalLabel" aria-hidden="true">
+        aria-labelledby="viewServiceModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 540px">
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
-                        data-bs-dismiss="modal">
+                    data-bs-dismiss="modal">
                     <img src="{{ url('public/images//close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body p-4">
-                            <input type="hidden" name="id" hidden id="view_id" />
-                            <div class="es-text-lg es-font-600 es-mb-6">View Service</div>
-                            <div class="es-mb-4">
-                                <label for="view_title"> Title </label>
-                                <input id="view_title" name="title" type="text" class="form-control es-input mt-2"
-                                       placeholder="Title" readonly />
+                        <input type="hidden" name="id" hidden id="view_id" />
+                        <div class="es-text-lg es-font-600 es-mb-6">View Service</div>
+                        <div class="es-mb-4">
+                            <label for="view_title"> Title </label>
+                            <input id="view_title" name="title" type="text" class="form-control es-input mt-2"
+                                placeholder="Title" readonly />
+                        </div>
+                        <div class="es-mb-4">
+                            Photo
+                            <div class="mt-2">
+                                <img src="#" alt="Service Image" id="view_photo_preview"
+                                    class="es-h-80 es-mb-3 file-preview d-none" />
                             </div>
-                            <div class="es-mb-4">
-                                Photo
-                                <div class="mt-2">
-                                    <img src="#" alt="Service Image" id="view_photo_preview" class="es-h-80 es-mb-3 file-preview d-none" />
-                                </div>
+                        </div>
+                        <div class="es-mb-4">
+                            <label for="view_description"> Description </label>
+                            <input id="view_description" name="description" type="text"
+                                class="form-control es-input mt-2" placeholder="Description" readonly />
+                        </div>
+                        <div class="es-mb-4">
+                            <label for="view_addServiceCategory"> Category </label>
+                            <div class="es-h-13 mt-2">
+                                <select class="form-control" name="category_id" id="category_id" disabled>
+                                    <option value=""></option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="es-mb-4">
-                                <label for="view_description"> Description </label>
-                                <input id="view_description" name="description" type="text" class="form-control es-input mt-2"
-                                       placeholder="Description" readonly />
+                        </div>
+                        <div class="row es-mb-2">
+                            <div class="col-xl-4 mb-4">
+                                <label for="view_session_capacity"> Session Capacity </label>
+                                <input id="view_session_capacity" name="session_capacity" type="text"
+                                    class="form-control es-input mt-2" placeholder="Session Capacity" readonly />
                             </div>
-                            <div class="es-mb-4">
-                                <label for="view_addServiceCategory"> Category </label>
-                                <div class="es-h-13 mt-2">
-                                    <select class="form-control" name="category_id" id="view_addServiceCategory" disabled>
-                                        <option value="1">Category 1</option>
-                                        <option value="2">Category 2</option>
-                                        <option value="3">Category 3</option>
-                                    </select>
-                                </div>
+                            <div class="col-xl-4 mb-4">
+                                <label for="view_session_timeframe"> Session Timeframe </label>
+                                <input id="view_session_timeframe" name="session_timeframe" type="text"
+                                    class="form-control es-input mt-2" placeholder="Session Timeframe" readonly />
                             </div>
-                            <div class="row es-mb-2">
-                                <div class="col-xl-4 mb-4">
-                                    <label for="view_session_capacity"> Session Capacity </label>
-                                    <input id="view_session_capacity" name="session_capacity" type="text" class="form-control es-input mt-2"
-                                           placeholder="Session Capacity" readonly />
-                                </div>
-                                <div class="col-xl-4 mb-4">
-                                    <label for="view_session_timeframe"> Session Timeframe </label>
-                                    <input id="view_session_timeframe" name="session_timeframe" type="text" class="form-control es-input mt-2"
-                                           placeholder="Session Timeframe" readonly />
-                                </div>
-                                <div class="col-xl-4 mb-4">
-                                    <label for="view_blockout_time"> Blockout Time </label>
-                                    <input id="view_blockout_time" name="blockout_time" type="text" class="form-control es-input mt-2"
-                                           placeholder="Blockout Time" readonly />
-                                </div>
+                            <div class="col-xl-4 mb-4">
+                                <label for="view_blockout_time"> Blockout Time </label>
+                                <input id="view_blockout_time" name="blockout_time" type="text"
+                                    class="form-control es-input mt-2" placeholder="Blockout Time" readonly />
                             </div>
+                        </div>
 
                     </div>
                 </div>
@@ -554,12 +564,15 @@
                 $('#update_photo_url').val('');
             });
 
-        $("#addServiceCategory").select2({
-            theme: "bootstrap-5",
-            placeholder: "Category",
-            tags: true,
-            dropdownParent: $('#addServiceModal'),
+        $(document).ready(function() {
+            $("#addServiceCategory").select2({
+                theme: "bootstrap-5",
+                placeholder: "Category",
+                tags: true,
+                dropdownParent: $('#addServiceModal'),
+            });
         });
+
 
         // function formatState(state) {
         //     if (!state.id) {
@@ -683,7 +696,8 @@
                     $('#photo-label-update-service').addClass('d-none');
                     $('#update_photo_url').val(photo);
                 } else {
-                    modal.find('#photo-preview-update-service').attr('src', ''); // Clear the image preview if no photo
+                    modal.find('#photo-preview-update-service').attr('src',
+                    ''); // Clear the image preview if no photo
                     modal.find('#file-preview-container-update-service').addClass('d-none');
                     $('#photo-label-update-service').removeClass('d-none');
                 }
@@ -850,59 +864,63 @@
             });
         });
 
-$(document).ready(function() {
-    let rowsPerPage = 10; // Rows to display per page
-    let currentPage = 1;
-    let totalRows = $("#servicesTable tbody tr").length; // Count total rows
-    let totalPages = Math.ceil(totalRows / rowsPerPage);
+        $(document).ready(function() {
+            let rowsPerPage = 10; // Rows to display per page
+            let currentPage = 1;
+            let totalRows = $("#servicesTable tbody tr").length; // Count total rows
+            let totalPages = Math.ceil(totalRows / rowsPerPage);
 
-    function renderTable(page) {
-        let start = (page - 1) * rowsPerPage;
-        let end = start + rowsPerPage;
+            function renderTable(page) {
+                let start = (page - 1) * rowsPerPage;
+                let end = start + rowsPerPage;
 
-        // Hide all rows initially
-        $("#servicesTable tbody tr").hide();
+                // Hide all rows initially
+                $("#servicesTable tbody tr").hide();
 
-        // Show rows for the current page
-        $("#servicesTable tbody tr").slice(start, end).show();
-    }
+                // Show rows for the current page
+                $("#servicesTable tbody tr").slice(start, end).show();
+            }
 
-    function renderPagination() {
-        $('#pagination').empty();
+            function renderPagination() {
+                $('#pagination').empty();
 
-        // Add Previous button (disabled if on the first page)
-        if (currentPage === 1) {
-            $('#pagination').append(`<span class="page prev disabled"><i class="fa-solid fa-chevron-left"></i></span> `);
-        } else {
-            $('#pagination').append(`<span class="page prev" data-page="${currentPage - 1}"><i class="fa-solid fa-chevron-left"></i></span> `);
-        }
+                // Add Previous button (disabled if on the first page)
+                if (currentPage === 1) {
+                    $('#pagination').append(
+                        `<span class="page prev disabled"><i class="fa-solid fa-chevron-left"></i></span> `);
+                } else {
+                    $('#pagination').append(
+                        `<span class="page prev" data-page="${currentPage - 1}"><i class="fa-solid fa-chevron-left"></i></span> `
+                        );
+                }
 
-        // Add page numbers
-        for (let i = 1; i <= totalPages; i++) {
-            let activeClass = (i === currentPage) ? 'active' : '';
-            $('#pagination').append(`<span class="page ${activeClass}" data-page="${i}">${i}</span> `);
-        }
+                // Add page numbers
+                for (let i = 1; i <= totalPages; i++) {
+                    let activeClass = (i === currentPage) ? 'active' : '';
+                    $('#pagination').append(`<span class="page ${activeClass}" data-page="${i}">${i}</span> `);
+                }
 
-        // Add Next button (disabled if on the last page)
-        if (currentPage === totalPages) {
-            $('#pagination').append(`<span class="page next disabled"><i class="fa-solid fa-chevron-right"></i></span> `);
-        } else {
-            $('#pagination').append(`<span class="page next" data-page="${currentPage + 1}"><i class="fa-solid fa-chevron-right"></i></span> `);
-        }
-    }
+                // Add Next button (disabled if on the last page)
+                if (currentPage === totalPages) {
+                    $('#pagination').append(
+                        `<span class="page next disabled"><i class="fa-solid fa-chevron-right"></i></span> `);
+                } else {
+                    $('#pagination').append(
+                        `<span class="page next" data-page="${currentPage + 1}"><i class="fa-solid fa-chevron-right"></i></span> `
+                        );
+                }
+            }
 
-    // Initial table and pagination render
-    renderTable(currentPage);
-    renderPagination();
+            // Initial table and pagination render
+            renderTable(currentPage);
+            renderPagination();
 
-    // Handle page click
-    $(document).on('click', '.page:not(.disabled)', function() {
-        currentPage = $(this).data('page');
-        renderTable(currentPage);
-        renderPagination();
-    });
-});
-
-
+            // Handle page click
+            $(document).on('click', '.page:not(.disabled)', function() {
+                currentPage = $(this).data('page');
+                renderTable(currentPage);
+                renderPagination();
+            });
+        });
     </script>
 @endsection

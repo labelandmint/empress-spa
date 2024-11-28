@@ -1,36 +1,37 @@
 @extends('layouts.app')
 @section('content')
-<style>
-    .position-relative {
-        position: relative;
-    }
+    <style>
+        .position-relative {
+            position: relative;
+        }
 
-    .tooltip-text {
-        position: absolute;
-        bottom: 120%;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: black;
-        color: white;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 12px;
-        white-space: nowrap;
-        z-index: 10;
-        display: none; /* Initially hidden */
-    }
+        .tooltip-text {
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: black;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 10;
+            display: none;
+            /* Initially hidden */
+        }
 
-    .tooltip-text::after {
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: black transparent transparent transparent;
-    }
-</style>
+        .tooltip-text::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+        }
+    </style>
 
     <div class="col-lg-9 es-py-8">
         <div class="mb-5">
@@ -47,7 +48,7 @@
                         </div>
                         <div class="es-text-sm es-font-500">Total Subscriptions</div>
                     </div>
-                    <div class="es-text-5xl es-font-600">{{number_format($subscriptionCount)}}</div>
+                    <div class="es-text-5xl es-font-600">{{ number_format($subscriptionCount) }}</div>
                 </div>
             </div>
             <div class="card border-0 w-100 rounded-3">
@@ -61,7 +62,7 @@
                             Total Subscriptions Value
                         </div>
                     </div>
-                    <div class="es-text-5xl es-font-600">${{number_format($subscriptionValue)}}</div>
+                    <div class="es-text-5xl es-font-600">${{ number_format($subscriptionValue) }}</div>
                 </div>
             </div>
             <div class="card border-0 w-100 rounded-3">
@@ -73,7 +74,7 @@
                         </div>
                         <div class="es-text-sm es-font-500">Total This Month</div>
                     </div>
-                    <div class="es-text-5xl es-font-600">${{number_format($currentMonthSubscriptionValue)}}</div>
+                    <div class="es-text-5xl es-font-600">${{ number_format($currentMonthSubscriptionValue) }}</div>
                 </div>
             </div>
             <div class="card border-0 w-100 rounded-3">
@@ -85,7 +86,7 @@
                         </div>
                         <div class="es-text-sm es-font-500">Total Last Month</div>
                     </div>
-                    <div class="es-text-5xl es-font-600">${{number_format($lastMonthSubscriptionValue)}}</div>
+                    <div class="es-text-5xl es-font-600">${{ number_format($lastMonthSubscriptionValue) }}</div>
                 </div>
             </div>
         </div>
@@ -108,20 +109,20 @@
                                     <img src="{{ url('public/images/filter-down-dark.png') }}" alt="" />
                                 </button>
                             </div>
-                            @if(auth()->guard('admin')->user()->hasPermission('add_subscriptions'))
-                            <div>
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#addSubscriptionModal"
-                                    class="es-link-primary border-0 bg-transparent es-text-lg">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M10 4.16699V15.8337" stroke="#BB7E45" stroke-width="1.8"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M4.16602 10H15.8327" stroke="#BB7E45" stroke-width="1.8"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                    Add subscription
-                                </button>
-                            </div>
+                            @if (auth()->guard('admin')->user()->hasPermission('add_subscriptions'))
+                                <div>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#addSubscriptionModal"
+                                        class="es-link-primary border-0 bg-transparent es-text-lg">
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M10 4.16699V15.8337" stroke="#BB7E45" stroke-width="1.8"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M4.16602 10H15.8327" stroke="#BB7E45" stroke-width="1.8"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                        Add subscription
+                                    </button>
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -136,6 +137,7 @@
                                 <th>Total Period</th>
                                 <th>Date Added</th>
                                 <th>Date Archived</th>
+                                <th>Mapped Products</th>
                                 <th>Mapped Services</th>
                                 <th>Payment Frequency</th>
                                 <th>Form Link</th>
@@ -143,116 +145,142 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if(count($subscriptionPlans) > 0)
-                            @foreach ($subscriptionPlans as $plan)
-                                <tr>
-                                    <td class="text-nowrap">{{ $plan->title }}</td>
-                                    <td>
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#photoModal"
-                                            class="border-0 es-outline-none bg-transparent p-0 hover-darken-95" data-image="{{ $plan->photo ?? url('public/images/services-image.svg') }}">
-                                            <img src="{{ $plan->photo ? $plan->photo : url('public/images/subscriptions-img.png') }}"
-                                                width="40" height="40" alt="Subscription Image" />
-                                        </button>
-                                    </td>
-                                    <td class="text-nowrap">
-                                        <div>{{ $plan->description }}</div>
-                                    </td>
-                                    <td>
-                                        @switch($plan->payment_frequency)
-                                            @case(1)
-                                                Weekly
-                                            @break
-
-                                            @case(2)
-                                                Monthly
-                                            @break
-
-                                            @case(3)
-                                                Quarterly
-                                            @break
-
-                                            @case(4)
-                                                Half-Yearly
-                                            @break
-
-                                            @case(5)
-                                                Yearly
-                                            @break
-
-                                            @default
-                                                Unknown
-                                        @endswitch
-                                    </td>
-                                    <td class="text-nowrap">{{ $plan->created_at->format('M d, Y') }}</td>
-                                    <td class="text-nowrap">
-                                        {{ $plan->deleted_at ? $plan->deleted_at->format('M d, Y') : 'N/A' }}</td>
-                                    <td>
-                                        <ul class="d-flex flex-wrap gap-2 m-0">
-                                            @foreach ($plan->products as $service)
-                                                <li>{{ $service->title }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </td>
-                                    <td>{{ $plan->days }} Days</td>
-                                    <td>
-                                        <div class="text-break link-text">
-                                            {{ $plan->subscription_form_url }}
-                                        </div>
-                                        <div class="d-flex justify-content-end">
-                                            <a href="{{ $plan->subscription_form_url }}" target="_blank"
-                                                class="bg-transparent border-0">
-                                                <img src="{{ url('public/images/external-link.png') }}" alt="Open Form" />
-                                            </a>
-                                            <button class="bg-transparent border-0 position-relative" onclick="copyToClipboard(event, this, '{{ $plan->subscription_form_url }}')" title="Copy Link">
-                                                <img src="{{ url('public/images/copy.png') }}" alt="Copy Link" />
-                                                <span class="tooltip-text" style="display: none;">Copied!</span>
+                            @if (count($subscriptionPlans) > 0)
+                                @foreach ($subscriptionPlans as $plan)
+                                    <tr>
+                                        <td class="text-nowrap">{{ $plan->title }}</td>
+                                        <td>
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#photoModal"
+                                                class="border-0 es-outline-none bg-transparent p-0 hover-darken-95"
+                                                data-image="{{ $plan->photo ?? url('public/images/services-image.svg') }}">
+                                                <img src="{{ $plan->photo ? $plan->photo : url('public/images/subscriptions-img.png') }}"
+                                                    width="40" height="40" alt="Subscription Image" />
                                             </button>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <div>{{ $plan->description }}</div>
+                                        </td>
+                                        <td>
+                                            @switch($plan->payment_frequency)
+                                                @case(1)
+                                                    Weekly
+                                                @break
 
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            @if(auth()->guard('admin')->user()->hasPermission('edit_subscriptions'))
-                                            <a href="#updateSubscriptionModal" class="es-link-primary edit-subscription"
-                                                data-bs-toggle="modal"
-                                                data-id="{{$plan->id}}"
-                                                data-title="{{$plan->title}}"
-                                                data-description="{{$plan->description}}"
-                                                data-photo="{{$plan->photo}}"
-                                                data-payment_frequency="{{$plan->payment_frequency}}"
-                                                data-frequency_title="{{$plan->frequency_title}}"
-                                                data-frequency_description="{{$plan->frequency_description}}"
-                                                data-price_of_subscription="{{$plan->price_of_subscription}}"
-                                                data-subscription_url="{{$plan->subscription_url}}"
-                                                data-subscription_form_url="{{$plan->subscription_form_url}}"
-                                                data-subscription_package="{{$plan->subscription_package}}"
-                                                role="button">
-                                                View/Edit
-                                            </a>
-                                            @else
-                                            <a href="#viewSubscriptionModal" class="es-link-primary view-subscription"
-                                                data-bs-toggle="modal"
-                                                data-id="{{$plan->id}}"
-                                                data-title="{{$plan->title}}"
-                                                data-description="{{$plan->description}}"
-                                                data-photo="{{$plan->photo}}"
-                                                data-payment_frequency="{{$plan->payment_frequency}}"
-                                                data-frequency_title="{{$plan->frequency_title}}"
-                                                data-frequency_description="{{$plan->frequency_description}}"
-                                                data-price_of_subscription="{{$plan->price_of_subscription}}"
-                                                data-subscription_url="{{$plan->subscription_url}}"
-                                                data-subscription_form_url="{{$plan->subscription_form_url}}"
-                                                data-subscription_package="{{$plan->subscription_package}}"
-                                                role="button">
-                                                View
-                                            </a>
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                                @case(2)
+                                                    Monthly
+                                                @break
+
+                                                @case(3)
+                                                    Quarterly
+                                                @break
+
+                                                @case(4)
+                                                    Half-Yearly
+                                                @break
+
+                                                @case(5)
+                                                    Yearly
+                                                @break
+
+                                                @default
+                                                    Unknown
+                                            @endswitch
+                                        </td>
+                                        <td class="text-nowrap">{{ $plan->created_at->format('M d, Y') }}</td>
+                                        <td class="text-nowrap">
+                                            {{ $plan->deleted_at ? $plan->deleted_at->format('M d, Y') : 'N/A' }}</td>
+                                        <td>
+                                            <ul class="d-flex flex-wrap gap-2 m-0">
+                                                @foreach ($plan->products as $service)
+                                                    <li>{{ $service->title }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="d-flex flex-wrap gap-2 m-0">
+                                                @if ($plan->services->isEmpty())
+                                                    <li>N/A</li>
+                                                @else
+                                                    @foreach ($plan->services as $service)
+                                                        <li>{{ $service->title }}</li>
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+                                        </td>
+
+                                        <td>{{ $plan->days }} Days</td>
+                                        <td>
+                                            <div class="text-break link-text">
+                                                {{ $plan->subscription_form_url }}
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <a href="{{ $plan->subscription_form_url }}" target="_blank"
+                                                    class="bg-transparent border-0">
+                                                    <img src="{{ url('public/images/external-link.png') }}"
+                                                        alt="Open Form" />
+                                                </a>
+                                                <button class="bg-transparent border-0 position-relative"
+                                                    onclick="copyToClipboard(event, this, '{{ $plan->subscription_form_url }}')"
+                                                    title="Copy Link">
+                                                    <img src="{{ url('public/images/copy.png') }}" alt="Copy Link" />
+                                                    <span class="tooltip-text" style="display: none;">Copied!</span>
+                                                </button>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                @if (auth()->guard('admin')->user()->hasPermission('edit_subscriptions'))
+                                                    <a href="#updateSubscriptionModal"
+                                                        class="es-link-primary edit-subscription" data-bs-toggle="modal"
+                                                        data-id="{{ $plan->id }}" data-title="{{ $plan->title }}"
+                                                        data-description="{{ $plan->description }}"
+                                                        data-promo_price="{{ $plan->promo_price }}"
+                                                        data-promo_period="{{ $plan->promo_period }}"
+                                                        data-promo_sub_title="{{ $plan->promo_sub_title }}"
+                                                        data-promo_sub_title_price="{{ $plan->promo_sub_title_price }}"
+                                                        data-photo="{{ $plan->photo }}"
+                                                        data-payment_frequency="{{ $plan->payment_frequency }}"
+                                                        data-frequency_title="{{ $plan->frequency_title }}"
+                                                        data-frequency_description="{{ $plan->frequency_description }}"
+                                                        data-price_of_subscription="{{ $plan->price_of_subscription }}"
+                                                        data-subscription_url="{{ $plan->subscription_url }}"
+                                                        data-subscription_form_url="{{ $plan->subscription_form_url }}"
+                                                        data-subscription_package="{{ $plan->subscription_package }}"
+                                                        data-subscription_services="{{ $plan->subscription_services }}"
+                                                        role="button">
+                                                        View/Edit
+                                                    </a>
+                                                @else
+                                                    <a href="#viewSubscriptionModal"
+                                                        class="es-link-primary view-subscription" data-bs-toggle="modal"
+                                                        data-id="{{ $plan->id }}" data-title="{{ $plan->title }}"
+                                                        data-description="{{ $plan->description }}"
+                                                        data-promo_price="{{ $plan->promo_price }}"
+                                                        data-promo_period="{{ $plan->promo_period }}"
+                                                        data-promo_sub_title="{{ $plan->promo_sub_title }}"
+                                                        data-promo_sub_title_price="{{ $plan->promo_sub_title_price }}"
+                                                        data-photo="{{ $plan->photo }}"
+                                                        data-payment_frequency="{{ $plan->payment_frequency }}"
+                                                        data-frequency_title="{{ $plan->frequency_title }}"
+                                                        data-frequency_description="{{ $plan->frequency_description }}"
+                                                        data-price_of_subscription="{{ $plan->price_of_subscription }}"
+                                                        data-subscription_url="{{ $plan->subscription_url }}"
+                                                        data-subscription_form_url="{{ $plan->subscription_form_url }}"
+                                                        data-subscription_package="{{ $plan->subscription_package }}"
+                                                        data-subscription_services="{{ $plan->subscription_services }}"
+                                                        role="button">
+                                                        View
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @else
-                            <tr class="text-center"><td colspan="10">No Record Found</td></tr>
+                                <tr class="text-center">
+                                    <td colspan="10">No Record Found</td>
+                                </tr>
                             @endif
                         </tbody>
                     </table>
@@ -335,10 +363,38 @@
                                         class="form-control es-input mt-2" placeholder="Description" />
                                     <div class="es-input-error-message"></div>
                                 </div>
+
+                                <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="promo_price">Promo Price</label>
+                                    <input id="promo_price" name="promo_price" type="text"
+                                        class="form-control es-input mt-2" placeholder="Promo Price" />
+                                    <div class="es-input-error-message"></div>
+                                </div>
+
+                                <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="promo_period">Promo Period</label>
+                                    <input id="promo_period" name="promo_period" type="text"
+                                        class="form-control es-input mt-2" placeholder="Promo Period" />
+                                    <div class="es-input-error-message"></div>
+                                </div>
+
+                                <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="promo_sub_title">Promo SubTitle</label>
+                                    <input id="promo_sub_title" name="promo_sub_title" type="text"
+                                        class="form-control es-input mt-2" placeholder="Promo SubTitle" />
+                                    <div class="es-input-error-message"></div>
+                                </div>
+
+                                <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="promo_sub_title_price">Promo SubTitle Price</label>
+                                    <input id="promo_sub_title_price" name="promo_sub_title_price" type="text"
+                                        class="form-control es-input mt-2" placeholder="Promo SubTitle Price" />
+                                    <div class="es-input-error-message"></div>
+                                </div>
                                 <!-- Subscription Package Dropdown -->
                                 <div class="col-xl-4 d-flex flex-column es-mt-6">
                                     <label for="subscription_package_subscription_modal" class="mb-2">
-                                        Subscription Package
+                                        Subscription Products
                                     </label>
                                     <div>
                                         <select class="form-select subscription_package"
@@ -346,6 +402,20 @@
                                             multiple>
                                             @foreach ($products as $product)
                                                 <option value="{{ $product->id }}">{{ $product->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="subscription_service_subscription_modal" class="mb-2">
+                                        Subscription Services
+                                    </label>
+                                    <div>
+                                        <select class="form-select subscription_services"
+                                            id="subscription_service_subscription_modal" name="subscription_services[]"
+                                            multiple>
+                                            @foreach ($services as $service)
+                                                <option value="{{ $service->id }}">{{ $service->title }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -440,8 +510,8 @@
                 <div class="card">
                     <div class="card-body es-p-6">
                         <form action="{{ url('admin/subscription/plan/store') }}" method="post"
-                        enctype="multipart/form-data">
-                        @csrf
+                            enctype="multipart/form-data">
+                            @csrf
                             <div
                                 class="d-flex align-items-center justify-content-between es-text-lg es-font-mulish-bold es-mb-4">
                                 Update Subscription
@@ -449,8 +519,8 @@
                             <div>
                                 <div>Photo</div>
                                 <div class="mt-2">
-                                    <input type="hidden" name="id" id="id"/>
-                                    <input type="hidden" name="photo_url" id="update_photo_url"/>
+                                    <input type="hidden" name="id" id="id" />
+                                    <input type="hidden" name="photo_url" id="update_photo_url" />
                                     <input type="file" accept=".jpg,.jpeg,.png" hidden
                                         id="update_photo_input_subscription" name="photo" />
                                     <label for="update_photo_input_subscription" class="es-file-input"
@@ -470,7 +540,8 @@
                                     </label>
                                     <div class="d-none" id="update-file-preview-container-subscription">
                                         <img src="#" alt="Preview Uploaded Image"
-                                            id="update-photo-preview-subscription" class="es-h-80 es-mb-3 file-preview" />
+                                            id="update-photo-preview-subscription"
+                                            class="img-fluid es-h-80 es-mb-3 file-preview" />
                                         <div class="d-flex es-gap-8">
                                             <label for="update_photo_input_subscription"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
@@ -479,7 +550,7 @@
                                                     height="14" alt="" />
                                             </label>
                                             <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
-                                                id="clear_update_photo_input_subscription" >
+                                                id="clear_update_photo_input_subscription">
                                                 Delete
                                                 <img src="{{ url('public/images/trash.png') }}" width="14"
                                                     height="14" alt="" />
@@ -491,18 +562,46 @@
                             <div class="row">
                                 <div class="col-xl-4 d-flex flex-column es-mt-6">
                                     <label for="update_title">Title</label>
-                                    <input id="update_title" name="title" type="text" class="form-control es-input mt-2"
-                                        placeholder="Title" value="Essential" />
+                                    <input id="update_title" name="title" type="text"
+                                        class="form-control es-input mt-2" placeholder="Title" value="Essential" />
                                     <div class="es-input-error-message"></div>
                                 </div>
                                 <div class="col-xl-4 d-flex flex-column es-mt-6">
                                     <label for="update_description">Description</label>
-                                    <input id="update_description" name="description" type="text" class="form-control es-input mt-2"
-                                        placeholder="Description"
-                                        value="Full Set Pink & White
-                            (French)" />
+                                    <input id="update_description" name="description" type="text"
+                                        class="form-control es-input mt-2" placeholder="Description"
+                                        value="Full Set Pink & White (French)" />
                                     <div class="es-input-error-message"></div>
                                 </div>
+
+                                <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="promo_price">Promo Price</label>
+                                    <input id="update_promo_price" name="promo_price" type="text"
+                                        class="form-control es-input mt-2" placeholder="Promo Price" />
+                                    <div class="es-input-error-message"></div>
+                                </div>
+
+                                <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="promo_period">Promo Period</label>
+                                    <input id="update_promo_period" name="promo_period" type="text"
+                                        class="form-control es-input mt-2" placeholder="Promo Period" />
+                                    <div class="es-input-error-message"></div>
+                                </div>
+
+                                <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="promo_sub_title">Promo SubTitle</label>
+                                    <input id="update_promo_sub_title" name="promo_sub_title" type="text"
+                                        class="form-control es-input mt-2" placeholder="Promo SubTitle" />
+                                    <div class="es-input-error-message"></div>
+                                </div>
+
+                                <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="promo_sub_title_price">Promo SubTitle Price</label>
+                                    <input id="update_promo_sub_title_price" name="promo_sub_title_price" type="text"
+                                        class="form-control es-input mt-2" placeholder="Promo SubTitle Price" />
+                                    <div class="es-input-error-message"></div>
+                                </div>
+
                                 <!-- Subscription Package Dropdown -->
                                 <div class="col-xl-4 d-flex flex-column es-mt-6">
                                     <label for="update_subscription_package_subscription_modal" class="mb-2">
@@ -517,6 +616,20 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="update_subscription_service_subscription_modal" class="mb-2">
+                                        Subscription Services
+                                    </label>
+                                    <div>
+                                        <select class="form-select subscription_services"
+                                            id="update_subscription_service_subscription_modal" name="subscription_services[]"
+                                            multiple>
+                                            @foreach ($services as $service)
+                                                <option value="{{ $service->id }}">{{ $service->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="es-text-lg es-font-mulish-bold es-mt-6">
                                 Payment Frequency
@@ -524,26 +637,27 @@
                             <div class="row">
                                 <div class="col-xl-6 d-flex flex-column es-mt-6">
                                     <label for="update_title_2">Title</label>
-                                    <input id="update_title_2" name="frequency_title" type="text" class="form-control es-input mt-2"
-                                        placeholder="Title" />
+                                    <input id="update_title_2" name="frequency_title" type="text"
+                                        class="form-control es-input mt-2" placeholder="Title" />
                                     <div class="es-input-error-message"></div>
                                 </div>
                                 <div class="col-xl-6 d-flex flex-column es-mt-6">
                                     <label for="update_description_2">Description</label>
-                                    <input id="update_description_2" name="frequency_description" type="text" class="form-control es-input mt-2"
-                                        placeholder="Description" />
+                                    <input id="update_description_2" name="frequency_description" type="text"
+                                        class="form-control es-input mt-2" placeholder="Description" />
                                     <div class="es-input-error-message"></div>
                                 </div>
                                 <div class="col-xl-6 d-flex flex-column es-mt-6">
                                     <label for="update_price_inc_gst">Price inc. GST</label>
-                                    <input id="update_price_inc_gst" name="price_of_subscription" type="number" class="form-control es-input mt-2"
-                                        placeholder="$0.00" />
+                                    <input id="update_price_inc_gst" name="price_of_subscription" type="number"
+                                        class="form-control es-input mt-2" placeholder="$0.00" />
                                     <div class="es-input-error-message"></div>
                                 </div>
                                 <div class="col-xl-6 d-flex flex-column es-mt-6">
                                     <label for="update_frequency">Frequency</label>
                                     <div>
-                                        <select class="form-select es-select mt-2" id="update_frequency" name="payment_frequency">
+                                        <select class="form-select es-select mt-2" id="update_frequency"
+                                            name="payment_frequency">
                                             <option value="1">Weekly</option>
                                             <option value="2">Monthly</option>
                                             <option value="3">Quarterly</option>
@@ -555,22 +669,20 @@
                                 <div class="d-flex flex-column es-mt-6">
                                     <label for="update_subscription_url">Subscription URL</label>
                                     <input id="update_subscription_url" type="text" class="form-control es-input mt-2"
-                                        placeholder="Subscription URL" name="subscription_url" value="https:subscription.com.au/sub/link"
-                                        readonly />
+                                        placeholder="Subscription URL" name="subscription_url"
+                                        value="https:subscription.com.au/sub/link" readonly />
                                     <div class="es-input-error-message"></div>
                                 </div>
                                 <div class="d-flex flex-column es-mt-6">
                                     <label for="update_subscription_form">Subscription Form</label>
                                     <div class="d-flex">
-                                        <input id="update_subscription_form" type="text"
-                                            name="subscription_form_url"
+                                        <input id="update_subscription_form" type="text" name="subscription_form_url"
                                             class="form-control es-input mt-2 es-w-full es-pr-20"
                                             placeholder="Subscription Form" value="https:domain.com.au/sub/xxxxxxxx"
                                             readonly />
 
                                         <div class="d-flex align-items-center gap-1 es--ml-16">
-                                            <a href="#" id="external-link"
-                                                class="bg-transparent">
+                                            <a href="#" id="external-link" class="bg-transparent">
                                                 <img src="{{ url('public/images/external-link-dark.png') }}"
                                                     alt="" />
                                             </a>
@@ -607,16 +719,17 @@
                 </button>
                 <div class="card">
                     <div class="card-body es-p-6">
-                        <div class="d-flex align-items-center justify-content-between es-text-lg es-font-mulish-bold es-mb-4">
+                        <div
+                            class="d-flex align-items-center justify-content-between es-text-lg es-font-mulish-bold es-mb-4">
                             View Subscription
                         </div>
                         <div>
                             <div>Photo</div>
                             <div class="mt-2">
-                                <input type="hidden" name="id" id="id"/>
-                                <input type="hidden" name="photo_url" id="view_photo_url"/>
-                                <input type="file" accept=".jpg,.jpeg,.png" hidden
-                                    id="view_photo_input_subscription" name="photo" disabled />
+                                <input type="hidden" name="id" id="id" />
+                                <input type="hidden" name="photo_url" id="view_photo_url" />
+                                <input type="file" accept=".jpg,.jpeg,.png" hidden id="view_photo_input_subscription"
+                                    name="photo" disabled />
                                 <label for="view_photo_input_subscription" class="es-file-input"
                                     id="view-photo-label-subscription">
                                     Upload
@@ -633,8 +746,8 @@
                                     </svg>
                                 </label>
                                 <div class="d-none" id="view-file-preview-container-subscription">
-                                    <img src="#" alt="Preview Uploaded Image"
-                                        id="view-photo-preview-subscription" class="es-h-80 es-mb-3 file-preview" />
+                                    <img src="#" alt="Preview Uploaded Image" id="view-photo-preview-subscription"
+                                        class="es-h-80 es-mb-3 file-preview" />
                                     <div class="d-flex es-gap-8">
                                         <label for="view_photo_input_subscription"
                                             class="btn border-0 es-text-sm es-font-600 p-0" disabled>
@@ -661,10 +774,40 @@
                             </div>
                             <div class="col-xl-4 d-flex flex-column es-mt-6">
                                 <label for="view_description">Description</label>
-                                <input id="view_description" name="description" type="text" class="form-control es-input mt-2"
-                                    placeholder="Description" disabled />
+                                <input id="view_description" name="description" type="text"
+                                    class="form-control es-input mt-2" placeholder="Description" disabled />
                                 <div class="es-input-error-message"></div>
                             </div>
+
+                            <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="promo_price">Promo Price</label>
+                                    <input id="view_promo_price" name="promo_price" type="text"
+                                        class="form-control es-input mt-2" placeholder="Promo Price" disabled/>
+                                    <div class="es-input-error-message"></div>
+                            </div>
+
+                            <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="promo_period">Promo Period</label>
+                                    <input id="view_promo_period" name="promo_period" type="text"
+                                        class="form-control es-input mt-2" placeholder="Promo Period" disabled />
+                                    <div class="es-input-error-message"></div>
+                            </div>
+
+                            <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="promo_sub_title">Promo SubTitle</label>
+                                    <input id="view_promo_sub_title" name="promo_sub_title" type="text"
+                                        class="form-control es-input mt-2" placeholder="Promo SubTitle" disabled />
+                                    <div class="es-input-error-message"></div>
+                            </div>
+
+                            <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                    <label for="promo_sub_title_price">Promo SubTitle Price</label>
+                                    <input id="view_promo_sub_title_price" name="promo_sub_title_price" type="text"
+                                        class="form-control es-input mt-2" placeholder="Promo SubTitle Price" disabled />
+                                    <div class="es-input-error-message"></div>
+                            </div>
+
+
                             <div class="col-xl-4 d-flex flex-column es-mt-6">
                                 <label for="view_subscription_package_subscription_modal" class="mb-2">
                                     Subscription Package
@@ -678,6 +821,20 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-xl-4 d-flex flex-column es-mt-6">
+                                <label for="view_subscription_service_subscription_modal" class="mb-2">
+                                    Subscription Services
+                                </label>
+                                <div>
+                                    <select class="form-select subscription_services"
+                                        id="view_subscription_service_subscription_modal" name="subscription_services[]"
+                                        multiple disabled>
+                                        @foreach ($services as $service)
+                                            <option value="{{ $service->id }}">{{ $service->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="es-text-lg es-font-mulish-bold es-mt-6">
                             Payment Frequency
@@ -685,26 +842,27 @@
                         <div class="row">
                             <div class="col-xl-6 d-flex flex-column es-mt-6">
                                 <label for="view_frequency_title">Title</label>
-                                <input id="view_frequency_title" name="frequency_title" type="text" class="form-control es-input mt-2"
-                                    placeholder="Title" disabled />
+                                <input id="view_frequency_title" name="frequency_title" type="text"
+                                    class="form-control es-input mt-2" placeholder="Title" disabled />
                                 <div class="es-input-error-message"></div>
                             </div>
                             <div class="col-xl-6 d-flex flex-column es-mt-6">
                                 <label for="view_frequency_description">Description</label>
-                                <input id="view_frequency_description" name="frequency_description" type="text" class="form-control es-input mt-2"
-                                    placeholder="Description" disabled />
+                                <input id="view_frequency_description" name="frequency_description" type="text"
+                                    class="form-control es-input mt-2" placeholder="Description" disabled />
                                 <div class="es-input-error-message"></div>
                             </div>
                             <div class="col-xl-6 d-flex flex-column es-mt-6">
                                 <label for="view_price_inc_gst">Price inc. GST</label>
-                                <input id="view_price_inc_gst" name="price_of_subscription" type="number" class="form-control es-input mt-2"
-                                    placeholder="$0.00" disabled />
+                                <input id="view_price_inc_gst" name="price_of_subscription" type="number"
+                                    class="form-control es-input mt-2" placeholder="$0.00" disabled />
                                 <div class="es-input-error-message"></div>
                             </div>
                             <div class="col-xl-6 d-flex flex-column es-mt-6">
                                 <label for="view_frequency">Frequency</label>
                                 <div>
-                                    <select class="form-select es-select mt-2" id="view_frequency" name="payment_frequency" disabled>
+                                    <select class="form-select es-select mt-2" id="view_frequency"
+                                        name="payment_frequency" disabled>
                                         <option value="1">Weekly</option>
                                         <option value="2">Monthly</option>
                                         <option value="3">Quarterly</option>
@@ -715,13 +873,13 @@
                             </div>
                             <div class="d-flex flex-column es-mt-6">
                                 <label for="view_subscription_url">Subscription URL</label>
-                                <input id="view_subscription_url" type="text" name="subscription_url" class="form-control es-input mt-2"
-                                    placeholder="Subscription URL" disabled />
+                                <input id="view_subscription_url" type="text" name="subscription_url"
+                                    class="form-control es-input mt-2" placeholder="Subscription URL" disabled />
                             </div>
                             <div class="d-flex flex-column es-mt-6">
                                 <label for="view_subscription_form">Subscription Form URL</label>
-                                <input id="view_subscription_form" type="text" name="subscription_form_url" class="form-control es-input mt-2"
-                                    placeholder="Subscription Form URL" disabled />
+                                <input id="view_subscription_form" type="text" name="subscription_form_url"
+                                    class="form-control es-input mt-2" placeholder="Subscription Form URL" disabled />
                             </div>
                         </div>
                     </div>
@@ -938,11 +1096,12 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img  src="{{ url('public/images/close.png') }}" alt="" />
+                    <img src="{{ url('public/images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body p-5">
-                        <img id="modalImage" src="{{ url('public/images/services-image.svg') }}" alt="" class="w-100" />
+                        <img id="modalImage" src="{{ url('public/images/services-image.svg') }}" alt=""
+                            class="w-100" />
                     </div>
                 </div>
             </div>
@@ -1085,12 +1244,22 @@
             placeholder: "Products",
             templateResult: formatState,
         });
+        $(".subscription_services").select2({
+            theme: "bootstrap-5",
+            closeOnSelect: false,
+            placeholder: "Services",
+            templateResult: formatState,
+        });
 
 
         $(document).on('click', '.edit-subscription', function() {
             var id = $(this).data('id');
             var title = $(this).data('title');
             var description = $(this).data('description');
+            var promo_price = $(this).data('promo_price');
+            var promo_period = $(this).data('promo_period');
+            var promo_sub_title = $(this).data('promo_sub_title');
+            var promo_sub_title_price = $(this).data('promo_sub_title_price');
             var photo = $(this).data('photo');
             var payment_frequency = $(this).data('payment_frequency');
             var price_of_subscription = $(this).data('price_of_subscription');
@@ -1098,32 +1267,46 @@
             var subscription_form_url = $(this).data('subscription_form_url');
             var frequency_title = $(this).data('frequency_title');
             var frequency_description = $(this).data('frequency_description');
-            var subscription_package = $(this).data('subscription_package'); // This should be an array if multiple options
+            var subscription_package = $(this).data(
+            'subscription_package');
+            var subscription_services = $(this).data(
+            'subscription_services');
 
             // Update form fields
             $('#update_title').val(title);
             $('#update_description').val(description);
+            $('#update_promo_price').val(promo_price);
+            $('#update_promo_period').val(promo_period);
+            $('#update_promo_sub_title').val(promo_sub_title);
+            $('#update_promo_sub_title_price').val(promo_sub_title_price);
             $('#update_title_2').val(frequency_title);
             $('#update_description_2').val(frequency_description);
             $('#update_price_inc_gst').val(price_of_subscription);
             $('#update_frequency').val(payment_frequency).trigger('change');
             $('#update_subscription_url').val(subscription_url);
             $('#update_subscription_form').val(subscription_form_url);
-            $('#external-link').attr('href',subscription_form_url);
+            $('#external-link').attr('href', subscription_form_url);
 
             $('#id').val(id);
 
             if (photo) {
                 $('#update-photo-preview-subscription').attr('src', photo); // Set the image source
-                $('#update-file-preview-container-subscription').removeClass('d-none'); // Show the preview container
+                $('#update-file-preview-container-subscription').removeClass(
+                'd-none'); // Show the preview container
                 $('#update-photo-label-subscription').addClass('d-none'); // Show the preview container
                 $('#update_photo_url').val(photo);
             }
 
-            // Ensure subscription_package is treated as a string
+
             var subscriptionPackagesArray = String(subscription_package).split(','); // Split the string
-            // Set the value of the modal input
+
             $('#update_subscription_package_subscription_modal').val(subscriptionPackagesArray).trigger('change');
+
+
+
+            var subscriptionServicesArray = String(subscription_services).split(','); // Split the string
+
+            $('#update_subscription_service_subscription_modal').val(subscriptionServicesArray).trigger('change');
 
         });
 
@@ -1158,6 +1341,10 @@
             var id = $(this).data('id');
             var title = $(this).data('title');
             var description = $(this).data('description');
+            var promo_price = $(this).data('promo_price');
+            var promo_period = $(this).data('promo_period');
+            var promo_sub_title = $(this).data('promo_sub_title');
+            var promo_sub_title_price = $(this).data('promo_sub_title_price');
             var photo = $(this).data('photo');
             var payment_frequency = $(this).data('payment_frequency');
             var price_of_subscription = $(this).data('price_of_subscription');
@@ -1166,10 +1353,15 @@
             var frequency_title = $(this).data('frequency_title');
             var frequency_description = $(this).data('frequency_description');
             var subscription_package = $(this).data('subscription_package');
+            var subscription_services = $(this).data('subscription_services');
 
             // Update form fields
             $('#view_title').val(title);
             $('#view_description').val(description);
+            $('#view_promo_price').val(promo_price);
+            $('#view_promo_period').val(promo_period);
+            $('#view_promo_sub_title').val(promo_sub_title);
+            $('#view_promo_sub_title_price').val(promo_sub_title_price);
             $('#view_frequency_title').val(frequency_title);
             $('#view_frequency_description').val(frequency_description);
             $('#view_price_inc_gst').val(price_of_subscription);
@@ -1186,11 +1378,19 @@
                 $('#view_photo_url').val(photo);
             }
 
-            var subscriptionPackagesArray = subscription_package.split(','); // Split the comma-separated string into an array
+            var subscriptionPackagesArray = subscription_package.split(
+            ','); // Split the comma-separated string into an array
             $('#view_subscription_package_subscription_modal').val(subscriptionPackagesArray).trigger('change');
 
+
+            var subscriptionServicesArray = String(subscription_services).split(','); // Split the string
+
+             $('#view_subscription_service_subscription_modal').val(subscriptionServicesArray).trigger('change');
+
+
             // Disable all fields for view-only mode
-            $('#view_title, #view_description, #view_frequency_title, #view_frequency_description, #view_price_inc_gst, #view_frequency, #view_subscription_url, #view_subscription_form, #view_subscription_package_subscription_modal').prop('disabled', true);
+            $('#view_title, #view_description, #view_frequency_title, #view_frequency_description, #view_price_inc_gst, #view_frequency, #view_subscription_url, #view_subscription_form, #view_subscription_package_subscription_modal,view_subscription_service_subscription_modal')
+                .prop('disabled', true);
         });
 
         $(document).ready(function() {
@@ -1212,6 +1412,10 @@
                     'subscription_package[]': {
                         required: true,
                         minlength: 1 // At least one package must be selected
+                    },
+                    'subscription_services[]': {
+                        required: false,
+                        minlength: 0
                     },
                     frequency_title: {
                         required: true,
@@ -1328,6 +1532,7 @@
                         required: true,
                         minlength: 10
                     },
+                   
                     'subscription_package[]': {
                         required: true,
                         minlength: 1 // At least one package must be selected
@@ -1367,6 +1572,7 @@
                         required: "Please enter a description",
                         minlength: "Description must be at least 10 characters long"
                     },
+                   
                     'subscription_package[]': {
                         required: "Please select at least one subscription package"
                     },
@@ -1473,77 +1679,95 @@
             }
         });
 
-$(document).ready(function() {
-    let rowsPerPage = 10; // Rows to display per page
-    let currentPage = 1;
-    let totalRows = $("#subscriptionTable tbody tr").length; // Count total rows
-    let totalPages = Math.ceil(totalRows / rowsPerPage);
+        $(document).ready(function() {
+            let rowsPerPage = 10; // Rows to display per page
+            let currentPage = 1;
+            let totalRows = $("#subscriptionTable tbody tr").length; // Count total rows
+            let totalPages = Math.ceil(totalRows / rowsPerPage);
 
-    function renderTable(page) {
-        let start = (page - 1) * rowsPerPage;
-        let end = start + rowsPerPage;
+            function renderTable(page) {
+                let start = (page - 1) * rowsPerPage;
+                let end = start + rowsPerPage;
 
-        // Hide all rows initially
-        $("#subscriptionTable tbody tr").hide();
+                // Hide all rows initially
+                $("#subscriptionTable tbody tr").hide();
 
-        // Show rows for the current page
-        $("#subscriptionTable tbody tr").slice(start, end).show();
-    }
+                // Show rows for the current page
+                $("#subscriptionTable tbody tr").slice(start, end).show();
+            }
 
-    function renderPagination() {
-        $('#pagination').empty();
+            function renderPagination() {
+                $('#pagination').empty();
 
-        // Add Previous button (disabled if on the first page)
-        if (currentPage === 1) {
-            $('#pagination').append(`<span class="page prev disabled"><i class="fa-solid fa-chevron-left"></i></span> `);
-        } else {
-            $('#pagination').append(`<span class="page prev" data-page="${currentPage - 1}"><i class="fa-solid fa-chevron-left"></i></span> `);
-        }
+                // Add Previous button (disabled if on the first page)
+                if (currentPage === 1) {
+                    $('#pagination').append(
+                        `<span class="page prev disabled"><i class="fa-solid fa-chevron-left"></i></span> `);
+                } else {
+                    $('#pagination').append(
+                        `<span class="page prev" data-page="${currentPage - 1}"><i class="fa-solid fa-chevron-left"></i></span> `
+                        );
+                }
 
-        // Add page numbers
-        for (let i = 1; i <= totalPages; i++) {
-            let activeClass = (i === currentPage) ? 'active' : '';
-            $('#pagination').append(`<span class="page ${activeClass}" data-page="${i}">${i}</span> `);
-        }
+                // Add page numbers
+                for (let i = 1; i <= totalPages; i++) {
+                    let activeClass = (i === currentPage) ? 'active' : '';
+                    $('#pagination').append(`<span class="page ${activeClass}" data-page="${i}">${i}</span> `);
+                }
 
-        // Add Next button (disabled if on the last page)
-        if (currentPage === totalPages) {
-            $('#pagination').append(`<span class="page next disabled"><i class="fa-solid fa-chevron-right"></i></span> `);
-        } else {
-            $('#pagination').append(`<span class="page next" data-page="${currentPage + 1}"><i class="fa-solid fa-chevron-right"></i></span> `);
-        }
-    }
+                // Add Next button (disabled if on the last page)
+                if (currentPage === totalPages) {
+                    $('#pagination').append(
+                        `<span class="page next disabled"><i class="fa-solid fa-chevron-right"></i></span> `);
+                } else {
+                    $('#pagination').append(
+                        `<span class="page next" data-page="${currentPage + 1}"><i class="fa-solid fa-chevron-right"></i></span> `
+                        );
+                }
+            }
 
-    // Initial table and pagination render
-    renderTable(currentPage);
-    renderPagination();
+            // Initial table and pagination render
+            renderTable(currentPage);
+            renderPagination();
 
-    // Handle page click
-    $(document).on('click', '.page:not(.disabled)', function() {
-        currentPage = $(this).data('page');
-        renderTable(currentPage);
-        renderPagination();
-    });
-});
-
-
-$('.preview-subs-modal').click(function() {
-    // Find the closest parent form of the clicked button
-    var title = $(this).closest('form').find('#title').val();
-    var description = $(this).closest('form').find('#description').val();
-    var src = $(this).closest('form').find('#photo-preview-subscription').attr('src');
-
-    var subscriptionPackageSelect = $(this).closest('form').find('#subscription_package_subscription_modal');
-    var selectedOptions = subscriptionPackageSelect.find('option:selected');
-    var selectedTexts = [];
-    selectedOptions.each(function() {
-        selectedTexts.push($(this).text());
-    });
-    var selectedPackageText = selectedTexts.join(', ');
+            // Handle page click
+            $(document).on('click', '.page:not(.disabled)', function() {
+                currentPage = $(this).data('page');
+                renderTable(currentPage);
+                renderPagination();
+            });
+        });
 
 
+        $('.preview-subs-modal').click(function() {
+            // Find the closest parent form of the clicked button
+            var title = $(this).closest('form').find('#title').val();
+            var description = $(this).closest('form').find('#description').val();
+            var src = $(this).closest('form').find('#photo-preview-subscription').attr('src');
+
+            var subscriptionPackageSelect = $(this).closest('form').find(
+            '#subscription_package_subscription_modal');
+            var selectedOptions = subscriptionPackageSelect.find('option:selected');
+            var selectedTexts = [];
+            selectedOptions.each(function() {
+                selectedTexts.push($(this).text());
+            });
+            var selectedPackageText = selectedTexts.join(', ');
+
+            // Populate the fields in the second form
+            $('#title_3').val(title); // Set title in the second form
+            $('#description_3').val(description); // Set description in the second form
+            if (src != '') {
+                $('#photo-preview-subscription-form').attr('src', src); // Set photo preview in the second form
+                $('#file-preview-container-subscription-form').removeClass('d-none');
+                $('#photo-label-subscription-form').addClass('d-none');
+            } else {
+                $('#file-preview-container-subscription-form').addClass('d-none');
+                $('#photo-label-subscription-form').removeClass('d-none');
+            }
+            $('#subscription_package').val(selectedPackageText);
 
 
-});
+        });
     </script>
 @endsection

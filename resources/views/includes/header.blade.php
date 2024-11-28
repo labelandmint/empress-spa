@@ -2,12 +2,12 @@
 <html lang="en" data-theme="light">
 
 <head>
-    <title>Transactions</title>
+    <title>{{$title ?? 'Transactions'}}</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
+    <link rel="icon" href="{{ url('public/logo.png') }}" type="image/x-icon">
     <!-- Bootstrap CSS v5.2.0 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
@@ -235,7 +235,8 @@
                 </div>
                 <div class="es-px-4">
                     <a href="{{ url('services')}}" class="es-menu-btn d-flex align-items-center
-                    @if (request()->is('services*')) active @endif ">
+                    @if (request()->is('services*')) active @endif
+                     @if (Auth::check() && Auth::user()->status === 3) disabled @endif">
                         <img src="{{ request()->is('services')
                         ? url('public/images/services-icon-white.png')
                         : url('public/images/services-icon-dark.png') }}" alt="" class="es-mr-3" />
@@ -244,7 +245,8 @@
                 </div>
                 <div class="es-px-4">
                     <a href="{{ url('bookings')}}" class="es-menu-btn d-flex align-items-center
-                    @if (request()->is('bookings*')) active @endif ">
+                    @if (request()->is('bookings*')) active @endif
+                    @if (Auth::check() && Auth::user()->status === 3) disabled @endif ">
                         <img src="{{ request()->is('bookings')
                         ? url('public/images/upcoming-bookings-icon-white.png')
                         : url('public/images/upcoming-bookings-icon-dark.png') }}" alt="" class="es-mr-3" />
@@ -372,7 +374,8 @@
                                 <div class="es-px-4">
                                     <a href="{{ url('services') }}"
                                         class="es-menu-btn d-flex align-items-center
-                                         @if (request()->is('services')) active @endif ">
+                                               @if (request()->is('services')) active @endif
+                                               @if (Auth::check() && Auth::user()->status === 3) disabled @endif">
                                         <img src="{{ request()->is('services')
                                             ? url('public/images/services-icon-white.png')
                                             : url('public/images/services-icon-dark.png') }}"
@@ -381,10 +384,12 @@
                                     </a>
                                 </div>
 
+
                                 <div class="es-px-4">
                                     <a href="{{ url('bookings') }}"
                                         class="es-menu-btn d-flex align-items-center
-                                         @if (request()->is('bookings')) active @endif ">
+                                         @if (request()->is('bookings')) active @endif
+                                         @if (Auth::check() && Auth::user()->status === 3) disabled @endif">
                                         <img src="{{ request()->is('bookings')
                                             ? url('public/images/upcoming-bookings-icon-white.png')
                                             : url('public/images/upcoming-bookings-icon-dark.png') }}"
@@ -417,8 +422,8 @@
                                     <div class="es-font-mulish-medium">
                                         <div>Have any questions?</div>
                                         <a href="#" class="es-font-mulish es-text-gray-900">
-                                            <div>1800 868 888</div>
-                                            <div>info@empressspa.au</div>
+                                            <div>{{$setting->business_phone_number}}</div>
+                                            <div>{{$setting->business_email_address}}</div>
                                         </a>
                                     </div>
                                 </div>

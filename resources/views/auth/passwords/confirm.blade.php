@@ -156,48 +156,69 @@
 			            </div>
 			        </div>
 			        <div class="col-lg-6 hero-text">
-			            <div class="hero-text-bg"></div>
-			            <div class="w-100 h-100">
-			                <div class="hero-text-content">
-			                    <div class="es-mb-8">
-			                        <img src="{{ url('public/images/logo-white.svg') }}" alt="" />
-			                    </div>
-			                    <div class="es-mb-8">
-			                        <div class="es-header-2 es-font-600 text-white es-font-inter es-mb-5">
-			                            Limited Time Offer: Exclusive<br />Empress Spa Package
-			                        </div>
-			                        <div class="es-text-xl text-white">
-			                            Only a Few Seats Left! Reserve Your Spot Today and<br />Indulge
-			                            in Pure Relaxation!
-			                        </div>
-			                    </div>
-			                    <div class="d-flex es-mb-8">
-			                        <div class="es-px-5 es-py-2 bg-white d-flex align-items-center gap-2 rounded-2">
-			                            <span class="es-text-xl es-font-600">2000</span>
-			                            <span>Seats Remaining</span>
-			                        </div>
-			                    </div>
-			                    <div class="text-white d-flex es-gap-7 text-center">
-			                        <div>
-			                            <div class="es-text-15xl es-font-500 es-font-inter">02</div>
-			                            <div class="es-font-500">MONTHS</div>
-			                        </div>
-			                        <div>
-			                            <div class="es-text-15xl es-font-500 es-font-inter">14</div>
-			                            <div class="es-font-500">DAYS</div>
-			                        </div>
-			                        <div>
-			                            <div class="es-text-15xl es-font-500 es-font-inter">20</div>
-			                            <div class="es-font-500">HOURS</div>
-			                        </div>
-			                        <div>
-			                            <div class="es-text-15xl es-font-500 es-font-inter odometer">44</div>
-			                            <div class="es-font-500">MINUTES</div>
-			                        </div>
-			                    </div>
-			                </div>
-			            </div>
-			        </div>
+						<div class="hero-text-bg"></div>
+						<div class="w-100 h-100">
+							<div class="hero-text-content">
+								<div class="es-mb-8">
+									<img src="{{ $settings->logo ?? url('public/images/logo-white.svg')}}" alt="" class="w-100" />
+								</div>
+								<div class="es-mb-8">
+									<div
+										class="es-header-2 es-font-600 text-white es-font-inter es-mb-5"
+									>
+									@if($settings && $settings->title)
+										{{$settings->title}}
+									@else
+										Limited Time Offer: Exclusive<br />Empress Spa Package
+									@endif
+									</div>
+									<div class="es-text-xl text-white">
+									@if($settings && $settings->subtitle)
+									{{$settings->subtitle}}
+									@else
+									Only a Few Seats Left! Reserve Your Spot Today and<br />Indulge
+											in Pure Relaxation!
+									@endif
+									</div>
+								</div>
+								<div class="d-flex es-mb-8">
+									<div
+										class="es-px-5 es-py-2 bg-white d-flex align-items-center gap-2 rounded-2"
+									>
+										<!-- <span class="es-text-xl es-font-600">@if($settings && $settings->number){{$settings->number}} @else 2000 @endif</span> -->
+
+										<span class="es-text-xl es-font-600">
+											{{ $remainingSeats }}
+										</span>
+
+										<span>Seats Remaining</span>
+									</div>
+								</div>
+								<div class="text-white d-flex es-gap-7 text-center">
+	                                <div>
+	                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="months">00</div>
+	                                    <div class="es-font-500">MONTHS</div>
+	                                </div>
+	                                <div>
+	                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="days">00</div>
+	                                    <div class="es-font-500">DAYS</div>
+	                                </div>
+	                                <div>
+	                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="hours">00</div>
+	                                    <div class="es-font-500">HOURS</div>
+	                                </div>
+	                                <div>
+	                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="minutes">00</div>
+	                                    <div class="es-font-500">MINUTES</div>
+	                                </div>
+	                                <div>
+	                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="seconds">00</div>
+	                                    <div class="es-font-500">SECONDS</div>
+	                                </div>
+	                            </div>
+							</div>
+						</div>
+					</div>
 			    </div>
 			</form>
 
@@ -234,10 +255,27 @@
 			});
 
 			// Reference: https://github.com/livebloggerofficial/Counter-Animation
+			// Input format: MM : DD : HH : MM : SS
+            const countdownInput = "{{$settings->countdown_timer ?? '00 : 00 : 00 : 00 : 00'}}"; // Example input
+
+            // Parse the countdown timer into its components
+            const [mm, dd, hh, min, ss] = countdownInput.split(' : ').map(Number);
+
+            // Get the current date and time
+            const now = new Date();
+
+            // Create the target date
+            const targetDate = new Date(now.getFullYear(), mm - 1, dd, hh, min, ss);
+
+            // If the target date is in the past, set it for next year
+            if (targetDate < now) {
+                targetDate.setFullYear(now.getFullYear() + 1);
+            }
+
             const createOdometer = (el, value) => {
                 const odometer = new Odometer({
                     el: el,
-                    value: 44,
+                    value: value,
                 });
 
                 let hasRun = false;
@@ -258,13 +296,49 @@
                 };
 
                 const observer = new IntersectionObserver(callback, options);
-                observer.observe(el);
-            };
+                    observer.observe(el);
+                };
 
-            setTimeout(() => {
-                const subscribersOdometer = document.querySelector(".odometer");
-                createOdometer(subscribersOdometer, 45);
-            }, 1000);
+                function updateTimer() {
+                    const currentTime = new Date();
+                    const elapsedTime = targetDate - currentTime; // Calculate how much time is left
+
+                    if (elapsedTime < 0) {
+                        // If the target time has passed, set all values to zero
+                        createOdometer(document.getElementById('months'), 0);
+                        createOdometer(document.getElementById('days'), 0);
+                        createOdometer(document.getElementById('hours'), 0);
+                        createOdometer(document.getElementById('minutes'), 0);
+                        createOdometer(document.getElementById('seconds'), 0);
+                        return; // Exit the function if the target has been reached
+                    }
+
+                    // Calculate remaining time components
+                    const totalSeconds = Math.floor(elapsedTime / 1000);
+
+                    const seconds = totalSeconds % 60; // Remaining seconds
+                    const totalMinutes = Math.floor(totalSeconds / 60);
+                    const minutes = totalMinutes % 60; // Remaining minutes
+                    const totalHours = Math.floor(totalMinutes / 60);
+                    const hours = totalHours % 24; // Remaining hours
+                    const totalDays = Math.floor(totalHours / 24);
+
+                    // Calculate remaining months and days (simple approximation)
+                    const months = Math.floor(totalDays / 30); // Rough approximation for months
+                    const days = totalDays % 30; // Remaining days
+
+                    // Update the HTML with the calculated values
+                    createOdometer(document.getElementById('months'), months);
+                    createOdometer(document.getElementById('days'), days);
+                    createOdometer(document.getElementById('hours'), hours);
+                    createOdometer(document.getElementById('minutes'), minutes);
+                    createOdometer(document.getElementById('seconds'), seconds);
+                }
+
+                // Update the timer every second
+                updateTimer(); // Initial call to display the timer immediately
+
+                setInterval(updateTimer, 1000);
 
 			document.addEventListener("DOMContentLoaded", function () {
 				function togglePasswordVisibility(
@@ -294,14 +368,8 @@
 					"{{url('public/images/eye-dark.png')}}",
 					"{{url('public/images/eye-off-dark.png')}}",
 				);
-
-				togglePasswordVisibility(
-					"confirm_password",
-					"toggle-confirm-password",
-					"{{url('public/images/eye-dark.png')}}",
-					"{{url('public/images/eye-off-dark.png')}}",
-				);
 			});
 		</script>
+		
 	</body>
 </html>

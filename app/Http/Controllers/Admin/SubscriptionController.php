@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\Setting;
 use App\Models\User;
 use App\Mail\Cancel;
+use App\Models\Service;
 
 class SubscriptionController extends Controller
 {
@@ -19,6 +20,7 @@ class SubscriptionController extends Controller
     public function index()
     {
         $products = Product::get();
+        $services = Service::get();
         $subscriptionPlans = SubscriptionPlan::get();
         $subs_id = SubscriptionPlan::max('id') + 1 ;
         $subscriptionCount = User::where('user_role',2)->count();
@@ -51,25 +53,30 @@ class SubscriptionController extends Controller
          // Attach products to each subscription plan (map product IDs to product objects)
         foreach ($subscriptionPlans as $plan) {
             $productIds = explode(',', $plan->subscription_package);
+            $serviceIds = explode(',', $plan->subscription_services);
             $plan->products = $products->only($productIds); // Attach related products to the plan
+            $plan->services = $services->only($serviceIds); // Attach related products to the plan
             $plan->days = $frequencyDays[$plan->payment_frequency] ?? 'Unknown';
         }
 
+        $title='Subscriptions';
 
-        return view('admin.subscriptions.index',compact('products','subscriptionPlans','subs_id','subscriptionCount','subscriptionValue','currentMonthSubscriptionValue','lastMonthSubscriptionValue'));
+        return view('admin.subscriptions.index',compact('title','services','products','subscriptionPlans','subs_id','subscriptionCount','subscriptionValue','currentMonthSubscriptionValue','lastMonthSubscriptionValue'));
     }
 
     public function store(Request $request)
     {
+        // dd($request);
         try {
             $data = $request->all();
-            
+
             if($request->hasFile('photo')){
                 $file = $request->file('photo');
                 $fileName = time() . '.' . $file->getClientOriginalExtension();
                 $data['photo']=$this->uploadImage($file,$fileName);
             }
             $data['subscription_package'] = implode(',',$request->subscription_package);
+            $data['subscription_services'] = implode(',',$request->subscription_services);
             // return $data;
             if ($request->id) {
                 $subscription = SubscriptionPlan::find($request->id);
@@ -101,7 +108,7 @@ class SubscriptionController extends Controller
         // return $request->all();
         // Retrieve the subscription based on the subscription ID
         $subscription = Subscription::find($request->subscription_id);
-        
+
         // Retrieve the user based on the user ID
         $user = User::find($request->id);
 
@@ -118,11 +125,11 @@ class SubscriptionController extends Controller
             'subscription_end' => $newEndDate,
             'status' => 3, // Paused status
         ]);
-        
+
         // Update the user's status to paused
         $user->status = 3;
         $user->save();
-        
+
 
         return redirect()->back()->with('success', 'Membership updated successfully.');
     }
@@ -138,8 +145,8 @@ class SubscriptionController extends Controller
             $user = User::find($subscription->user_id);
             $user->status = 1;
             $user->save();
-        }       
-        
+        }
+
         return redirect()->back()->with('success', 'Membership updated successfully.');
     }
 

@@ -19,6 +19,7 @@ class Setting extends Model
         'business_website_address',
         'business_phone_number',
         'business_email_address',
+        'terms_condition',
         'company_terms',
         'logo',
         'page_background_image',
@@ -43,5 +44,9 @@ class Setting extends Model
         'payment_failed_body',
         'successful_payment_subject',
         'successful_payment_body',
+        'square_application_id',
+        'square_access_token',
+        'square_location_id',
+        'ratio_update_time'
     ];
 }

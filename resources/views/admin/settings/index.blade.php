@@ -139,29 +139,10 @@
                             Payment Terms & Conditions
                         </div>
                         <div style="font-size: 13px">
-                            Participation in the Activity is VOLUNTARY, so by signing
-                            this Agreement I agree to assume all the risks associated
-                            with its employees or volunteers or that of third parties.
-                            I understand that there are certain dangers, hazards, and
-                            risks inherent in the Activity and that such dangers,
-                            hazards, and risks may involve risk of injury and loss,
-                            both to person and property. I understand that the risks
-                            could include, but are not limited to: (i) minor personal
-                            injuries such as scratches, bruises, and sprains, (ii)
-                            serious personal injuries such as fractures, broken bones,
-                            concussions, permanent disability, paralysis, or death, or
-                            (iii) property damage and/or loss resulting therefrom;
-                            (iv) colliding, hitting, running into, falling into or
-                            making physical contact with other individuals or physical
-                            objects; (v) potential exposure to communicable diseases;
-                            (vi) potential exposure to hazardous, harsh, or extreme
-                            weather or environmental conditions, should take place
-                            outdoors; (vii) all dangers inherent in being in a place
-                            used for athletic or exercise activities. There may be
-                            other risks not known or not reasonably foreseeable at
-                            this time.I understand that such risks cannot be
-                            eliminated without jeopardizing the es sential qualities
-                            of the Activity.
+                            <textarea id="terms_condition" name="terms_condition">
+                                {{ old('terms_condition', $settings->terms_condition ?? '') }}
+                            </textarea>
+
                         </div>
                     </div>
                     <div class="card-footer">
@@ -481,8 +462,10 @@
                             id="payment_gateway"
                             class="form-select es-select mt-2"
                         >
-                            <option value="0" {{  $settings && $settings->payment_gateway  == 0 ? 'selected' : '' }}>PayPal</option>
-                            <option value="1" {{ $settings && $settings->payment_gateway == 1 ? 'selected' : '' }}>Stripe</option>
+                            {{-- <option value="0" {{  $settings && $settings->payment_gateway  == 0 ? 'selected' : '' }}>PayPal</option>
+                            <option value="1" {{ $settings && $settings->payment_gateway == 1 ? 'selected' : '' }}>Stripe</option> --}}
+                            <option value="2" {{ $settings && $settings->payment_gateway == 2 ? 'selected' : '' }}>Credit/Debit Cards (Square)</option>
+                            <option value="3" {{ $settings && $settings->payment_gateway == 3 ? 'selected' : '' }}>Afterpay (Square)</option>
                         </select>
                     </div>
                 </div>
@@ -550,6 +533,45 @@
                             class="form-control es-input mt-2"
                             placeholder="Webhook Secret"
                             value="{{ old('stripe_webhook_secret', $settings->stripe_webhook_secret ?? '') }}"
+                        />
+                        <div class="es-input-error-message"></div>
+                    </div>
+                </div>
+
+                <div id="squareForm">
+                    <div class="d-flex flex-column es-mt-6">
+                        <label for="application_id">Live/Test Application ID</label>
+                        <input
+                            id="application_id"
+                            name="square_application_id"
+                            type="text"
+                            class="form-control es-input mt-2"
+                            placeholder="Live/Test Application ID"
+                            value="{{ old('square_application_id', $settings->square_application_id ?? '') }}"
+                        />
+                        <div class="es-input-error-message"></div>
+                    </div>
+                    <div class="d-flex flex-column es-mt-6">
+                        <label for="access_token">Live/Test Access Token</label>
+                        <input
+                            id="access_token"
+                            name="square_access_token"
+                            type="password"
+                            class="form-control es-input mt-2"
+                            placeholder="Live/Test Access Token"
+                            value="{{ old('square_access_token', $settings->square_access_token ?? '') }}"
+                        />
+                        <div class="es-input-error-message"></div>
+                    </div>
+                    <div class="d-flex flex-column es-mt-6">
+                        <label for="location_id">Location ID</label>
+                        <input
+                            id="location_id"
+                            name="square_location_id"
+                            type="text"
+                            class="form-control es-input mt-2"
+                            placeholder="Location ID"
+                            value="{{ old('square_location_id', $settings->square_location_id ?? '') }}"
                         />
                         <div class="es-input-error-message"></div>
                     </div>
@@ -1249,20 +1271,35 @@ aria-hidden="true"
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.js"></script>
 <script>
+
+$('#terms_condition').summernote();
+
 document.addEventListener("DOMContentLoaded", function () {
 const paymentGatewaySelect = document.getElementById("payment_gateway");
 const paypalForm = document.getElementById("paypalForm");
 const stripeForm = document.getElementById("stripeForm");
+const squareForm = document.getElementById("squareForm");
 
 function updateFormVisibility() {
     if (paymentGatewaySelect.value === "0") {
         paypalForm.classList.remove("d-none");
         stripeForm.classList.add("d-none");
+        squareForm.classList.add("d-none");
     } else if (paymentGatewaySelect.value === "1") {
         paypalForm.classList.add("d-none");
         stripeForm.classList.remove("d-none");
+        squareForm.classList.add("d-none");
+    } else if (paymentGatewaySelect.value === "2") {
+        paypalForm.classList.add("d-none");
+        stripeForm.classList.add("d-none");
+        squareForm.classList.remove("d-none");
+    } else if (paymentGatewaySelect.value === "3") {
+        paypalForm.classList.add("d-none");
+        stripeForm.classList.add("d-none");
+        squareForm.classList.remove("d-none");
     }
 }
 

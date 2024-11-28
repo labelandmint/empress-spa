@@ -12,7 +12,8 @@ class ProductController extends Controller
     public function index(){
         $products = Product::where('status',1)->get();
         // return $products;
-        return view('admin.products.index',compact('products'));
+        $title = 'Products';
+        return view('admin.products.index',compact('title','products'));
     }
 
     public function store(Request $request)

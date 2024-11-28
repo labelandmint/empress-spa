@@ -29,15 +29,15 @@
                                     {{$booking->description}}
                                 </div>
                             </div>
-                        
+
                             <div class="es-text-gray-900 es-font-500 d-flex flex-column flex-md-row align-items-end align-items-md-start">
                                 <div class="d-flex">
                                     <div class="es-mr-2">
                                         <img src="{{url('public/images/clock.png')}}" alt="">
                                     </div>
                                     <div class="es-leading-6">
-                                        {{ \Carbon\Carbon::parse($booking->start_time)->format('g:i A') }} - 
-                                        {{ \Carbon\Carbon::parse($booking->end_time)->format('g:i A') }}
+                                        {{ \Carbon\Carbon::parse($booking->booking_start_time)->format('g:i A') }} -
+                                        {{ \Carbon\Carbon::parse($booking->booking_end_time)->format('g:i A') }}
                                     </div>
                                 </div>
                                 <div class="es-ml-5">
@@ -125,7 +125,7 @@
         </div>
     </div>
 
-<script>
+<!-- <script>
 
     document.getElementById("current-month").innerHTML = moment().format('MMMM YYYY')
 
@@ -150,5 +150,29 @@
         var booking_id = $(this).data('id');
         $('#booking_id').val(booking_id);
     });
+</script> -->
+
+
+<script>
+   document.getElementById("current-month").innerHTML = moment().format('MMMM YYYY');
+
+flatpickr(".flatpickr", {
+    inline: true,
+    minDate: "today",
+    onDayCreate: function (dObj, dStr, fp, dayElem) {
+        let date = moment(dayElem.dateObj).format('YYYY-MM-DD');
+        let current_month_dates = @json($bookingDates); 
+        if (current_month_dates.includes(date)) {
+            dayElem.classList.add('booked');
+        }
+    }
+});
+
+$('.delete-booking').click(function () {
+    var booking_id = $(this).data('id');
+    $('#booking_id').val(booking_id);
+});
+
 </script>
+
 @endsection

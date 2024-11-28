@@ -139,7 +139,7 @@
                         </div>
                         <div class="child2">
                           <span style="font-weight: bold">Phone Number</span><br />
-                          <span>1800 868 888</span>
+                          <span>{{$setting->business_phone_number}}</span>
                         </div>
                       </div>
                     </td>
@@ -150,7 +150,7 @@
                         </div>
                         <div class="child2">
                           <span style="font-weight: bold">Website</span><br />
-                          <span>www.empress.spa</span>
+                          <span>{{$setting->business_website_address}}</span>
                         </div>
                       </div>
                     </td>
@@ -175,22 +175,21 @@
                         </div>
                         <div class="child2">
                           <span style="font-weight: bold">Email</span><br />
-                          <span>booking@empressspa.com.au</span>
+                          <span>{{$setting->business_email_address}}</span>
                         </div>
                       </div>
                     </td>
                     <td width="30%" align="left" valign="top">
                       <div class="parent">
                         <div class="child1">
-                          <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/address.png'))) }}" alt="address" />
+                          <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/address.png'))) }}" alt="address" style="margin-bottom:23px;"/>
                         </div>
                         <div class="child2">
-                          <span style="font-weight: bold">Address</span><br />
-                          <span>
-                            226-228 Cooper St.<br />
-                            Epping VIC 3076
-                          </span>
-                        </div>
+                            <span style="font-weight: bold">Address</span><br />
+                            <span>{{$setting->business_address1}}</span><br />
+                            <span>{{$setting->business_address2}}{{$setting->city}}</span><br />
+                            <span>{{$setting->state}}{{$setting->postcode}}</span>
+                          </div>
                       </div>
                     </td>
                   </tr>
@@ -198,6 +197,22 @@
               </table>
             </td>
           </tr>
+          <div class="mid" style="position: absolute; top: 12%; font-size: 13px; color: white; width: 25%;">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="text-align: left;">Invoice No</td>
+                    <td style="text-align: left;">: 1</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">Invoice Date</td>
+                    <td style="text-align: left;">: {{ $transaction->created_at->format('d-m-Y') }}</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">Payment Date</td>
+                    <td style="text-align: left;">: {{ $transaction->created_at->format('d-m-Y') }}</td>
+                </tr>
+            </table>
+        </div>
         <tr>
           <td align="center" valign="top" height="10">&nbsp;</td>
         </tr>
@@ -214,7 +229,7 @@
                       font-weight: bold;
                       letter-spacing: 3px;
                       font-size: 25px;
-                      padding: 3px 14px;
+                      padding: 6px 18px;
                     "
                     >TAX INVOICE</span
                   >
@@ -242,10 +257,8 @@
       style="background-color: #232323;
       border-radius: 6px;
       padding: 20px 0;
-      background-image: url('/Assets/square-logo.png');
-      background-position: center;
-      background-size:contain;
-      background-repeat: no-repeat; /* Prevents the image from repeating */">
+     ">
+      <div><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/squarelogo.png'))) }}" alt="" style="width:370px;position:absolute;top:30%;z-index:9999;left:26%;"></div>
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tbody>
           <tr>
@@ -354,7 +367,7 @@
                       <div class="tab4" style="padding-left:20px;"><span></span></div>
                     </td>
                     <td width="32%" align="left" valign="center">
-                      <div class="tab4"><span>Sub Total</span></div>
+                      <div class="tab4"><span>Sub Total </span></div>
                     </td>
                     <td width="15%" align="center" valign="center">
                       <div class="tab4"><span>${{number_format($transaction->amount,2)}}</span></div>
@@ -402,7 +415,10 @@
                       <div class="tab4" style="padding-bottom:10px;"><span>GST (10%)</span></div>
                     </td>
                     <td width="15%" align="center" valign="center">
-                      <div class="tab4" style="padding-bottom:10px;"><span>N/A</span></div>
+                      <div class="tab4" style="padding-bottom:10px;">
+                        <span>${{ number_format($transaction->amount * 0.10, 2) }}</span>
+                        <!-- <span>N/A</span> -->
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -434,7 +450,10 @@
                       color: black;
                       background-color: #fad479;
                       font-weight: bold;
-                      padding: 3px 14px;border-top-left-radius:0px;border-bottom-left-radius:0px;"><span style="font-size:22px;">${{number_format($transaction->amount,2)}}</span></div>
+                      padding: 3px 14px;border-top-left-radius:0px;border-bottom-left-radius:0px;">
+                      <span style="font-size:22px;">${{ number_format($transaction->amount * 1.10, 2) }}</span>
+                      <!-- <span style="font-size:22px;">${{number_format($transaction->amount,2)}}</span> -->
+                    </div>
                     </td>
                   </tr>
                 </tbody>

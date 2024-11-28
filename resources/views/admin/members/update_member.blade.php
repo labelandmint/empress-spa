@@ -76,6 +76,12 @@
                                 placeholder="Phone Number" name="phone_no" value="{{$user->phone_no}}"/>
                             <div class="es-input-error-message"></div>
                         </div>
+                        <div class="col-xl-4 es-mt-6">
+                            <label for="phone_number"> Tag ID </label>
+                            <input id="tag_id" type="text" class="form-control es-input mt-2"
+                                placeholder="Tag ID" name="tag_id" value="{{$user->tag_id}}"/>
+                            <div class="es-input-error-message"></div>
+                        </div>
                         <div class="col-xl-4 es-mt-6 d-flex align-items-end">
                             <div class="d-none d-md-block" style="padding-top: 29.33px"></div>
                             <button type="submit" class="es-btn es-w-full es-h-13">

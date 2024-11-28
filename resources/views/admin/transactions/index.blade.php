@@ -58,7 +58,7 @@
                     </div>
                     <div class="es-text-sm es-font-500">Total Last Month</div>
                 </div>
-                <div class="es-text-5xl es-font-600">${{$totalLastMonth}}</div>
+                <div class="es-text-5xl es-font-600">${{number_format($totalLastMonth)}}</div>
             </div>
         </div>
     </div>
@@ -159,7 +159,7 @@
                             @endif
                         </tbody>
                     </table>
-                    <p id="noRecords" class="text-center mt-3">No records found</p>
+                    {{-- <p id="noRecords" class="text-center mt-3">No records found</p> --}}
                 </div>
 
                 <div id="pagination" class="d-flex justify-content-end pt-3 me-3"></div>

@@ -1,3 +1,17 @@
+@php
+    $settings = DB::table('settings')->first();
+    $fullUrl = $settings->business_website_address;
+
+    // Check if the URL starts with http or https, if not add https://
+    if (!preg_match('/^https?:\/\//', $fullUrl)) {
+        $fullUrl = 'https://' . $fullUrl;
+    }
+
+    // Parse the URL to get just the host
+    $parsedUrl = parse_url($fullUrl);
+    $domain = isset($parsedUrl['host']) ? $parsedUrl['host'] : $fullUrl; // Fallback to full URL if parsing fails
+
+@endphp
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 	<head>
@@ -9,7 +23,7 @@
 			name="viewport"
 			content="width=device-width, initial-scale=1, shrink-to-fit=no"
 		/>
-
+        <link rel="icon" href="{{ url('public/logo.png') }}" type="image/x-icon">
 		<!-- Bootstrap CSS v5.2.0 -->
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
@@ -72,7 +86,7 @@
 						</div>
 						<div>
 							<a
-								href="#"
+								href="{{$fullUrl}}"
 								class="text-decoration-none es-text-gray-900 es-font-500"
 							>
 								<div class="d-flex align-items-center gap-2 gap-md-3">
@@ -85,7 +99,7 @@
 									<div>
 										<span class="d-none d-md-inline-block">Back to&nbsp;</span
 										><span class="text-decoration-underline"
-											>empressspa.com</span
+											>{{$domain}}</span
 										>
 									</div>
 								</div>
@@ -194,7 +208,12 @@
 									<div
 										class="es-px-5 es-py-2 bg-white d-flex align-items-center gap-2 rounded-2"
 									>
-										<span class="es-text-xl es-font-600">@if($settings && $settings->number){{$settings->number}} @else 2000 @endif</span>
+										<!-- <span class="es-text-xl es-font-600">@if($settings && $settings->number){{$settings->number}} @else 2000 @endif</span> -->
+
+										<span class="es-text-xl es-font-600">
+											{{ $remainingSeats }}
+										</span>
+
 										<span>Seats Remaining</span>
 									</div>
 								</div>

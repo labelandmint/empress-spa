@@ -14,6 +14,7 @@ class booking extends Model
         'service_id',
         'slot_id',
         'booking_date',
+        'booking_start_time',
         'booking_end_time',
         'payment_date',
         'member_rating',

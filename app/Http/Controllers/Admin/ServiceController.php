@@ -16,14 +16,18 @@ class ServiceController extends Controller
     //
     public function index() {
         $services = Service::where('status',1)->get();
-        return view('admin.services.index' ,compact('services'));
+        $categories = Category::get();
+        $title='Services';
+
+        // return $categories;
+        return view('admin.services.index' ,compact('title','services','categories'));
     }
 
     public function store(Request $request)
     {
         // Prepare data for insertion
         $data = $request->all();
-        
+
         // Handle file upload
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
@@ -117,7 +121,7 @@ class ServiceController extends Controller
             $Service->status = 1;
             $Service->archived_at = null;
         }
-        
+
         $Service->save();
         return redirect()->back()->with('success','Services archived successfully.');
     }

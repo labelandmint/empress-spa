@@ -68,15 +68,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/transactions', [TransactionController::class, 'index']);
     Route::get('/transactions/download/invoice/{id}', [TransactionController::class, 'downloadInvoice']);
 
-    // Transaction Controller
-    Route::get('/services', [ServiceController::class, 'index']);
-    Route::get('/services/slots', [ServiceController::class, 'slots']);
 
-    // Booking Controller
-    Route::get('/bookings', [BookingController::class, 'index']);
-    Route::post('/booking/store', [BookingController::class, 'store']);
-    Route::post('/booking/delete', [BookingController::class, 'destroy']);
+    Route::middleware(['checkUserPaused'])->group(function () {
+        // Services Controller
+        Route::get('/services', [ServiceController::class, 'index']);
+        Route::get('/services/slots', [ServiceController::class, 'slots']);
 
+        // Booking Controller
+        Route::get('/bookings', [BookingController::class, 'index']);
+        Route::post('/booking/store', [BookingController::class, 'store']);
+        Route::post('/booking/delete', [BookingController::class, 'destroy']);
+    });
     // Subscription Controller
     Route::get('/subscription/cancel/{id}', [SubscriptionController::class, 'cancelSubscription']);
     Route::post('/subscription/pause', [SubscriptionController::class, 'pauseMembership']);

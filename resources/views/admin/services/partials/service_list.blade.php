@@ -4,7 +4,7 @@
         <td>
             <button type="button" data-bs-toggle="modal" data-bs-target="#photoModal" data-image="{{ $service->photo }}"
                 class="border-0 es-outline-none bg-transparent p-0 hover-darken-95">
-                <img src="{{ $service->photo ? $service->photo : url('public/images/subscriptions-img.png') }}"
+                <img src="{{ $service->photo ? $service->photo : url('/images/subscriptions-img.png') }}"
                     width="40" height="40" alt="Service Image" />
             </button>
         </td>

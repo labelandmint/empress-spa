@@ -98,7 +98,7 @@
                                                 </div>
                                                 <div class="d-flex align-items-center gap-2">
                                                     <img
-                                                        src="{{url('public/images/clock.png')}}"
+                                                        src="{{url('/images/clock.png')}}"
                                                         alt=""
                                                         width="16"
                                                         height="16"
@@ -176,7 +176,7 @@
                                 <div class="d-flex align-items-center es-mr-14 es-w-full es-w-md-96">
                                     <div>
                                         <div class="es-w-14 es-h-14 es-bg-gray-100 es-rounded-full d-flex justify-content-center align-items-center es-mr-5">
-                                            <img src="{{url('public/images/calendar.png')}}" width="18" height="18" alt="">
+                                            <img src="{{url('/images/calendar.png')}}" width="18" height="18" alt="">
                                         </div>
                                     </div>
                                     <div>
@@ -190,7 +190,7 @@
                                 </div>
                                 <div>
                                     <a href="#" onclick="nextPrev(-1)">
-                                        <img src="{{url('public/images/Edit Icon.png')}}" alt="">
+                                        <img src="{{url('/images/Edit Icon.png')}}" alt="">
                                     </a>
                                 </div>
                              </div>
@@ -198,7 +198,7 @@
                                 <div class="d-flex align-items-center es-mr-14 es-w-full es-w-md-96">
                                     <div>
                                         <div class="es-w-14 es-h-14 es-bg-gray-100 es-rounded-full d-flex justify-content-center align-items-center es-mr-5">
-                                            <img src="{{url('public/images/info.png')}}" width="18" height="18" alt="">
+                                            <img src="{{url('/images/info.png')}}" width="18" height="18" alt="">
                                         </div>
                                     </div>
                                     <div>
@@ -212,7 +212,7 @@
                                 </div>
                                 <div>
                                     <a href="#" onclick="nextPrev(-2)">
-                                        <img src="{{url('public/images/Edit Icon.png')}}" alt="">
+                                        <img src="{{url('/images/Edit Icon.png')}}" alt="">
                                     </a>
                                 </div>
                              </div>
@@ -252,11 +252,11 @@
                 class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                 data-bs-dismiss="modal"
             >
-                <img src="{{url('public/images/close.png')}}" alt="" />
+                <img src="{{url('/images/close.png')}}" alt="" />
             </button>
             <div class="card">
                 <div class="card-body d-flex align-items-center justify-content-center es-py-24 mt-3 flex-column es-gap-6">
-                    <img src="{{url('public/images/Success Icon.png')}}" alt="" class="" />
+                    <img src="{{url('/images/Success Icon.png')}}" alt="" class="" />
                     <div class="es-text-3xl es-font-mulish-bold">Success</div>
                     <div class="es-text-gray-500 text-center es-w-auto " >
                         Your appointment has been successfully booked! <br/> We look forward to seeing you.
@@ -292,11 +292,11 @@
                 class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                 data-bs-dismiss="modal"
             >
-                <img src="{{url('public/images/close.png')}}" alt="" />
+                <img src="{{url('/images/close.png')}}" alt="" />
             </button>
             <div class="card">
                 <div class="card-body d-flex align-items-center justify-content-center es-py-24 mt-3 flex-column es-gap-6">
-                    <img src="{{url('public/images/failed-icon.png')}}" alt="" class="" />
+                    <img src="{{url('/images/failed-icon.png')}}" alt="" class="" />
                     <div class="es-text-3xl es-font-mulish-bold">Failed</div>
                     <div class="es-text-gray-500 text-center es-w-auto es-w-md-72">
                          @if ($errors->has('error'))
@@ -320,7 +320,7 @@
 <!-- Moment.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment-with-locales.js" integrity="sha512-1cMYNLuYP3nNQUA42Gj7XvcJN5lAukNNw3fE1HtK3Fs1DA5JPrNQHv5g/FM+1yL5cT6x3sf2o1mKmTpVO0iGcA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="{{url('public/js/multi-step-form.js')}}"></script>
+<script src="{{url('/js/multi-step-form.js')}}"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 

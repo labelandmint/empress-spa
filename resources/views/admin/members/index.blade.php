@@ -30,7 +30,7 @@
                     <div class="d-flex align-items-center es-mb-4">
                         <div
                             class="es-rounded-full es-w-8 es-h-8 es-bg-blue-100 d-flex align-items-center justify-content-center es-mr-4">
-                            <img src="{{ url('public/images/users-blue.png') }}" alt="" />
+                            <img src="{{ url('/images/users-blue.png') }}" alt="" />
                         </div>
                         <div class="es-text-sm es-font-500">Total Members</div>
                     </div>
@@ -42,7 +42,7 @@
                     <div class="d-flex align-items-center es-mb-4">
                         <div
                             class="es-rounded-full es-w-8 es-h-8 es-bg-green-100 d-flex align-items-center justify-content-center es-mr-4">
-                            <img src="{{ url('public/images/check-circle-green.png') }}" alt="" />
+                            <img src="{{ url('/images/check-circle-green.png') }}" alt="" />
                         </div>
                         <div class="es-text-sm es-font-500">Total Active</div>
                     </div>
@@ -54,7 +54,7 @@
                     <div class="d-flex align-items-center es-mb-4">
                         <div
                             class="es-rounded-full es-w-8 es-h-8 es-bg-gray-100 d-flex align-items-center justify-content-center es-mr-4">
-                            <img src="{{ url('public/images/pause-gray.png') }}" alt="" />
+                            <img src="{{ url('/images/pause-gray.png') }}" alt="" />
                         </div>
                         <div class="es-text-sm es-font-500">Total Paused</div>
                     </div>
@@ -66,7 +66,7 @@
                     <div class="d-flex align-items-center es-mb-4">
                         <div
                             class="es-rounded-full es-w-8 es-h-8 es-bg-red-100 d-flex align-items-center justify-content-center es-mr-4">
-                            <img src="{{ url('public/images/times-red.png') }}" alt="" />
+                            <img src="{{ url('/images/times-red.png') }}" alt="" />
                         </div>
                         <div class="es-text-sm es-font-500">Total Cancelled</div>
                     </div>
@@ -82,7 +82,7 @@
                         <div class="position-relative w-100">
                             <div class="position-absolute es-left-4 es-translate-y-1/2 es-top-1/2">
                                 <div class="es-w-6 es-h-6 es-bg-gray-500 rounded-circle position-relative">
-                                    <img src="{{ url('public/images/magnifying-glass.png') }}" alt=""
+                                    <img src="{{ url('/images/magnifying-glass.png') }}" alt=""
                                         class="position-absolute es-bottom-0.5 es-right-0.5" />
                                 </div>
                             </div>
@@ -159,7 +159,7 @@
                                                     data-booking_date="{{$member->booking_date}}"
                                                     data-slot_id="{{$member->slot_id}}"
                                                     class="border-0 bg-transparent es-btn-icon rebook-button">
-                                                    <img src="{{ url('public/images/rebook-icon.png') }}" alt="" />
+                                                    <img src="{{ url('/images/rebook-icon.png') }}" alt="" />
                                                 </button>
                                                 @else
                                                 N/A
@@ -186,10 +186,10 @@
                                                     <div class="d-flex gap-1">
                                                         @for ($i = 1; $i <= 5; $i++)
                                                             @if ($i <= $member->rating)
-                                                                <img src="{{ url('public/images/star-solid.svg') }}"
+                                                                <img src="{{ url('/images/star-solid.svg') }}"
                                                                     alt="" width="14" height="14" />
                                                             @else
-                                                                <img src="{{ url('public/images/star-regular.svg') }}"
+                                                                <img src="{{ url('/images/star-regular.svg') }}"
                                                                     alt="" width="14" height="14" />
                                                             @endif
                                                         @endfor
@@ -257,7 +257,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('public/images/close.png') }}" alt="" />
+                    <img src="{{ url('/images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body p-4">
@@ -309,7 +309,7 @@
                                                 <div>
                                                     <div
                                                         class="es-w-14 es-h-14 es-bg-gray-100 es-rounded-full d-flex justify-content-center align-items-center es-mr-5">
-                                                        <img src="{{ url('public/images/calendar.png') }}" width="18"
+                                                        <img src="{{ url('/images/calendar.png') }}" width="18"
                                                             height="18" alt="" />
                                                     </div>
                                                 </div>
@@ -324,7 +324,7 @@
                                             </div>
                                             <div>
                                                 <a href="javascript:void(0)" onclick="nextPrev(-1)">
-                                                    <img src="{{ url('public/images/Edit Icon.png') }}" alt="" />
+                                                    <img src="{{ url('/images/Edit Icon.png') }}" alt="" />
                                                 </a>
                                             </div>
                                         </div>
@@ -333,7 +333,7 @@
                                                 <div>
                                                     <div
                                                         class="es-w-14 es-h-14 es-bg-gray-100 es-rounded-full d-flex justify-content-center align-items-center es-mr-5">
-                                                        <img src="{{ url('public/images/info.png') }}" width="18"
+                                                        <img src="{{ url('/images/info.png') }}" width="18"
                                                             height="18" alt="" />
                                                     </div>
                                                 </div>
@@ -349,7 +349,7 @@
                                             </div>
                                             <div>
                                                 <!-- <a href="#">
-                                                    <img src="{{ url('public/images/Edit Icon.png') }}" alt="" />
+                                                    <img src="{{ url('/images/Edit Icon.png') }}" alt="" />
                                                 </a> -->
                                             </div>
                                         </div>
@@ -392,12 +392,12 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('public/images/close.png') }}" alt="" />
+                    <img src="{{ url('/images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div
                         class="card-body d-flex align-items-center justify-content-center es-py-24 mt-3 flex-column es-gap-6">
-                        <img src="{{ url('public/images/Success Icon.png') }}" alt="" class="" />
+                        <img src="{{ url('/images/Success Icon.png') }}" alt="" class="" />
                         <div class="es-text-3xl es-font-mulish-bold">Success</div>
                         <div class="es-text-gray-500 text-center es-w-auto es-w-md-72">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -421,7 +421,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-5 es-right-5 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('public/images/close.png') }}" alt="" />
+                    <img src="{{ url('/images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body">
@@ -478,7 +478,7 @@
         integrity="sha512-1cMYNLuYP3nNQUA42Gj7XvcJN5lAukNNw3fE1HtK3Fs1DA5JPrNQHv5g/FM+1yL5cT6x3sf2o1mKmTpVO0iGcA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src="{{ url('public/js/multi-step-form.js') }}"></script>
+    <script src="{{ url('/js/multi-step-form.js') }}"></script>
 
     <script>
 

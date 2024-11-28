@@ -45,13 +45,13 @@
                                 <div class="d-flex es-gap-8">
                                     <label for="photo_input" class="btn border-0 es-text-sm es-font-600 p-0">
                                         Change
-                                        <img src="{{ url('public/images/refresh.png') }}" width="14" height="14"
+                                        <img src="{{ url('/images/refresh.png') }}" width="14" height="14"
                                             alt="" />
                                     </label>
                                     <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                         id="clear_photo_input">
                                         Delete
-                                        <img src="{{ url('public/images/trash.png') }}" width="14" height="14"
+                                        <img src="{{ url('/images/trash.png') }}" width="14" height="14"
                                             alt="" />
                                     </button>
                                 </div>
@@ -271,7 +271,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{url('public/images/close.png')}}" alt="" />
+                    <img src="{{url('/images/close.png')}}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body">

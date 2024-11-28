@@ -33,7 +33,7 @@
                             <div class="es-text-gray-900 es-font-500 d-flex flex-column flex-md-row align-items-end align-items-md-start">
                                 <div class="d-flex">
                                     <div class="es-mr-2">
-                                        <img src="{{url('public/images/clock.png')}}" alt="">
+                                        <img src="{{url('/images/clock.png')}}" alt="">
                                     </div>
                                     <div class="es-leading-6">
                                         {{ \Carbon\Carbon::parse($booking->booking_start_time)->format('g:i A') }} -
@@ -48,7 +48,7 @@
                                         class="outline-none border-0 delete-booking"
                                         data-id="{{$booking->id}}"
                                     >
-                                        <img src="{{url('public/images/trash.png')}}" alt="">
+                                        <img src="{{url('/images/trash.png')}}" alt="">
                                     </button>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                             class="d-flex es-py-8 flex-column align-items-center justify-content-center es-gap-6"
                         >
                             <div class="es-bg-brown-500 rounded-circle es-h-16 es-w-16 d-flex justify-content-center align-items-center">
-                                <img src="{{url('public/images/trash-white-large.png')}}" alt="" class="es-h-7" />
+                                <img src="{{url('/images/trash-white-large.png')}}" alt="" class="es-h-7" />
                             </div>
                             <div class="es-text-3xl es-font-mulish-bold">Cancel Booking</div>
                             <div class="es-text-gray-500 text-center col-8">

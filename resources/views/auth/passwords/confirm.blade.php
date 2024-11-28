@@ -41,7 +41,7 @@
 		/>
 
 		<!-- Stylesheet -->
-		<link rel="stylesheet" href="{{url('public/css/style.css')}}" />
+		<link rel="stylesheet" href="{{url('/css/style.css')}}" />
 	</head>
 	<body
 		class="es-bg-gray-50 es-text-gray-900 es-text-normal es-font-mulish onboarding-page position-relative"
@@ -52,7 +52,7 @@
 					<div class="d-flex align-items-center justify-content-between w-100">
 						<div class="d-flex align-items-center">
 							<a href="#" class="">
-								<img src="{{url('public/images/logo.svg')}}" alt="" class="es-h-8" />
+								<img src="{{url('/images/logo.svg')}}" alt="" class="es-h-8" />
 							</a>
 						</div>
 						<div>
@@ -62,7 +62,7 @@
 							>
 								<div class="d-flex align-items-center gap-2 gap-md-3">
 									<img
-										src="{{url('public/images/left-arrow.png')}}"
+										src="{{url('/images/left-arrow.png')}}"
 										width="16"
 										height="16"
 										alt=""
@@ -118,7 +118,7 @@
 			                        class="d-flex align-items-center bg-transparent border-0 es--ml-12 es-outline-none"
 			                    >
 			                        <img
-			                            src="{{ url('public/images/eye-dark.png') }}"
+			                            src="{{ url('/images/eye-dark.png') }}"
 			                            alt="Toggle Password Visibility"
 			                        />
 			                    </button>
@@ -140,7 +140,7 @@
 			                        class="d-flex align-items-center bg-transparent border-0 es--ml-12 es-outline-none"
 			                    >
 			                        <img
-			                            src="{{ url('public/images/eye-dark.png') }}"
+			                            src="{{ url('/images/eye-dark.png') }}"
 			                            alt="Toggle Password Visibility"
 			                        />
 			                    </button>
@@ -160,7 +160,7 @@
 						<div class="w-100 h-100">
 							<div class="hero-text-content">
 								<div class="es-mb-8">
-									<img src="{{ $settings->logo ?? url('public/images/logo-white.svg')}}" alt="" class="w-100" />
+									<img src="{{ $settings->logo ?? url('/images/logo-white.svg')}}" alt="" class="w-100" />
 								</div>
 								<div class="es-mb-8">
 									<div
@@ -365,8 +365,8 @@
 				togglePasswordVisibility(
 					"password",
 					"toggle-password",
-					"{{url('public/images/eye-dark.png')}}",
-					"{{url('public/images/eye-off-dark.png')}}",
+					"{{url('/images/eye-dark.png')}}",
+					"{{url('/images/eye-off-dark.png')}}",
 				);
 			});
 		</script>

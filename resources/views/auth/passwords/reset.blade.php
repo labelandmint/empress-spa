@@ -41,7 +41,7 @@
 		/>
 
 		<!-- Stylesheet -->
-		<link rel="stylesheet" href="{{url('public/css/style.css')}}" />
+		<link rel="stylesheet" href="{{url('/css/style.css')}}" />
 
 		@if($settings && $settings->page_background_image)
 	    <style>
@@ -67,7 +67,7 @@
 					<div class="d-flex align-items-center justify-content-between w-100">
 						<div class="d-flex align-items-center">
 							<a href="#" class="">
-								<img src="{{url('public/images/logo.svg')}}" alt="" class="es-h-8" />
+								<img src="{{url('/images/logo.svg')}}" alt="" class="es-h-8" />
 							</a>
 						</div>
 						<div>
@@ -77,7 +77,7 @@
 							>
 								<div class="d-flex align-items-center gap-2 gap-md-3">
 									<img
-										src="{{url('public/images/left-arrow.png')}}"
+										src="{{url('/images/left-arrow.png')}}"
 										width="16"
 										height="16"
 										alt=""
@@ -147,7 +147,7 @@
 						<div class="w-100 h-100">
 							<div class="hero-text-content">
 								<div class="es-mb-8">
-									<img class="w-100" src="{{ $settings->logo ?? url('public/images/logo-white.svg')}}" alt="" />
+									<img class="w-100" src="{{ $settings->logo ?? url('/images/logo-white.svg')}}" alt="" />
 								</div>
 								<div class="es-mb-8">
 									<div

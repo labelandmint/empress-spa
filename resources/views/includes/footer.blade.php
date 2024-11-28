@@ -18,7 +18,7 @@
                     <div
                         class="d-flex es-py-8 flex-column align-items-center justify-content-center es-gap-6"
                     >
-                        <img src="{{url('public/images/logout-icon.png')}}" alt="" class="" />
+                        <img src="{{url('/images/logout-icon.png')}}" alt="" class="" />
                         <div class="es-text-3xl es-font-mulish-bold">Logout</div>
                         <div class="es-text-gray-500 text-center col-8">
                             Are you sure you would like to log out of your account?

@@ -22,7 +22,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="icon" href="{{ url('public/logo.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url('/logo.png') }}" type="image/x-icon">
     <!-- Bootstrap CSS v5.2.0 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
@@ -41,7 +41,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="{{ url('public/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url('/css/style.css') }}" />
 
     <script src="https://js.stripe.com/v3/"></script>
 
@@ -130,13 +130,13 @@
                 <div class="d-flex align-items-center justify-content-between w-100">
                     <div class="d-flex align-items-center">
                         <a href="#" class="">
-                            <img src="{{ url('public/images/logo.svg') }}" alt="" class="es-h-8" />
+                            <img src="{{ url('/images/logo.svg') }}" alt="" class="es-h-8" />
                         </a>
                     </div>
                     <div>
                         <a href="{{ $fullUrl }}" class="text-decoration-none es-text-gray-900 es-font-500">
                             <div class="d-flex align-items-center gap-2 gap-md-3">
-                                <img src="{{ url('public/images/left-arrow.png') }}" width="16" height="16"
+                                <img src="{{ url('/images/left-arrow.png') }}" width="16" height="16"
                                     alt="">
                                 <div>
                                     <span class="d-none d-md-inline-block">Back to&nbsp;</span><span
@@ -212,7 +212,7 @@
                                     class="d-flex align-items-center bg-transparent border-0 es--ml-12 es-outline-none"
                                 >
                                     <img
-                                        src="{{url('public/images/eye-dark.png')}}"
+                                        src="{{url('/images/eye-dark.png')}}"
                                         alt="Toggle Password Visibility"
                                     />
                                 </button>
@@ -367,12 +367,12 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('public/images/close.png') }}" alt="" />
+                    <img src="{{ url('/images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div
                         class="card-body d-flex align-items-center justify-content-center es-py-24 mt-3 flex-column es-gap-6">
-                        <img src="{{url('public/images/logo.svg')}}" alt="" class="" />
+                        <img src="{{url('/images/logo.svg')}}" alt="" class="" />
                         <div class="es-text-3xl es-font-mulish-bold">Congratulations!</div>
                         <div class="es-text-gray-500 text-center es-w-auto es-w-md-96 es-mb-4">
                             We're pleased to have you as an Empress Spa Member, and look forward to meeting you.
@@ -479,8 +479,8 @@
             togglePasswordVisibility(
                 "password",
                 "toggle-password",
-                "{{ url('public/images/eye-dark.png') }}",
-                "{{ url('public/images/eye-off-dark.png') }}",
+                "{{ url('/images/eye-dark.png') }}",
+                "{{ url('/images/eye-off-dark.png') }}",
             );
         });
 

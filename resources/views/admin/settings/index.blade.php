@@ -228,7 +228,7 @@
                                 >
                                     Change
                                     <img
-                                        src="{{url('public/images/refresh.png')}}"
+                                        src="{{url('/images/refresh.png')}}"
                                         width="14"
                                         height="14"
                                         alt=""
@@ -241,7 +241,7 @@
                                 >
                                     Delete
                                     <img
-                                        src="{{ url('public/images/trash.png') }}"
+                                        src="{{ url('/images/trash.png') }}"
                                         width="14"
                                         height="14"
                                         alt="Trash Icon"
@@ -317,7 +317,7 @@
                                 >
                                     Change
                                     <img
-                                        src="{{ url('public/images/refresh.png') }}"
+                                        src="{{ url('/images/refresh.png') }}"
                                         width="14"
                                         height="14"
                                         alt="Refresh Icon"
@@ -330,7 +330,7 @@
                                 >
                                     Delete
                                     <img
-                                        src="{{ url('public/images/trash.png') }}"
+                                        src="{{ url('/images/trash.png') }}"
                                         width="14"
                                         height="14"
                                         alt="Trash Icon"
@@ -660,7 +660,7 @@
                                 >
                                     Change
                                     <img
-                                        src="{{url('public/images/refresh.png')}}"
+                                        src="{{url('/images/refresh.png')}}"
                                         width="14"
                                         height="14"
                                         alt=""
@@ -673,7 +673,7 @@
                                 >
                                     Delete
                                     <img
-                                        src="{{url('public/images/trash.png')}}"
+                                        src="{{url('/images/trash.png')}}"
                                         width="14"
                                         height="14"
                                         alt=""
@@ -750,7 +750,7 @@
                                 >
                                     Change
                                     <img
-                                        src="{{url('public/images/refresh.png')}}"
+                                        src="{{url('/images/refresh.png')}}"
                                         width="14"
                                         height="14"
                                         alt=""
@@ -763,7 +763,7 @@
                                 >
                                     Delete
                                     <img
-                                        src="{{url('public/images/trash.png')}}"
+                                        src="{{url('/images/trash.png')}}"
                                         width="14"
                                         height="14"
                                         alt=""
@@ -785,7 +785,7 @@
                                 data-type="registration"
                             >
                                 Preview
-                                <img src="{{url('public/images/eye-brown.png')}}" alt="" />
+                                <img src="{{url('/images/eye-brown.png')}}" alt="" />
                             </button>
                         </div>
                         <label for="successful_registration_subject"></label>
@@ -826,7 +826,7 @@
                                 data-type="failed"
                             >
                                 Preview
-                                <img src="{{url('public/images/eye-brown.png')}}" alt="" />
+                                <img src="{{url('/images/eye-brown.png')}}" alt="" />
                             </button>
                         </div>
                         <label for="payment_failed_subject"></label>
@@ -867,7 +867,7 @@
                                 data-type="success"
                             >
                                 Preview
-                                <img src="{{url('public/images/eye-brown.png')}}" alt="" />
+                                <img src="{{url('/images/eye-brown.png')}}" alt="" />
                             </button>
                         </div>
                         <label for="successful_payment_subject"></label>
@@ -1008,11 +1008,11 @@
                     <div class="es-font-mulish-bold es-text-lg">Users</div>
                     <div>
                         <button class="border-0 bg-transparent">
-                            <img src="{{url('public/images/filter-up-dark.png')}}" alt="" />
+                            <img src="{{url('/images/filter-up-dark.png')}}" alt="" />
                         </button>
 
                         <button class="border-0 bg-transparent">
-                            <img src="{{url('public/images/filter-down-dark.png')}}" alt="" />
+                            <img src="{{url('/images/filter-down-dark.png')}}" alt="" />
                         </button>
                     </div>
                 </div>
@@ -1117,20 +1117,20 @@ aria-hidden="true"
                         class="border-0 bg-transparent"
                         data-bs-dismiss="modal"
                     >
-                        <img src="{{url('public/images/close.png')}}" alt="" />
+                        <img src="{{url('/images/close.png')}}" alt="" />
                     </button>
                 </div>
             </div>
             <div
                 class="d-flex es-py-28 align-items-center justify-content-center"
             >
-                <img id="email-logo" class="es-w-40" src="{{url('public/images/logo.svg')}}" alt="" />
+                <img id="email-logo" class="es-w-40" src="{{url('/images/logo.svg')}}" alt="" />
             </div>
             <div class="es-mb-8">
                 <img
                     id="email-graphic"
                     class="es-w-full"
-                    src="{{url('public/images/settings-img.png')}}"
+                    src="{{url('/images/settings-img.png')}}"
                     alt=""
                 />
             </div>
@@ -1174,7 +1174,7 @@ aria-hidden="true"
         class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
         data-bs-dismiss="modal"
     >
-        <img src="{{url('public/images/close.png')}}" alt="" />
+        <img src="{{url('/images/close.png')}}" alt="" />
     </button>
     <div class="card">
         <div class="card-body es-p-6">

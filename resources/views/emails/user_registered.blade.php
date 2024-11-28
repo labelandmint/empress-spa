@@ -13,10 +13,10 @@
         </div> -->
     </div>
     <div class=""  style="text-align: center;padding: 100px 0px;" >
-        <img class="es-w-40" src="{{url('public/images/logo.svg')}}" alt=""/>
+        <img class="es-w-40" src="{{url('/images/logo.svg')}}" alt=""/>
     </div>
     <div class="" style="text-align: center;">
-        <img class="es-w-full" src="{{url('public/images/settings-img.png')}}" alt="" />
+        <img class="es-w-full" src="{{url('/images/settings-img.png')}}" alt="" />
     </div>
     <div class="" style="text-align: center; font-size : 24px;">
         <h3>Welcome to Empress Spa!</h3>

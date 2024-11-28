@@ -56,7 +56,7 @@
           <tbody>
             <tr>
               <td align="center">
-                <img src="{{url('public/images/Logo.png')}}" style="width: 300px" />
+                <img src="{{url('/images/Logo.png')}}" style="width: 300px" />
               </td>
             </tr>
           </tbody>
@@ -150,7 +150,7 @@
                   <a href="https://www.facebook.com/empressspa"
                     >
                     <img
-                    src="{{url('public/images/facebook1.png')}}"
+                    src="{{url('/images/facebook1.png')}}"
                      
                       style="
                         width: 40px;
@@ -161,7 +161,7 @@
                   </a>
                   <a href="https://www.instagram.com/empressdayspa"
                     ><img
-                      src="{{url('public/images/instagram1.png')}}"
+                      src="{{url('/images/instagram1.png')}}"
                       style="
                         width: 40px;
                         border-radius: 50px;

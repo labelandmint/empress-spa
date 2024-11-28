@@ -5,11 +5,11 @@
                 type="button"
                 data-bs-toggle="modal"
                 data-bs-target="#photoModal"
-                data-image="{{ $list->image ?? url('public/images/subscriptions-img.png') }}"
+                data-image="{{ $list->image ?? url('/images/subscriptions-img.png') }}"
                 class="border-0 es-outline-none bg-transparent p-0 hover-darken-95"
             >
                 <img
-                    src="{{ $list->image ?? url('public/images/subscriptions-img.png') }}"
+                    src="{{ $list->image ?? url('/images/subscriptions-img.png') }}"
                     width="40"
                     height="40"
                     alt=""

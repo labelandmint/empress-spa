@@ -13,7 +13,7 @@
                     <div
                         class="es-rounded-full es-w-8 es-h-8 es-bg-brown-100 d-flex align-items-center justify-content-center es-mr-4"
                     >
-                        <img src="{{url('public/images/users-black.png')}}" alt="" />
+                        <img src="{{url('/images/users-black.png')}}" alt="" />
                     </div>
                     <div class="es-text-sm es-font-500">Total Subscriptions</div>
                 </div>
@@ -26,7 +26,7 @@
                     <div
                         class="es-rounded-full es-w-8 es-h-8 es-bg-brown-100 d-flex align-items-center justify-content-center es-mr-4"
                     >
-                        <img src="{{url('public/images/credit-card.png')}}" alt="" />
+                        <img src="{{url('/images/credit-card.png')}}" alt="" />
                     </div>
                     <div class="es-text-sm es-font-500">
                         Total Subscriptions Value
@@ -41,7 +41,7 @@
                     <div
                         class="es-rounded-full es-w-8 es-h-8 es-bg-brown-100 d-flex align-items-center justify-content-center es-mr-4"
                     >
-                        <img src="{{url('public/images/shopping-bag.png')}}" alt="" />
+                        <img src="{{url('/images/shopping-bag.png')}}" alt="" />
                     </div>
                     <div class="es-text-sm es-font-500">Total This Month</div>
                 </div>
@@ -54,7 +54,7 @@
                     <div
                         class="es-rounded-full es-w-8 es-h-8 es-bg-brown-100 d-flex align-items-center justify-content-center es-mr-4"
                     >
-                        <img src="{{url('public/images/refresh.png')}}" alt="" />
+                        <img src="{{url('/images/refresh.png')}}" alt="" />
                     </div>
                     <div class="es-text-sm es-font-500">Total Last Month</div>
                 </div>
@@ -77,7 +77,7 @@
                                 class="es-w-6 es-h-6 es-bg-gray-500 rounded-circle position-relative"
                             >
                                 <img
-                                    src="{{url('public/images/magnifying-glass.png')}}"
+                                    src="{{url('/images/magnifying-glass.png')}}"
                                     alt=""
                                     class="position-absolute es-bottom-0.5 es-right-0.5"
                                 />
@@ -95,11 +95,11 @@
                     >
                         <div class="d-flex gap-2">
                             <button id="sortAsc" class="bg-transparent p-0 es-btn-icon">
-                                <img src="{{url('public/images/filter-up-dark')}}.png" alt="" />
+                                <img src="{{url('/images/filter-up-dark')}}.png" alt="" />
                             </button>
 
                             <button id="sortDesc" class="bg-transparent p-0 es-btn-icon">
-                                <img src="{{url('public/images/filter-down-dark')}}.png" alt="" />
+                                <img src="{{url('/images/filter-down-dark')}}.png" alt="" />
                             </button>
                         </div>
                         <div class="d-flex align-items-center gap-2">

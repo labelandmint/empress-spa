@@ -18,7 +18,7 @@
 <head>
     <title>Create Account</title>
 
-    <link rel="icon" href="{{ url('public/logo.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url('/logo.png') }}" type="image/x-icon">
 
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -47,7 +47,7 @@
 
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="{{ url('public/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url('/css/style.css') }}" />
 
 
 
@@ -203,13 +203,13 @@
                 <div class="d-flex align-items-center justify-content-between w-100">
                     <div class="d-flex align-items-center">
                         <a href="#" class="">
-                            <img src="{{ url('public/images/logo.svg') }}" alt="" class="es-h-8 logo1" />
+                            <img src="{{ url('/images/logo.svg') }}" alt="" class="es-h-8 logo1" />
                         </a>
                     </div>
                     <div>
                         <a href="{{$fullUrl}}" class="text-decoration-none es-text-gray-900 es-font-500">
                             <div class="d-flex align-items-center gap-2 gap-md-3">
-                                <img src="{{ url('public/images/left-arrow.png') }}" width="13" height="13"
+                                <img src="{{ url('/images/left-arrow.png') }}" width="13" height="13"
                                     alt="">
                                 <div>
                                     <span class="d-none d-md-inline-block">Back to&nbsp;</span><span
@@ -262,7 +262,7 @@
                                     class="btn border-0 es-text-sm es-font-600 p-0"
                                 >
                                     Change
-                                    <img src="{{url('public/images/refresh.png')}}" width="14" height="14" alt="">
+                                    <img src="{{url('/images/refresh.png')}}" width="14" height="14" alt="">
                                 </label>
                                 <button
                                     type="button"
@@ -270,7 +270,7 @@
                                     id="clear_photo_input"
                                 >
                                     Delete
-                                    <img src="{{url('public/images/trash.png')}}" width="14" height="14" alt="">
+                                    <img src="{{url('/images/trash.png')}}" width="14" height="14" alt="">
                                 </button>
                             </div>
                         </div> --}}
@@ -395,7 +395,7 @@
                                     placeholder="Password" />
                                 <button id="toggle-password" type="button"
                                     class="d-flex align-items-center bg-transparent border-0 es--ml-12 es-outline-none">
-                                    <img src="{{ url('public/images/eye-dark.png') }}"
+                                    <img src="{{ url('/images/eye-dark.png') }}"
                                         alt="Toggle Password Visibility" />
                                 </button>
                             </div>
@@ -514,7 +514,7 @@
                     <div class="w-100 h-100">
                         <div class="hero-text-content">
                             <div class="es-mb-8">
-                                <img src="{{ $settings->logo ?? url('public/images/logo-white.svg') }}"
+                                <img src="{{ $settings->logo ?? url('/images/logo-white.svg') }}"
                                     alt="" class="w-100" />
                             </div>
                             <div class="es-mb-8">
@@ -594,12 +594,12 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('public/images/close.png') }}" alt="" />
+                    <img src="{{ url('/images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div
                         class="card-body d-flex align-items-center justify-content-center es-py-24 mt-3 flex-column es-gap-6">
-                        <img src="{{ url('public/images/logo.svg') }}" alt="" class="" />
+                        <img src="{{ url('/images/logo.svg') }}" alt="" class="" />
                         <div class="es-text-3xl es-font-mulish-bold">Congratulations!</div>
                         <div class="es-text-gray-500 text-center es-w-auto es-w-md-96 es-mb-4">
                             We're pleased to have you as an Empress Spa Member, and look forward to meeting you.
@@ -626,11 +626,11 @@
         <div class="modal-content position-relative">
             <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                <img src="{{ url('public/images/close.png') }}" alt="" />
+                <img src="{{ url('/images/close.png') }}" alt="" />
             </button>
             <div class="card">
                 <div class="card-body d-flex align-items-center justify-content-center es-py-12 mt-3 flex-column es-gap-6">
-                    <img src="{{ url('public/images/logo.svg') }}" alt="" class="" />
+                    <img src="{{ url('/images/logo.svg') }}" alt="" class="" />
                     <div class="es-text-3xl es-font-mulish-bold">Payment Terms and Conditions</div>
                     <div class="es-text-gray-500 text-center es-w-auto es-w-md-96 es-mb-4" style="width:35rem; height: 400px; overflow-y: scroll;">
                     {!! $settings->terms_condition !!}
@@ -1087,8 +1087,8 @@
             togglePasswordVisibility(
                 "password",
                 "toggle-password",
-                "{{ url('public/images/eye-dark.png') }}",
-                "{{ url('public/images/eye-off-dark.png') }}",
+                "{{ url('/images/eye-dark.png') }}",
+                "{{ url('/images/eye-off-dark.png') }}",
             );
         });
     </script>

@@ -13,11 +13,16 @@ return new class extends Migration
     {
         Schema::create('plans_to_services', function (Blueprint $table) {
             $table->id();
-            $table->integer('subscription_plan_id');
-            $table->integer('service_id');
-            $table->integer('product_id');
-            $table->timestamps();
+            $table->bigInteger('subscription_plan_id')->unsigned();
+            $table->bigInteger('service_id')->unsigned();
+            $table->bigInteger('product_id')->unsigned();
+            $table->timestamps(0);
             $table->softDeletes();
+        });
+        Schema::table('plans_to_services', function (Blueprint $table) {
+            $table->index('service_id');
+            $table->index('subscription_plan_id');
+            $table->index('product_id');
         });
     }
 

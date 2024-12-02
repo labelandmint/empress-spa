@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('subscription_plan_id');
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('subscription_plan_id')->unsigned();
             $table->date('subscription_start');
             $table->date('subscription_end');
             $table->tinyInteger('status')->default(1)->comment('1=active, 2=cancelled, 3=paused');
@@ -23,6 +23,12 @@ return new class extends Migration
             $table->timestamp('pause_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::table('subscriptions', function (Blueprint $table) {
+           
+            // Adding index to 'user_id' column
+            $table->index('user_id');
         });
     }
 

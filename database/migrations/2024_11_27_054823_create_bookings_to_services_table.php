@@ -12,15 +12,22 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create bookings_to_services table
         Schema::create('bookings_to_services', function (Blueprint $table) {
             $table->id();
             $table->integer('booking_id');
             $table->integer('service_id');
             $table->integer('service_availability_id');
-            $table->timestamp('booking_start_time')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('booking_end_time');
+            $table->timestamp('booking_date')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('booking_end_time')->default('0000-00-00 00:00:00');
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::table('bookings_to_services', function (Blueprint $table) {
+            $table->index('booking_id'); // Add index on 'booking_id'
+            $table->index('service_id'); // Add index on 'service_id'
+            $table->index('service_availability_id'); // Add index on 'service_availability_id'
         });
     }
 

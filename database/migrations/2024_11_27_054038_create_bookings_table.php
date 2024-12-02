@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create bookings table
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->integer('member_id');
-            $table->integer('service_id');
-            $table->integer('slot_id');
+            $table->bigInteger('member_id')->unsigned();
+            $table->bigInteger('service_id')->unsigned();
+            $table->bigInteger('slot_id')->unsigned();
             $table->date('booking_date')->nullable();
             $table->time('booking_start_time')->nullable();
             $table->time('booking_end_time')->nullable();
@@ -24,6 +25,13 @@ return new class extends Migration
             $table->tinyInteger('status')->default(1)->comment('1: CONFIRMED, 2: CANCELED');
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        // Add primary key and indexes
+        Schema::table('bookings', function (Blueprint $table) {
+            $table->index('member_id'); // Add index on 'member_id'
+            $table->index('service_id'); // Add index on 'service_id'
+            $table->index('slot_id'); // Add index on 'slot_id'
         });
     }
 

@@ -11,17 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create bank_details table with primary key, index, and foreign key
         Schema::create('bank_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('card_type',255)->nullable();
-            $table->string('card_no')->nullable();
-            $table->string('expiration',7)->nullable();
-            $table->string('cardholder_name',100)->nullable();
-            $table->integer('status')->default(0);
+            $table->bigInteger('user_id')->unsigned();
+            $table->string('card_type', 50)->nullable()->comment('Visa, Mastercard');
+            $table->string('card_no', 20)->nullable();
+            $table->string('expiration', 7)->nullable()->comment('MM/YYYY format');
+            $table->string('cardholder_name', 100)->nullable();
+            $table->tinyInteger('status')->default(0);
             $table->integer('security')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            // Add primary key and index
+            $table->index('user_id'); // Index on 'user_id'
+
+
         });
     }
 

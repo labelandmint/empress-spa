@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create email_templates table
         Schema::create('email_templates', function (Blueprint $table) {
-            $table->id();
-            $table->string('template_name',50);
-            $table->string('subject',255);
+            $table->increments('id');
+            $table->string('template_name', 50)->comment('Successful Registration, Payment Failed, Successful Payment');
+            $table->string('subject', 255);
             $table->text('body');
             $table->timestamps();
             $table->softDeletes();
         });
+
     }
 
     /**

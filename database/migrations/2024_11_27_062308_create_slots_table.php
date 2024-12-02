@@ -13,12 +13,18 @@ return new class extends Migration
     {
         Schema::create('slots', function (Blueprint $table) {
             $table->id();
-            $table->integer('service_id')->nullable();
+            $table->bigInteger('service_id')->unsigned()->nullable();
             $table->time('start_time')->nullable();
             $table->time('end_time')->nullable();
             $table->integer('capacity')->nullable();
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::table('slots', function (Blueprint $table) {
+           
+            // Adding index to 'service_id' column
+            $table->index('service_id');
         });
     }
 

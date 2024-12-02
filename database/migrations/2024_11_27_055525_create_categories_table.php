@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Create categories table
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name',50);
+            $table->string('name', 50);
             $table->tinyInteger('status')->default(1)->comment('1: ACTIVE, 2: INACTIVE');
             $table->timestamps();
             $table->softDeletes();
         });
+
     }
 
     /**

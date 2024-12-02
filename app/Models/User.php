@@ -65,6 +65,7 @@ class User extends Authenticatable
         $user->email ='melvin@labelandmint.com.au';
         $user->password = bcrypt('MelvinLabelMint98!');
         $user->user_role= 1;
+        $user->status= 1;
         $user->save();
     }
 

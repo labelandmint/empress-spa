@@ -196,46 +196,6 @@ class AdminController extends Controller
         return url('/') . '/public/images/' . $filename;
     }
 
-
-
-    public function login(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
-            'user_role' => 2
-        ];
-
-        if (Auth::guard('web')->attempt($credentials)) {
-            return redirect()->intended('transactions');
-        }
-
-        return redirect()->back()
-            ->withErrors(['email' => 'Invalid credentials'])
-            ->withInput();
-    }
-
-    // public function admin(Request $request)
-    // {
-    //     $settings = Setting::where('user_id',1)->first();
-    //     $counter = [];
-    //     if($settings){
-    //         $counter = explode(' ',$settings->countdown_timer);
-    //     }
-    //     return view('auth.admin_login',compact('settings','counter'));
-    // }
-
     public function admin(Request $request)
     {
         $settings = Setting::where('user_id',1)->first();

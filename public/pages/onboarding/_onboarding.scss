@@ -1,0 +1,69 @@
+.onboarding-page {
+
+    .es-navbar {
+        position: sticky;
+        top: 0;
+        width: 100%;
+    }
+
+    .hero-image {
+        display: none;
+    }
+    
+    .hero-text {
+        position: relative;
+        padding: 0;
+
+        .hero-text-content {
+            position: relative;
+            padding: 32px 20px;
+        }
+
+        .hero-text-bg {
+            display: block;
+            background: url("../assets/onboarding-hero-image.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: brightness(57%);
+
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+    }
+
+    @media (min-width: $lg) {
+        .hero-image {
+            display: block;
+            background: url("../assets/onboarding-hero-image.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: brightness(57%);
+
+            height: calc(100vh - 80px);
+            width: 50%;
+            
+            position: fixed;
+            top: 80px;
+            left: 51%;
+        }
+
+        .hero-text {
+            position: fixed;
+            top: 80;
+            left: 51%;
+            height: calc(100vh - 80px);
+            padding-left: 5%;
+    
+            .hero-text-content {
+                position: absolute;
+                bottom: 10%;
+                padding: 0;
+            }
+
+            .hero-text-bg {
+                display: none;
+            }
+        }
+    }
+}

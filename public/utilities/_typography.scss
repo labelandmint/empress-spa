@@ -1,0 +1,181 @@
+// Color
+@mixin es-text-color(
+    $name, 
+    $textColor,
+) {
+
+    .es-text-#{$name} {
+        color: #{$textColor};
+    }
+}
+
+@include es-text-color("gray-50", var(--gray50));
+@include es-text-color("gray-100", var(--gray100));
+@include es-text-color("gray-200", var(--gray200));
+@include es-text-color("gray-300", var(--gray300));
+@include es-text-color("gray-500", var(--gray500));
+@include es-text-color("gray-600", var(--gray600));
+@include es-text-color("gray-900", var(--gray900));
+
+@include es-text-color("brown-100", var(--brown100));
+@include es-text-color("brown-200", var(--brown200));
+@include es-text-color("brown-500", var(--brown500));
+@include es-text-color("brown-800", var(--brown800));
+
+@include es-text-color("red-100", var(--red100));
+@include es-text-color("red-500", var(--red500));
+
+@include es-text-color("green-100", var(--green100));
+@include es-text-color("green-500", var(--green500));
+
+@include es-text-color("blue-100", var(--blue100));
+@include es-text-color("blue-500", var(--blue500));
+
+// Size
+@mixin es-text-size($name, $fontSize, $lineHeight: normal) {
+
+    .es-text-#{$name} {
+        font-size: #{$fontSize} !important;
+        line-height: $lineHeight;
+    }
+}
+
+@include es-text-size("2xs", 10px);
+@include es-text-size("xs", 12px);
+@include es-text-size("sm", 14px);
+@include es-text-size("normal", 16px);
+@include es-text-size("lg", 18px);
+@include es-text-size("xl", 20px);
+@include es-text-size("2xl", 22px);
+@include es-text-size("3xl", 24px);
+@include es-text-size("4xl", 26px);
+@include es-text-size("5xl", 28px);
+@include es-text-size("6xl", 30px);
+@include es-text-size("7xl", 32px);
+@include es-text-size("8xl", 34px);
+@include es-text-size("9xl", 36px);
+@include es-text-size("10xl", 38px);
+@include es-text-size("11xl", 40px);
+@include es-text-size("12xl", 42px);
+@include es-text-size("13xl", 44px);
+@include es-text-size("14xl", 46px);
+@include es-text-size("15xl", 48px);
+@include es-text-size("16xl", 50px);
+
+
+// Weight
+@mixin es-text-weight($name, $fontWeight) {
+
+    .es-font-#{$name} {
+        font-weight: #{$fontWeight};
+    }
+}
+
+@include es-text-weight("100", 100);
+@include es-text-weight("200", 200);
+@include es-text-weight("300", 300);
+@include es-text-weight("400", 400);
+@include es-text-weight("500", 500);
+@include es-text-weight("600", 600);
+@include es-text-weight("700", 700);
+@include es-text-weight("800", 800);
+@include es-text-weight("900", 900);
+
+//Text Decoration
+.es-line-through {
+    text-decoration: line-through;
+}
+
+.es-text-justify {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+//Font Style
+.es-font-inter {
+    font-family: 'Inter-Regular', $fallbackFont;
+}
+
+.es-font-inter-medium {
+    font-family: 'Inter-Medium', $fallbackFont;
+    font-weight: 500;
+}
+
+.es-font-inter-semibold {
+    font-family: 'Inter-SemiBold', $fallbackFont;
+    font-weight: 700;
+}
+
+.es-font-inter-bold {
+    font-family: 'Inter-Bold', $fallbackFont;
+    font-weight: 900;
+}
+
+.es-font-mulish {
+    font-family: 'Mulish-Regular', $fallbackFont;
+}
+
+.es-font-mulish-medium {
+    font-family: 'Mulish-Medium', $fallbackFont;
+}
+
+.es-font-mulish-semibold {
+    font-family: 'Mulish-SemiBold', $fallbackFont;
+}
+
+.es-font-mulish-bold {
+    font-family: 'Mulish-Bold', $fallbackFont;
+}
+
+@mixin es-header(
+    $name,
+    $size,
+    $lineHeight,
+    $letterSpacing
+) {
+
+    .es-header-#{$name} {
+        font-size: #{$size};
+        line-height: #{$lineHeight};
+        letter-spacing: #{$letterSpacing};
+    }
+}
+
+// Headers - Mobile
+@include es-header("1", 32px, 40px, -0.4px);
+@include es-header("2", 28px, 36px, -0.4px);
+@include es-header("3", 24px, 32px, 0px);
+@include es-header("4", 22px, 32px, 0px);
+@include es-header("5", 20px, 28px, 0px);
+@include es-header("6", 18px, 28px, 0px);
+
+// Headers - Desktop
+@media (min-width: $md) {
+    @include es-header("1", 40px, 48px, -0.6px);
+    @include es-header("2", 36px, 44px, -0.6px);
+    @include es-header("3", 32px, 40px, -0.6pxpx);
+    @include es-header("4", 28px, 36px, 0px);
+    @include es-header("5", 24px, 32px, 0px);
+    @include es-header("6", 20px, 28px, 0px);
+}
+
+@mixin es-line-clamp(
+    $name,
+    $lineNumber,
+) {
+
+    .es-line-clamp-#{$name} {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: $lineNumber;
+    }
+}
+
+@include es-line-clamp("1", 1);
+@include es-line-clamp("2", 2);
+@include es-line-clamp("3", 3);
+@include es-line-clamp("4", 4);
+@include es-line-clamp("5", 5);
+@include es-line-clamp("6", 6);
+@include es-line-clamp("none", none);

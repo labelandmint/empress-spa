@@ -1,0 +1,41 @@
+.es-file-input {
+    border: 1.5px dashed var(--gray500);
+    background: var(--gray100);
+    color: var(--gray500);
+    font-family: 'Mulish-Regular', $fallbackFont;
+    font-size: 18px;
+    line-height: 28px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+
+    svg path {
+        stroke: var(--gray500);
+    }
+
+    &:hover {
+        background: var(--gray50);
+    }
+
+    &.disabled {
+        opacity: .5;
+        cursor: default;
+
+        &:hover {
+            background: var(--gray200);
+            opacity: .5;
+        }
+    
+        &:active {
+            background: var(--gray100);
+            opacity: .5;
+        }
+    }
+}

@@ -1,0 +1,38 @@
+.es-badge-green {
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 26px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Mulish-Regular', $fallbackFont;
+    background: var(--green100);
+    color: var(--green500);
+    text-align: center;
+}
+
+.es-badge-red {
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 26px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Mulish-Regular', $fallbackFont;
+    background: var(--red100);
+    color: var(--red500);
+    text-align: center;
+}
+
+.es-badge-gray {
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 26px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Mulish-Regular', $fallbackFont;
+    background: #E6E8EB;
+    color: var(--gray500);
+    text-align: center;
+}

@@ -1,0 +1,17 @@
+.hover-lighten {
+    &:hover {
+        filter: brightness(200%);
+    }
+}
+
+.hover-darken {
+    &:hover {
+        filter: brightness(80%);
+    }
+}
+
+.hover-darken-95 {
+    &:hover {
+        filter: brightness(95%);
+    }
+}

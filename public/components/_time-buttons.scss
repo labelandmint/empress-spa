@@ -1,0 +1,15 @@
+input[type="radio"]:checked {
+    & ~ .es-time-btn {
+        background: var(--gray900);
+        color: white;
+    }
+}
+
+.es-time-btn {
+    padding: 14px 38px;
+    background: var(--gray100);
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}

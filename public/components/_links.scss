@@ -1,0 +1,104 @@
+.es-link-primary {
+    color: var(--brown500);
+    text-decoration: none;
+    font-family: 'Mulish-Bold', $fallbackFont;
+    font-weight: 700;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    outline: none;
+
+    svg {
+        path {
+            stroke: var(--brown500);
+        }
+    }
+
+    &:hover {
+        color: var(--brown800);
+
+        svg {
+            path {
+                stroke: var(--brown800);
+            }
+        }
+    }
+
+    &.disabled {
+        opacity: .5;
+        cursor: default;
+
+        &:hover {
+            color: var(--brown500);
+            opacity: .5;
+
+            svg {
+                path {
+                    stroke: var(--brown500);
+                }
+            }
+        }
+    }
+
+    // Size
+    &.es-link-sm {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    &.es-link-lg {
+        font-size: 18px;
+        line-height: 28px;
+    }
+}
+
+.es-link-secondary {
+    color: var(--gray900);
+    text-decoration: none;
+    font-family: 'Mulish-Bold', $fallbackFont;
+    font-weight: 700;
+
+    svg {
+        path {
+            stroke: var(--gray900);
+        }
+    }
+
+    &:hover {
+        color: var(--brown500);
+
+        svg {
+            path {
+                stroke: var(--brown500);
+            }
+        }
+    }
+
+    &.disabled {
+        opacity: .5;
+        cursor: default;
+
+        &:hover {
+            color: var(--gray900);
+            opacity: .5;
+
+            svg {
+                path {
+                    stroke: var(--gray900);
+                }
+            }
+        }
+    }
+
+    // Size
+    &.es-link-sm {
+        font-size: 14px;
+        line-height: 20px;
+    }
+    
+    &.es-link-lg {
+        font-size: 18px;
+        line-height: 28px;
+    }
+}

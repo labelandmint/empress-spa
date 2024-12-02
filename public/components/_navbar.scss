@@ -1,0 +1,22 @@
+.es-navbar {
+
+    .offcanvas {
+
+        z-index: 1047;
+
+        .offcanvas-body {
+            height: max-content;
+        }
+
+        .btn-close-canvas {
+
+            background: none;
+            border: none;
+
+            path {
+
+                fill: #272A28;
+            }
+        }
+    }
+}

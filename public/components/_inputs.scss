@@ -1,0 +1,38 @@
+.es-input {
+    background: var(--gray100);
+    border: none;
+    outline: none;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    padding-left: 24px;
+    padding-right: 24px;
+    border-radius: 4px;
+    font-family: 'Mulish-Regular', $fallbackFont;
+    color: var(--gray900);
+    box-sizing: border-box;
+
+    &::placeholder {
+        color: var(--gray300);
+    }
+
+    &.has-error {
+        outline: 1px solid var(--red500);
+
+        &:focus {
+            outline: none;
+            box-shadow: 0px 0px 0px 4px rgba(235,0,27,0.4);
+            -webkit-box-shadow: 0px 0px 0px 4px rgba(235,0,27,0.4);
+            -moz-box-shadow: 0px 0px 0px 4px rgba(235,0,27,0.4);
+        }
+    }
+
+    &:focus {
+        background: var(--gray100);
+    }
+}
+
+.es-input-error-message {
+    color: var(--red500);
+    font-size: 14px;
+    line-height: 30px;
+}

@@ -1,0 +1,35 @@
+@mixin es-background(
+    $name,
+    $backgroundColor,
+) {
+
+    .es-bg-#{$name} {
+        background: #{$backgroundColor};
+    }
+}
+
+@include es-background("gray-50", var(--gray50));
+@include es-background("gray-100", var(--gray100));
+@include es-background("gray-200", var(--gray200));
+@include es-background("gray-300", var(--gray300));
+@include es-background("gray-500", var(--gray500));
+@include es-background("gray-600", var(--gray600));
+@include es-background("gray-700", var(--gray700));
+@include es-background("gray-800", var(--gray800));
+@include es-background("gray-900", var(--gray900));
+
+@include es-background("brown-100", var(--brown100));
+@include es-background("brown-200", var(--brown200));
+@include es-background("brown-500", var(--brown500));
+@include es-background("brown-800", var(--brown800));
+
+@include es-background("red-100", var(--red100));
+@include es-background("red-500", var(--red500));
+
+@include es-background("green-100", var(--green100));
+@include es-background("green-500", var(--green500));
+
+@include es-background("blue-100", var(--blue100));
+@include es-background("blue-500", var(--blue500));
+
+@include es-background("golden", var(--golden));

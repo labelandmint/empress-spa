@@ -1,0 +1,29 @@
+.subscriptions-page {
+	table {
+		.link-text {
+			width: 100px;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 3;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			word-wrap: break-word;
+		}
+
+		ul {
+			list-style-type: none;
+			width: 580px;
+			padding: 0;
+			li {
+				white-space: nowrap;
+				font-size: 13px;
+				background: #f3f4f6;
+				padding-top: 6px;
+				padding-bottom: 6px;
+				padding-left: 12px;
+				padding-right: 12px;
+				border-radius: 4px;
+			}
+		}
+	}
+}

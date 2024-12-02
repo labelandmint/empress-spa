@@ -1,0 +1,108 @@
+// Colors
+@mixin es-border($name, $color) {
+
+    .es-border-#{$name} {
+        border-color: #{$color};
+    }
+}
+
+// Any Background Mode
+@include es-border("gray-500", var(--gray500));
+
+// Sizes
+.es-border-0 {
+    border-width: 0px
+}
+.es-border-2 {
+    border-width: 2px
+}
+.es-border-4 {
+    border-width: 4px
+}
+.es-border-8 {
+    border-width: 8px
+}
+.es-border {
+    border-width: 1px
+}
+.es-border-t-0 {
+    border-top-width: 0px
+}
+.es-border-t-2 {
+    border-top-width: 2px
+}
+.es-border-t-4 {
+    border-top-width: 4px
+}
+.es-border-t-8 {
+    border-top-width: 8px
+}
+.es-border-t {
+    border-top-width: 1px
+}
+.es-border-r-0 {
+    border-right-width: 0px
+}
+.es-border-r-2 {
+    border-right-width: 2px
+}
+.es-border-r-4 {
+    border-right-width: 4px
+}
+.es-border-r-8 {
+    border-right-width: 8px
+}
+.es-border-r {
+    border-right-width: 1px
+}
+.es-border-b-0 {
+    border-bottom-width: 0px
+}
+.es-border-b-2 {
+    border-bottom-width: 2px
+}
+.es-border-b-4 {
+    border-bottom-width: 4px
+}
+.es-border-b-8 {
+    border-bottom-width: 8px
+}
+.es-border-b {
+    border-bottom-width: 1px
+}
+.es-border-l-0 {
+    border-left-width: 0px
+}
+.es-border-l-2 {
+    border-left-width: 2px
+}
+.es-border-l-4 {
+    border-left-width: 4px
+}
+.es-border-l-8 {
+    border-left-width: 8px
+}
+.es-border-l {
+    border-left-width: 1px
+}
+.es-border-solid {
+    border-style: solid
+}
+.es-border-dashed {
+    border-style: dashed
+}
+.es-border-dotted {
+    border-style: dotted
+}
+.es-border-double {
+    border-style: double
+}
+.es-border-none {
+    border-style: none
+}
+.es-border-transparent {
+    border-color: transparent
+}
+.es-border-current {
+    border-color: currentColor
+}

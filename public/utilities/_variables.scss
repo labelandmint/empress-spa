@@ -1,0 +1,40 @@
+// Breakpoints
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+
+// Fonts
+$fallbackFont: 'Arial';
+
+html {
+
+    --gray50: #F8FAFB;
+    --gray100: #F3F4F6;
+    --gray200: #D2D6DC;
+    --gray300: #9099A9;
+    --gray500: #6A768B;
+    --gray600: #7D7F7E;
+    --gray700: #6A768B;
+    --gray800: #333333;
+    --gray900: #272A28;
+
+    --brown100: #F8F1EB;
+    --brown200: #DFC2A8;
+    --brown500: #BB7E45;
+    --brown800: #984A02;
+
+    --red100: #FDE5E8;
+    --red500: #EB001B;
+
+    --green100: #DBF4E5;
+    --green500: #00B046;
+
+    --blue100: #DCE7FB;
+    --blue500: #5B8CEC;
+
+    --golden: #efca64;
+
+    --yellow500: #FFC107;
+}

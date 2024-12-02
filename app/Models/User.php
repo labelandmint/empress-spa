@@ -57,4 +57,15 @@ class User extends Authenticatable
         return config("permissions.roles.$roleId.$permission", false);
     }
 
+    public static function createDefaultUser(): void
+    {
+        $user = new User;
+        $user->f_name = 'Administrator';
+        $user->l_name = 'User';
+        $user->email ='melvin@labelandmint.com.au';
+        $user->password = bcrypt('MelvinLabelMint98!');
+        $user->role= 1;
+        $user->save();
+    }
+
 }

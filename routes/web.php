@@ -79,6 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/booking/store', [BookingController::class, 'store']);
         Route::post('/booking/delete', [BookingController::class, 'destroy']);
     });
+    Route::get('/booking/member/{id}', [BookingController::class, 'getMemberBooking']);
     // Subscription Controller
     Route::get('/subscription/cancel/{id}', [SubscriptionController::class, 'cancelSubscription']);
     Route::post('/subscription/pause', [SubscriptionController::class, 'pauseMembership']);
@@ -157,5 +158,7 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
 
     // BookingController
     Route::get('booking/getById/{id}', [AdminBookingController::class, 'getById']);
+    Route::get('bookings/view/{id?}', [AdminBookingController::class, 'memberBooking'])->name('admin.bookings.view');
+    Route::get('bookings/user/{id}', [AdminBookingController::class, 'getMemberBooking']);
     Route::post('booking/update', [AdminBookingController::class, 'update']);
 });

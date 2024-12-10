@@ -12,6 +12,7 @@ use App\Models\Service;
 use App\Mail\Booking as EmailBooking;
 use DateTime;
 use Carbon\Carbon;
+use DB;
 
 class BookingController extends Controller
 {
@@ -30,21 +31,56 @@ class BookingController extends Controller
 
     public function index()
     {
+
+        $userId = Auth::user()->id;
+
+        // $bookings = Booking::join('services', 'services.id', '=', 'bookings.service_id')
+        //     ->select('bookings.*', 'services.description')
+        //     ->where('bookings.member_id', Auth::user()->id)
+        //     ->whereMonth('bookings.booking_date', $currentMonth)
+        //     ->whereYear('bookings.booking_date', $currentYear)
+        //     ->orderBy('bookings.booking_date')
+        //     ->get();
+
+        $title = "Bookings";
+        // $bookingDates = $bookings->pluck('booking_date');
+
+        return view('bookings.upcoming', compact('title', 'userId',));
+    }
+
+    public function getMemberBooking(Request $request, $id)
+    {
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
 
-        $bookings = Booking::join('services', 'services.id', '=', 'bookings.service_id')
-            ->select('bookings.*', 'services.description')
-            ->where('bookings.member_id', Auth::user()->id)
-            ->whereMonth('bookings.booking_date', $currentMonth)
-            ->whereYear('bookings.booking_date', $currentYear)
-            ->orderBy('bookings.booking_date')
-            ->get();
+        $query = Booking::join('services', 'services.id', '=', 'bookings.service_id')
+            ->join('users', 'users.id', '=', 'bookings.member_id')
+            ->select('bookings.*', 'services.description', DB::raw("CONCAT(users.f_name, ' ', users.l_name) as name"))
+            ->where('bookings.member_id', $id)
+            ->orderBy('bookings.booking_date');
 
-        $title = "Bookings";
+
+        if ($request->has('month') && !empty($request->get('month')) &&  $request->get('date') != "month" && $request->has('year') && !empty($request->get('year')) &&  $request->get('date') != "year") {
+            $query->whereMonth('bookings.booking_date', $request->get('month'))
+                ->whereYear('bookings.booking_date', $request->get('year'));
+        } else {
+            $query->whereMonth('bookings.booking_date', $currentMonth)
+                ->whereYear('bookings.booking_date', $currentYear);
+        }
+
+        // Execute the query and get the results
+        $bookings = $query->get();
+
+
+        // Pluck the booking dates for use in the response
         $bookingDates = $bookings->pluck('booking_date');
 
-        return view('bookings.upcoming', compact('title', 'bookings', 'bookingDates'));
+        // Return the response as JSON
+        return response()->json([
+            'title' => 'Bookings',
+            'bookings' => $bookings,
+            'bookingDates' => $bookingDates
+        ]);
     }
 
     // public function store(Request $request)
@@ -78,28 +114,28 @@ class BookingController extends Controller
         }
 
         $existingBooking = Booking::where('member_id', $data['member_id'])
-                                   ->where('service_id', $slot->service_id)
-                                   ->where('slot_id', $slot->id)
-                                   ->where('booking_date', $data['booking_date'])
-                                   ->first();
+            ->where('service_id', $slot->service_id)
+            ->where('slot_id', $slot->id)
+            ->where('booking_date', $data['booking_date'])
+            ->first();
 
         if ($existingBooking) {
             return redirect()->back()->withErrors(['error' => 'You have already scheduled this service and time slot on the selected date.']);
         }
 
         $currentBookings = Booking::where('slot_id', $slot->id)
-                                  ->where('booking_date', $data['booking_date'])
-                                  ->count();
+            ->where('booking_date', $data['booking_date'])
+            ->count();
 
         if ($currentBookings >= $slot->capacity) {
             return redirect()->back()->withErrors(['error' => 'The selected slot is fully booked. Please choose another slot.']);
         }
 
         $bookedSlotsCount = Booking::where('booking_date', $data['booking_date'])
-                                    ->where('service_id', $slot->service_id)
-                                    ->groupBy('slot_id')
-                                    ->havingRaw('COUNT(*) >= (SELECT capacity FROM slots WHERE id = slot_id)')
-                                    ->count();
+            ->where('service_id', $slot->service_id)
+            ->groupBy('slot_id')
+            ->havingRaw('COUNT(*) >= (SELECT capacity FROM slots WHERE id = slot_id)')
+            ->count();
 
         $totalSlots = Slot::where('service_id', $slot->service_id)->count();
 
@@ -149,8 +185,4 @@ class BookingController extends Controller
         $booking->forceDelete();
         return redirect()->back();
     }
-
-
-
-
 }

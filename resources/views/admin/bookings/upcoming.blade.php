@@ -121,7 +121,7 @@
                             <div class="es-text-gray-900 es-font-500 d-flex flex-column flex-md-row align-items-end align-items-md-start">
                                 <div class="d-flex">
                                     <div class="es-mr-2">
-                                        <img src="{{ url('public/images/clock.png') }}" alt="">
+                                        <img src="{{ asset('images/clock.png') }}" alt="">
                                     </div>
                                     <div class="es-leading-6">${startTime} - ${endTime}</div>
                                 </div>

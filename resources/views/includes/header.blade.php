@@ -7,7 +7,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="icon" href="{{ url('public/logo.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('logo.png') }}" type="image/x-icon">
     <!-- Bootstrap CSS v5.2.0 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="{{ url('public/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
     <!-- Required JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -59,7 +59,7 @@
                 <div class="d-none d-lg-flex align-items-center justify-content-between w-100">
                     <div class="d-flex align-items-center">
                         <a href="#" class="">
-                            <img src="{{ url('public/images/logo.svg') }}" alt="" class="es-h-8" />
+                            <img src="{{ asset('images/logo.svg') }}" alt="" class="es-h-8" />
                         </a>
                     </div>
                     @if (Auth::guard('admin')->check())
@@ -109,7 +109,7 @@
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
                         <div class="es-px-4 d-flex align-items-center align-self-center my-3">
                             <a href="#" class="">
-                                <img src="{{ url('public/images/logo.svg') }}" alt="" class="es-h-8" />
+                                <img src="{{ asset('images/logo.svg') }}" alt="" class="es-h-8" />
                             </a>
                         </div>
                     </h5>
@@ -145,8 +145,8 @@
                         <a href="{{ url('admin/members') }}"
                             class="es-menu-btn d-flex align-items-center @if (request()->is('admin/members*')) active @endif">
                             <img src="{{ request()->is('admin/members*')
-                                ? url('public/images/members-white.png')
-                                : url('public/images/members-dark.png') }}"
+                                ? asset('images/members-white.png')
+                                : asset('images/members-dark.png') }}"
                                 alt="" class="es-mr-3" />
                             Members
                         </a>
@@ -155,8 +155,8 @@
                         <a href="{{ route('admin.bookings.view') }}"
                             class="es-menu-btn d-flex align-items-center @if (request()->is('admin/bookings/view*')) active @endif">
                             <img src="{{ request()->is('admin/bookings/view*')
-                                ? url('public/images/upcoming-bookings-icon-white.png')
-                                : url('public/images/upcoming-bookings-icon-dark.png') }}"
+                                ? asset('images/upcoming-bookings-icon-white.png')
+                                : asset('images/upcoming-bookings-icon-dark.png') }}"
                                 alt="" class="es-mr-3" />
                             Upcoming Bookings
                         </a>
@@ -165,8 +165,8 @@
                         <a href="{{ url('admin/transactions') }}"
                             class="es-menu-btn d-flex align-items-center @if (request()->is('admin/transactions*')) active @endif">
                             <img src="{{ request()->is('admin/transactions*')
-                                ? url('public/images/transactions-icon-white.png')
-                                : url('public/images/transactions-icon-dark.png') }}"
+                                ? asset('images/transactions-icon-white.png')
+                                : asset('images/transactions-icon-dark.png') }}"
                                 alt="" class="es-mr-3" />
                             Transactions
                         </a>
@@ -176,8 +176,8 @@
                             class="es-menu-btn d-flex align-items-center
                     @if (request()->is('admin/subscriptions*')) active @endif ">
                             <img src="{{ request()->is('admin/subscriptions*')
-                                ? url('public/images/shopping-cart-white.png')
-                                : url('public/images/shopping-cart-dark.png') }}"
+                                ? asset('images/shopping-cart-white.png')
+                                : asset('images/shopping-cart-dark.png') }}"
                                 alt="" class="es-mr-3" />
                             Subscriptions
                         </a>
@@ -187,8 +187,8 @@
                             class="es-menu-btn d-flex align-items-center
                     @if (request()->is('admin/products*')) active @endif ">
                             <img src="{{ request()->is('admin/products*')
-                                ? url('public/images/products-white.png')
-                                : url('public/images/products-dark.png') }}"
+                                ? asset('images/products-white.png')
+                                : asset('images/products-dark.png') }}"
                                 alt="" class="es-mr-3" />
                             Products
                         </a>
@@ -197,7 +197,7 @@
                         <a href="{{ url('admin/services') }}"
                             class="es-menu-btn d-flex align-items-center
                     @if (request()->is('admin/services*')) active @endif ">
-                            <img src="{{ request()->is('admin/services*') ? url('public/images/edit-white.png') : url('public/images/edit-dark.png') }}"
+                            <img src="{{ request()->is('admin/services*') ? asset('images/edit-white.png') : asset('images/edit-dark.png') }}"
                                 alt="" class="es-mr-3" />
                             Services
                         </a>
@@ -207,8 +207,8 @@
                             class="es-menu-btn d-flex align-items-center
                     @if (request()->is('admin/profile*')) active @endif ">
                             <img src="{{ request()->is('admin/profile*')
-                                ? url('public/images/profile-icon-white.png')
-                                : url('public/images/profile-icon-dark.png') }}"
+                                ? asset('images/profile-icon-white.png')
+                                : asset('images/profile-icon-dark.png') }}"
                                 alt="" class="es-mr-3" />
                             Profile
                         </a>
@@ -216,7 +216,7 @@
                     <div class="es-px-4 mb-2">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#logoutModal"
                             class="es-w-full es-menu-btn d-flex align-items-center">
-                            <img src="{{ url('public/images/arrow-right-start-on-rectangle-icon.png') }}"
+                            <img src="{{ asset('images/arrow-right-start-on-rectangle-icon.png') }}"
                                 alt="" class="es-mr-3" />
                             Logout
                         </button>
@@ -230,7 +230,7 @@
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
                         <div class="es-px-4 d-flex align-items-center align-self-center my-3">
                             <a href="#" class="">
-                                <img src="{{ url('public/images/logo.svg') }}" alt="" class="es-h-8" />
+                                <img src="{{ asset('images/logo.svg') }}" alt="" class="es-h-8" />
                             </a>
                         </div>
                     </h5>
@@ -265,8 +265,8 @@
                             class="es-menu-btn d-flex align-items-center
                      @if (request()->is('transactions*')) active @endif ">
                             <img src="{{ request()->is('transactions')
-                                ? url('public/images/transactions-icon-white.png')
-                                : url('public/images/transactions-icon-dark.png') }}"
+                                ? asset('images/transactions-icon-white.png')
+                                : asset('images/transactions-icon-dark.png') }}"
                                 alt="" class="es-mr-3" />
                             Transactions
                         </a>
@@ -277,8 +277,8 @@
                     @if (request()->is('services*')) active @endif
                      @if (Auth::check() && Auth::user()->status === 3) disabled @endif">
                             <img src="{{ request()->is('services')
-                                ? url('public/images/services-icon-white.png')
-                                : url('public/images/services-icon-dark.png') }}"
+                                ? asset('images/services-icon-white.png')
+                                : asset('images/services-icon-dark.png') }}"
                                 alt="" class="es-mr-3" />
                             Services
                         </a>
@@ -289,8 +289,8 @@
                     @if (request()->is('bookings*')) active @endif
                     @if (Auth::check() && Auth::user()->status === 3) disabled @endif ">
                             <img src="{{ request()->is('bookings')
-                                ? url('public/images/upcoming-bookings-icon-white.png')
-                                : url('public/images/upcoming-bookings-icon-dark.png') }}"
+                                ? asset('images/upcoming-bookings-icon-white.png')
+                                : asset('images/upcoming-bookings-icon-dark.png') }}"
                                 alt="" class="es-mr-3" />
                             Upcoming Bookings
                         </a>
@@ -300,8 +300,8 @@
                             class="es-menu-btn d-flex align-items-center
                     @if (request()->is('profile*')) active @endif ">
                             <img src="{{ request()->is('profile')
-                                ? url('public/images/profile-icon-white.png')
-                                : url('public/images/profile-icon-dark.png') }}"
+                                ? asset('images/profile-icon-white.png')
+                                : asset('images/profile-icon-dark.png') }}"
                                 alt="" class="es-mr-3" />
                             Profile
                         </a>
@@ -309,7 +309,7 @@
                     <div class="es-px-4 mb-2">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#logoutModal"
                             class="es-w-full es-menu-btn d-flex align-items-center">
-                            <img src="{{ url('public/images/arrow-right-start-on-rectangle-icon.png') }}"
+                            <img src="{{ asset('images/arrow-right-start-on-rectangle-icon.png') }}"
                                 alt="" class="es-mr-3" />
                             Logout
                         </button>
@@ -334,8 +334,8 @@
                                         class="es-menu-btn d-flex align-items-center
                                          @if (request()->is('admin/members*')) active @endif">
                                         <img src="{{ request()->is('admin/members*')
-                                            ? url('public/images/members-white.png')
-                                            : url('public/images/members-dark.png') }}"
+                                            ? asset('images/members-white.png')
+                                            : asset('images/members-dark.png') }}"
                                             alt="" class="es-mr-3" />
                                         Members
                                     </a>
@@ -345,8 +345,8 @@
                                         class="es-menu-btn d-flex align-items-center
                                         @if (request()->is('admin/bookings/view*')) active @endif">
                                         <img src="{{ request()->is('admin/bookings/view*')
-                                           ? url('public/images/upcoming-bookings-icon-white.png')
-                                            : url('public/images/upcoming-bookings-icon-dark.png') }}"
+                                           ? asset('images/upcoming-bookings-icon-white.png')
+                                            : asset('images/upcoming-bookings-icon-dark.png') }}"
                                             alt="" class="es-mr-3" />
                                         Upcoming Bookings
                                     </a>
@@ -358,8 +358,8 @@
                                         class="es-menu-btn d-flex align-items-center
                                          @if (request()->is('admin/transactions*')) active @endif">
                                         <img src="{{ request()->is('admin/transactions*')
-                                            ? url('public/images/transactions-icon-white.png')
-                                            : url('public/images/transactions-icon-dark.png') }}"
+                                            ? asset('images/transactions-icon-white.png')
+                                            : asset('images/transactions-icon-dark.png') }}"
                                             alt="" class="es-mr-3" />
                                         Transactions
                                     </a>
@@ -370,8 +370,8 @@
                                         class="es-menu-btn d-flex align-items-center
                                          @if (request()->is('admin/subscriptions*')) active @endif">
                                         <img src="{{ request()->is('admin/subscriptions*')
-                                            ? url('public/images/shopping-cart-white.png')
-                                            : url('public/images/shopping-cart-dark.png') }}"
+                                            ? asset('images/shopping-cart-white.png')
+                                            : asset('images/shopping-cart-dark.png') }}"
                                             alt="" class="es-mr-3" />
                                         Subscriptions
                                     </a>
@@ -382,8 +382,8 @@
                                         class="es-menu-btn d-flex align-items-center
                                          @if (request()->is('admin/products*')) active @endif">
                                         <img src="{{ request()->is('admin/products*')
-                                            ? url('public/images/products-white.png')
-                                            : url('public/images/products-dark.png') }}"
+                                            ? asset('images/products-white.png')
+                                            : asset('images/products-dark.png') }}"
                                             alt="" class="es-mr-3" />
                                         Products
                                     </a>
@@ -393,7 +393,7 @@
                                     <a href="{{ url('admin/services') }}"
                                         class="es-menu-btn d-flex align-items-center
                                          @if (request()->is('admin/services*')) active @endif">
-                                        <img src="{{ request()->is('admin/services*') ? url('public/images/edit-white.png') : url('public/images/edit-dark.png') }}"
+                                        <img src="{{ request()->is('admin/services*') ? asset('images/edit-white.png') : asset('images/edit-dark.png') }}"
                                             alt="" class="es-mr-3" />
                                         Services
                                     </a>
@@ -404,8 +404,8 @@
                                         class="es-menu-btn d-flex align-items-center
                                      @if (request()->is('admin/profile*')) active @endif">
                                         <img src="{{ request()->is('admin/profile*')
-                                            ? url('public/images/profile-icon-white.png')
-                                            : url('public/images/profile-icon-dark.png') }}"
+                                            ? asset('images/profile-icon-white.png')
+                                            : asset('images/profile-icon-dark.png') }}"
                                             alt="" class="es-mr-3" />
                                         Profile
                                     </a>
@@ -420,8 +420,8 @@
                                         class="es-menu-btn  d-flex align-items-center
                                          @if (request()->is('transactions')) active @endif">
                                         <img src="{{ request()->is('transactions')
-                                            ? url('public/images/transactions-icon-white.png')
-                                            : url('public/images/transactions-icon-dark.png') }}"
+                                            ? asset('images/transactions-icon-white.png')
+                                            : asset('images/transactions-icon-dark.png') }}"
                                             alt="" class="es-mr-3" />
                                         Transactions
                                     </a>
@@ -433,8 +433,8 @@
                                                @if (request()->is('services')) active @endif
                                                @if (Auth::check() && Auth::user()->status === 3) disabled @endif">
                                         <img src="{{ request()->is('services')
-                                            ? url('public/images/services-icon-white.png')
-                                            : url('public/images/services-icon-dark.png') }}"
+                                            ? asset('images/services-icon-white.png')
+                                            : asset('images/services-icon-dark.png') }}"
                                             alt="" class="es-mr-3" />
                                         Services
                                     </a>
@@ -447,8 +447,8 @@
                                          @if (request()->is('bookings')) active @endif
                                          @if (Auth::check() && Auth::user()->status === 3) disabled @endif">
                                         <img src="{{ request()->is('bookings')
-                                            ? url('public/images/upcoming-bookings-icon-white.png')
-                                            : url('public/images/upcoming-bookings-icon-dark.png') }}"
+                                            ? asset('images/upcoming-bookings-icon-white.png')
+                                            : asset('images/upcoming-bookings-icon-dark.png') }}"
                                             alt="" class="es-mr-3" />
                                         Upcoming Bookings
                                     </a>
@@ -459,8 +459,8 @@
                                         class="es-menu-btn d-flex align-items-center
                                             @if (request()->is('profile')) active @endif ">
                                         <img src="{{ request()->is('profile')
-                                            ? url('public/images/profile-icon-white.png')
-                                            : url('public/images/profile-icon-dark.png') }}"
+                                            ? asset('images/profile-icon-white.png')
+                                            : asset('images/profile-icon-dark.png') }}"
                                             alt="" class="es-mr-3" />
                                         Profile
                                     </a>
@@ -472,7 +472,7 @@
                             <div class="es-px-4">
                                 <div class="d-flex es-bg-brown-100 es-px-5 es-py-3 es-rounded">
                                     <div>
-                                        <img src="{{ url('public/images/info.png') }}" alt=""
+                                        <img src="{{ asset('images/info.png') }}" alt=""
                                             class="es-mr-3" />
                                     </div>
                                     <div class="es-font-mulish-medium">
@@ -492,8 +492,8 @@
                                         class="es-menu-btn d-flex align-items-center
                                         @if (request()->is('admin/settings')) active @endif ">
                                         <img src="{{ request()->is('admin/settings')
-                                            ? url('public/images/settings-white.png')
-                                            : url('public/images/settings-dark.png') }}"
+                                            ? asset('images/settings-white.png')
+                                            : asset('images/settings-dark.png') }}"
                                             alt="" class="es-mr-3" />
                                         Settings
                                     </a>
@@ -503,7 +503,7 @@
                             <div class="es-px-4 mb-2">
                                 <button type="button" data-bs-toggle="modal" data-bs-target="#logoutModal"
                                     class="es-w-full es-menu-btn d-flex align-items-center">
-                                    <img src="{{ url('public/images/arrow-right-start-on-rectangle-icon.png') }}"
+                                    <img src="{{ asset('images/arrow-right-start-on-rectangle-icon.png') }}"
                                         alt="" class="es-mr-3" />
                                     Logout
                                 </button>

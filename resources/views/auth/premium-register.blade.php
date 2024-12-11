@@ -18,7 +18,7 @@
 <head>
     <title>Create Account</title>
 
-    <link rel="icon" href="{{ url('/logo.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('logo.png') }}" type="image/x-icon">
 
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -47,7 +47,7 @@
 
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="{{ url('/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
 
 
@@ -147,41 +147,87 @@
             display: block;
             /* Show when visible */
         }
-        
-        
-        @media only screen and (max-width: 400px){
-            
-          
-        .es-text-15xl{
-            
-            
-            font-size: 22px !important;
+
+
+        @media only screen and (max-width: 400px) {
+
+
+            .es-text-15xl {
+
+
+                font-size: 22px !important;
+            }
+
+
+            .es-text-normal {
+
+
+                font-size: 10px !important;
+            }
+
+
+            .es-gap-7 {
+                gap: 1rem;
+            }
+
+
+
+            .logo1 {
+
+                height: 1.2rem;
+            }
+
+
         }
 
-            
-         .es-text-normal{
-             
-             
-             font-size:10px !important;
-         }   
-         
-         
-         .es-gap-7 {
-  gap: 1rem;
-}
 
+        @media only screen and (max-width:400px) {
+            .custom-gap {
+                gap: 0.6rem;
+            }
 
+            .custom-font-size {
+                font-size: 24px !important;
+            }
 
-.logo1{
-    
-    height:1.2rem;
-}
-            
-            
+            .custom-font-size2 {
+                font-size: 12px !important;
+            }
         }
-        
-        
-        
+
+        @media only screen and (min-width: 401px) and (max-width: 600px) {
+            .custom-gap {
+                gap: 1rem;
+            }
+
+            .custom-font-size {
+                font-size: 29px !important;
+            }
+
+            .custom-font-size2 {
+                font-size: 17px !important;
+            }
+        }
+
+        @media only screen and (max-width:1000px) {
+            .col-reverse {
+                flex-direction: column-reverse !important;
+            }
+        }
+
+        @media only screen and (max-width:460px) {
+            .block {
+                display: block !important;
+            }
+
+            .mt {
+                margin: 12px 0px!important;
+            }
+
+            .cust-size{
+                font-size: 30px!important;
+            }
+        }
     </style>
 </head>
 
@@ -200,20 +246,20 @@
     <div class="es-navbar es-z-50">
         <nav class="navbar navbar-expand-lg es-h-20 bg-white es-drop-shadow">
             <div class="container-xxl">
-                <div class="d-flex align-items-center justify-content-between w-100">
+                <div class="d-flex block align-items-center justify-content-between w-100">
                     <div class="d-flex align-items-center">
                         <a href="#" class="">
-                            <img src="{{ url('/images/logo.svg') }}" alt="" class="es-h-8 logo1" />
+                            <img src="{{ asset('images/logo.svg') }}" alt="" class="es-h-8" />
                         </a>
                     </div>
-                    <div>
-                        <a href="{{$fullUrl}}" class="text-decoration-none es-text-gray-900 es-font-500">
+                    <div class="mt">
+                        <a href="{{ $fullUrl }}" class="text-decoration-none es-text-gray-900 es-font-500">
                             <div class="d-flex align-items-center gap-2 gap-md-3">
-                                <img src="{{ url('/images/left-arrow.png') }}" width="13" height="13"
-                                    alt="">
+                                <img src="{{ asset('images/left-arrow.png') }}" width="16" height="16"
+                                    alt="" />
                                 <div>
                                     <span class="d-none d-md-inline-block">Back to&nbsp;</span><span
-                                        class="text-decoration-underline">{{$domain}}</span>
+                                        class="text-decoration-underline">{{ $domain }}</span>
                                 </div>
                             </div>
                         </a>
@@ -226,7 +272,7 @@
     <div class="container-xxl es-z-10 position-relative">
         <form id="payment-form" action="{{ url('/store') }}" method="POST">
             @csrf
-            <div class="row position-relative">
+            <div class="row col-reverse position-relative">
                 <div class="col-lg-6 es-pt-20 es-pb-24">
                     <div class="es-mb-10 d-flex" style="justify-content: space-between;align-items:center;">
                         <div>
@@ -238,10 +284,14 @@
                             </div>
                         </div>
                         <div style="text-align:end;">
-                             <p><span class="es-header-1 es-font-600 es-mb-3" style="font-size:61px;">${{ $plan ? $plan->promo_price : '' }}</span>
-                                 <span class="es-header-5 es-font-400 es-mb-3">{{ $plan ? $plan->promo_period : '' }}</span></p>
+                            <p><span class="es-header-1 es-font-600 es-mb-3 cust-size"
+                                    style="font-size:61px;">${{ $plan ? $plan->promo_price : '' }}</span>
+                                <span
+                                    class="es-header-5 es-font-400 es-mb-3">{{ $plan ? $plan->promo_period : '' }}</span>
+                            </p>
 
-                                 <p class="es-text-gray-500" >{{ $plan ? $plan->promo_sub_title : '' }}  {{ $plan ? $plan->promo_sub_title_price : '' }}</p>
+                            <p class="es-text-gray-500">{{ $plan ? $plan->promo_sub_title : '' }}
+                                {{ $plan ? $plan->promo_sub_title_price : '' }}</p>
                         </div>
                     </div>
                     <div class="es-mb-4 es-mb-6">
@@ -262,7 +312,7 @@
                                     class="btn border-0 es-text-sm es-font-600 p-0"
                                 >
                                     Change
-                                    <img src="{{url('/images/refresh.png')}}" width="14" height="14" alt="">
+                                    <img src="{{asset('images/refresh.png')}}" width="14" height="14" alt="">
                                 </label>
                                 <button
                                     type="button"
@@ -270,7 +320,7 @@
                                     id="clear_photo_input"
                                 >
                                     Delete
-                                    <img src="{{url('/images/trash.png')}}" width="14" height="14" alt="">
+                                    <img src="{{asset('images/trash.png')}}" width="14" height="14" alt="">
                                 </button>
                             </div>
                         </div> --}}
@@ -344,8 +394,8 @@
                             <div class="alert alert-danger">
                                                             <ul>
                                                                 @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
+<li>{{ $error }}</li>
+@endforeach
                                                             </ul>
                                                         </div>
                             @endif -->
@@ -395,7 +445,7 @@
                                     placeholder="Password" />
                                 <button id="toggle-password" type="button"
                                     class="d-flex align-items-center bg-transparent border-0 es--ml-12 es-outline-none">
-                                    <img src="{{ url('/images/eye-dark.png') }}"
+                                    <img src="{{ asset('images/eye-dark.png') }}"
                                         alt="Toggle Password Visibility" />
                                 </button>
                             </div>
@@ -419,7 +469,8 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="es-mb-5">
-                                    <select id="payment_method" name="payment_method"  class="form-control es-input mt-2" >
+                                    <select id="payment_method" name="payment_method"
+                                        class="form-control es-input mt-2">
                                         <option value="">Select Payment Method</option>
                                         {{-- <option value="1">Stripe</option> --}}
                                         <option value="2">Credit/Debit Cards (Square)</option>
@@ -479,15 +530,17 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="acceptTerms" value="1" id="acceptTerms">
+                                    <input class="form-check-input" type="checkbox" name="acceptTerms"
+                                        value="1" id="acceptTerms">
                                     <a href="#" id="termsModalTrigger" style="color:black;">
-                                    <label class="form-check-label es-pl-1 text-decoration-underline es-font-500" for="acceptTerms">
-                                     Acknowledge Payment Terms and Conditions
-                                    </label>
+                                        <label class="form-check-label es-pl-1 text-decoration-underline es-font-500"
+                                            for="acceptTerms">
+                                            Acknowledge Payment Terms and Conditions
+                                        </label>
                                     </a>
                                     @error('acceptTerms')
-                                    <div class="es-input-error-message">{{ $message }}</div>
-                                @enderror
+                                        <div class="es-input-error-message">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -514,8 +567,8 @@
                     <div class="w-100 h-100">
                         <div class="hero-text-content">
                             <div class="es-mb-8">
-                                <img src="{{ $settings->logo ?? url('/images/logo-white.svg') }}"
-                                    alt="" class="w-100" />
+                                <img src="{{ $settings->logo ?? asset('images/logo-white.svg') }}"
+                                    alt="" class="img600x100" />
                             </div>
                             <div class="es-mb-8">
                                 <div class="es-header-2 es-font-600 text-white es-font-inter es-mb-5">
@@ -541,43 +594,43 @@
                                 <div class="es-px-5 es-py-2 bg-white d-flex align-items-center gap-2 rounded-2">
                                     <!-- <span class="es-text-xl es-font-600">
                                         @if ($settings && $settings->number)
-                                            {{ $settings->number }}
-                                        @else
-                                            2000
-                                        @endif
+{{ $settings->number }}
+@else
+2000
+@endif
                                     </span> -->
                                     <span class="es-text-xl es-font-600">
-                                         {{ $remainingSeats }}
+                                        {{ $remainingSeats }}
                                     </span>
                                     <span>Seats Remaining</span>
                                 </div>
                             </div>
 
-                            <div class="text-white d-flex es-gap-7 text-center">
+                            <div class="text-white d-flex es-gap-7 custom-gap text-center">
                                 <div>
-                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="months">00
-                                    </div>
-                                    <div class="es-font-500">MONTHS</div>
+                                    <div class="es-text-15xl custom-font-size es-font-500 es-font-inter odometer"
+                                        id="months">00</div>
+                                    <div class="es-font-500 custom-font-size2">MONTHS</div>
                                 </div>
                                 <div>
-                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="days">00
-                                    </div>
-                                    <div class="es-font-500">DAYS</div>
+                                    <div class="es-text-15xl custom-font-size es-font-500 es-font-inter odometer"
+                                        id="days">00</div>
+                                    <div class="es-font-500 custom-font-size2">DAYS</div>
                                 </div>
                                 <div>
-                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="hours">00
-                                    </div>
-                                    <div class="es-font-500">HOURS</div>
+                                    <div class="es-text-15xl custom-font-size es-font-500 es-font-inter odometer"
+                                        id="hours">00</div>
+                                    <div class="es-font-500 custom-font-size2">HOURS</div>
                                 </div>
                                 <div>
-                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="minutes">00
-                                    </div>
-                                    <div class="es-font-500">MINUTES</div>
+                                    <div class="es-text-15xl custom-font-size es-font-500 es-font-inter odometer"
+                                        id="minutes">00</div>
+                                    <div class="es-font-500 custom-font-size2">MINUTES</div>
                                 </div>
                                 <div>
-                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="seconds">00
-                                    </div>
-                                    <div class="es-font-500">SECONDS</div>
+                                    <div class="es-text-15xl custom-font-size es-font-500 es-font-inter odometer"
+                                        id="seconds">00</div>
+                                    <div class="es-font-500 custom-font-size2">SECONDS</div>
                                 </div>
                             </div>
                         </div>
@@ -594,12 +647,12 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div
                         class="card-body d-flex align-items-center justify-content-center es-py-24 mt-3 flex-column es-gap-6">
-                        <img src="{{ url('/images/logo.svg') }}" alt="" class="" />
+                        <img src="{{ asset('images/logo.svg') }}" alt="" class="" />
                         <div class="es-text-3xl es-font-mulish-bold">Congratulations!</div>
                         <div class="es-text-gray-500 text-center es-w-auto es-w-md-96 es-mb-4">
                             We're pleased to have you as an Empress Spa Member, and look forward to meeting you.
@@ -618,28 +671,30 @@
         </div>
     </div>
 
-      <!--Payment terms and conditions modal -->
-    
-      <div class="modal fade" data-bs-backdrop="static" id="termsModal" tabindex="-1" role="dialog"
-     aria-labelledby="termsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content position-relative">
-            <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
+    <!--Payment terms and conditions modal -->
+
+    <div class="modal fade" data-bs-backdrop="static" id="termsModal" tabindex="-1" role="dialog"
+        aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content position-relative">
+                <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                <img src="{{ url('/images/close.png') }}" alt="" />
-            </button>
-            <div class="card">
-                <div class="card-body d-flex align-items-center justify-content-center es-py-12 mt-3 flex-column es-gap-6">
-                    <img src="{{ url('/images/logo.svg') }}" alt="" class="" />
-                    <div class="es-text-3xl es-font-mulish-bold">Payment Terms and Conditions</div>
-                    <div class="es-text-gray-500 text-center es-w-auto es-w-md-96 es-mb-4" style="width:35rem; height: 400px; overflow-y: scroll;">
-                    {!! $settings->terms_condition !!}
+                    <img src="{{ asset('images/close.png') }}" alt="" />
+                </button>
+                <div class="card">
+                    <div
+                        class="card-body d-flex align-items-center justify-content-center es-py-12 mt-3 flex-column es-gap-6">
+                        <img src="{{ asset('images/logo.svg') }}" alt="" class="" />
+                        <div class="es-text-3xl es-font-mulish-bold">Payment Terms and Conditions</div>
+                        <div class="es-text-gray-500 text-center es-w-auto es-w-md-96 es-mb-4"
+                            style="width:35rem; height: 400px; overflow-y: scroll;">
+                            {!! $settings->terms_condition !!}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
@@ -663,35 +718,30 @@
     <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
 
     <script>
+        // Hide fields when selecting afterpay (Square)
 
-
-
-
-
- // Hide fields when selecting afterpay (Square)
-        
- $(document).ready(function() {
-    $('#payment_method').change(function() {
-        var selectedValue = $(this).val();
-        if (selectedValue === '3') {
-            $('.hidee').fadeOut(300); // Hides the div with a fade-out effect over 300 milliseconds
-        } else if (selectedValue === '2') {
-            $('.hidee').fadeIn(300); // Shows the div with a fade-in effect over 300 milliseconds
-        }
-    });
-});
-
-
-
-
- // Modal box displaying information 
-        
- $(document).ready(function() {
-        $('#termsModalTrigger').click(function(event) {
-            event.preventDefault(); // Prevent the default anchor click behavior
-            $('#termsModal').modal('show'); // Show the terms modal
+        $(document).ready(function() {
+            $('#payment_method').change(function() {
+                var selectedValue = $(this).val();
+                if (selectedValue === '3') {
+                    $('.hidee').fadeOut(300); // Hides the div with a fade-out effect over 300 milliseconds
+                } else if (selectedValue === '2') {
+                    $('.hidee').fadeIn(300); // Shows the div with a fade-in effect over 300 milliseconds
+                }
+            });
         });
-    });
+
+
+
+
+        // Modal box displaying information 
+
+        $(document).ready(function() {
+            $('#termsModalTrigger').click(function(event) {
+                event.preventDefault(); // Prevent the default anchor click behavior
+                $('#termsModal').modal('show'); // Show the terms modal
+            });
+        });
 
 
 
@@ -713,7 +763,8 @@
                 if (selectedMethod === '1' || selectedMethod === '2') {
                     createAccountButton.disabled = false; // Enable for Stripe or Square
                     cardContainer.classList.remove('d-none'); // Show card input
-                    document.getElementById('afterpay-button').classList.add('d-none'); // Hide Afterpay button
+                    document.getElementById('afterpay-button').classList.add(
+                    'd-none'); // Hide Afterpay button
                     initializePaymentMethod(selectedMethod); // Initialize selected payment method
 
                 } else if (selectedMethod === '3') { // Afterpay
@@ -722,9 +773,11 @@
                     cardContainer.classList.add('d-none'); // Hide card input
                     initializeAfterpay(); // Initialize Afterpay
                 } else {
-                    createAccountButton.disabled = true; // Disable Create Account button for no selection
+                    createAccountButton.disabled =
+                    true; // Disable Create Account button for no selection
                     cardContainer.classList.add('d-none'); // Hide card input
-                    document.getElementById('afterpay-button').classList.add('d-none'); // Hide Afterpay button
+                    document.getElementById('afterpay-button').classList.add(
+                    'd-none'); // Hide Afterpay button
                 }
             });
 
@@ -741,7 +794,10 @@
                         event.preventDefault();
                         if (!$("#payment-form").valid()) return; // Validate the form
 
-                        const { paymentMethod: pm, error } = await stripe.createPaymentMethod({
+                        const {
+                            paymentMethod: pm,
+                            error
+                        } = await stripe.createPaymentMethod({
                             type: 'card',
                             card: cardElement,
                         });
@@ -762,7 +818,10 @@
                         event.preventDefault();
                         if (!$("#payment-form").valid()) return; // Validate the form
 
-                        const { token, error } = await card.tokenize();
+                        const {
+                            token,
+                            error
+                        } = await card.tokenize();
 
                         if (error) {
                             paymentStatus.textContent = error.message;
@@ -776,11 +835,11 @@
 
             // Function to initialize Afterpay
             async function initializeAfterpay() {
-                
-                const afterpayButtonEle = document.getElementById('afterpay-button');
-               afterpayButtonEle.innerHTML = ''; // Clear existing content
 
-                
+                const afterpayButtonEle = document.getElementById('afterpay-button');
+                afterpayButtonEle.innerHTML = ''; // Clear existing content
+
+
                 const application_id = "{{ get_setting('square_application_id') }}";
                 const location_id = "{{ get_setting('square_location_id') }}";
                 const amount = "{{ $plan->price_of_subscription }}";
@@ -828,13 +887,16 @@
                         const tokenResult = await afterpay.tokenize();
                         if (tokenResult.status === 'OK') {
                             $('#afterpay_token').val(tokenResult.token);
-                            paymentStatus.textContent = 'Payment has been completed successfully. Now you can create your account!';
+                            paymentStatus.textContent =
+                                'Payment has been completed successfully. Now you can create your account!';
                             paymentStatus.classList.add('visible', 'text-success');
                             // Enable the Create Account button
                             createAccountButton.disabled = false;
                             createAccountButton.addEventListener('click', function() {
-                                if ($("#payment-form").valid()) { // Validate the form before submission
-                                    paymentForm.submit(); // Submit the form to create the account
+                                if ($("#payment-form")
+                                .valid()) { // Validate the form before submission
+                                    paymentForm
+                                .submit(); // Submit the form to create the account
                                 }
                             });
                             afterpayButton.classList.add('d-none');
@@ -959,7 +1021,6 @@
                 }
             });
         });
-
     </script>
 
 
@@ -1087,8 +1148,8 @@
             togglePasswordVisibility(
                 "password",
                 "toggle-password",
-                "{{ url('/images/eye-dark.png') }}",
-                "{{ url('/images/eye-off-dark.png') }}",
+                "{{ asset('images/eye-dark.png') }}",
+                "{{ asset('images/eye-off-dark.png') }}",
             );
         });
     </script>

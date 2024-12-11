@@ -7653,3 +7653,39 @@ pointer-events: none; /* Disable pointer events */
 text-decoration: none; /* Remove underline */
 cursor: not-allowed; /* Change cursor to indicate it's disabled */
 }
+
+
+
+/* New Image Resolution  */
+
+
+.img500x500 {
+  height: 500px;
+  width: 500px;
+  object-fit: cover;
+  object-position: center;
+}
+.img500x200 {
+  width: 500px;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+.img600x100 {
+  width: 600px;
+  height: 100px;
+  object-fit: cover;
+  object-position: center;
+}
+.img960x1080 {
+  width: 960px;
+  height: 1080px;
+  object-fit: cover;
+  object-position: center;
+}
+.img600x300 {
+  width: 600px;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+}

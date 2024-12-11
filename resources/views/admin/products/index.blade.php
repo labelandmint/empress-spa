@@ -19,11 +19,11 @@
                         <div class="d-flex align-items-center gap-4">
                             <div class="d-flex gap-3">
                                 <button id="sortAsc" class="bg-transparent p-0 es-btn-icon">
-                                    <img src="{{ url('/images/filter-up-dark.png') }}" alt="" />
+                                    <img src="{{ asset('images/filter-up-dark.png') }}" alt="" />
                                 </button>
 
                                 <button id="sortDesc" class="bg-transparent p-0 es-btn-icon">
-                                    <img src="{{ url('/images/filter-down-dark.png') }}" alt="" />
+                                    <img src="{{ asset('images/filter-down-dark.png') }}" alt="" />
                                 </button>
                             </div>
                             <div class="d-flex align-items-center gap-2">
@@ -71,9 +71,9 @@
                                     <tr>
                                         <td>
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#photoModal"
-                                                data-image="{{ $list->image ?? url('/images/services-image.svg') }}"
+                                                data-image="{{ $list->image ?? asset('images/services-image.svg') }}"
                                                 class="border-0 es-outline-none bg-transparent p-0 hover-darken-95">
-                                                <img src="{{ $list->image ?? url('/images/services-image.svg') }}"
+                                                <img src="{{ $list->image ?? asset('images/services-image.svg') }}"
                                                     width="40" height="40" alt="" />
                                             </button>
                                         </td>
@@ -135,7 +135,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent closeModal position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body p-4">
@@ -144,7 +144,10 @@
                             @csrf
                             <div class="es-text-lg es-font-600 es-mb-6">Add Product</div>
                             <div>
-                                <div>Photo</div>
+                                <div>Photo :</div>
+                                <div class="es-text-gray-500 es-mt-2 es-mb-4">
+                                    Resolution requirements: 500x500px
+                                </div>
                                 <div class="mt-2">
                                     <input type="file" name="image" accept=".jpg,.jpeg,.png" hidden id="photo_input" />
                                     <label for="photo_input" class="es-file-input" id="photo-label">
@@ -162,18 +165,18 @@
                                         </svg>
                                     </label>
                                     <div class="d-none" id="file-preview-container">
-                                        <img src="#" alt="Preview Uploaded Image" id="photo-preview"
-                                            class="es-h-80 es-mb-3 file-preview w-100" />
+                                        <img src="#" alt="Preview Uploaded Image" id="photo-preview" 
+                                            class="es-h-80 es-mb-3 file-preview w-100 img500x500" />
                                         <div class="d-flex es-gap-8">
                                             <label for="photo_input" class="btn border-0 es-text-sm es-font-600 p-0">
                                                 Change
-                                                <img src="{{ url('/images/refresh.png') }}" width="14"
+                                                <img src="{{ asset('images/refresh.png') }}" width="14"
                                                     height="14" alt="" />
                                             </label>
                                             <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                                 id="clear_photo_input">
                                                 Delete
-                                                <img src="{{ url('/images/trash.png') }}" width="14"
+                                                <img src="{{ asset('images/trash.png') }}" width="14"
                                                     height="14" alt="" />
                                             </button>
                                         </div>
@@ -217,7 +220,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body p-4">
@@ -252,13 +255,13 @@
                                             <label for="update_photo_input"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
                                                 Change
-                                                <img src="{{ url('/images/refresh.png') }}" width="14"
+                                                <img src="{{ asset('images/refresh.png') }}" width="14"
                                                     height="14" alt="" />
                                             </label>
                                             <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                                 id="update_clear_photo_input">
                                                 Delete
-                                                <img src="{{ url('/images/trash.png') }}" width="14"
+                                                <img src="{{ asset('images/trash.png') }}" width="14"
                                                     height="14" alt="" />
                                             </button>
                                         </div>
@@ -310,7 +313,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body p-4">
@@ -372,16 +375,16 @@
     <!-- Photo Modal -->
     <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 540px">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 610px">
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body p-5">
-                        <img id="modalImage" src="{{ url('/images/services-image.svg') }}" alt=""
-                            class="w-100" />
+                        <img id="modalImage" src="{{ asset('images/services-image.svg') }}" alt=""
+                            class="img500x500" />
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@
         </div> -->
     </div>
     <div class=""  style="text-align: center;padding: 100px 0px;" >
-        <img class="es-w-40" src="{{$logo}}" alt=""/>
+        <img class="img600x100" src="{{$logo}}" alt=""/>
     </div>
     <div class="" style="text-align: center;">
         <img class="es-w-full" src="{{$graphic}}" alt="" />

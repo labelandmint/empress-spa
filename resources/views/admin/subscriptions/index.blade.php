@@ -44,7 +44,7 @@
                     <div class="d-flex align-items-center es-mb-4">
                         <div
                             class="es-rounded-full es-w-8 es-h-8 es-bg-brown-100 d-flex align-items-center justify-content-center es-mr-4">
-                            <img src="{{ url('/images/users-black.png') }}" alt="" />
+                            <img src="{{ asset('images/users-black.png') }}" alt="" />
                         </div>
                         <div class="es-text-sm es-font-500">Total Subscriptions</div>
                     </div>
@@ -56,7 +56,7 @@
                     <div class="d-flex align-items-center es-mb-4">
                         <div
                             class="es-rounded-full es-w-8 es-h-8 es-bg-brown-100 d-flex align-items-center justify-content-center es-mr-4">
-                            <img src="{{ url('/images/credit-card.png') }}" alt="" />
+                            <img src="{{ asset('images/credit-card.png') }}" alt="" />
                         </div>
                         <div class="es-text-sm es-font-500">
                             Total Subscriptions Value
@@ -70,7 +70,7 @@
                     <div class="d-flex align-items-center es-mb-4">
                         <div
                             class="es-rounded-full es-w-8 es-h-8 es-bg-brown-100 d-flex align-items-center justify-content-center es-mr-4">
-                            <img src="{{ url('/images/shopping-bag.png') }}" alt="" />
+                            <img src="{{ asset('images/shopping-bag.png') }}" alt="" />
                         </div>
                         <div class="es-text-sm es-font-500">Total This Month</div>
                     </div>
@@ -82,7 +82,7 @@
                     <div class="d-flex align-items-center es-mb-4">
                         <div
                             class="es-rounded-full es-w-8 es-h-8 es-bg-brown-100 d-flex align-items-center justify-content-center es-mr-4">
-                            <img src="{{ url('/images/refresh.png') }}" alt="" />
+                            <img src="{{ asset('images/refresh.png') }}" alt="" />
                         </div>
                         <div class="es-text-sm es-font-500">Total Last Month</div>
                     </div>
@@ -102,11 +102,11 @@
                         <div class="d-flex align-items-center gap-3">
                             <div>
                                 <button type="button" id="sortAsc" class="border-0 bg-transparent p-0">
-                                    <img src="{{ url('/images/filter-up-dark.png') }}" alt="" />
+                                    <img src="{{ asset('images/filter-up-dark.png') }}" alt="" />
                                 </button>
 
                                 <button type="button" id="sortDesc" class="border-0 bg-transparent p-0">
-                                    <img src="{{ url('/images/filter-down-dark.png') }}" alt="" />
+                                    <img src="{{ asset('images/filter-down-dark.png') }}" alt="" />
                                 </button>
                             </div>
                             @if (auth()->guard('admin')->user()->hasPermission('add_subscriptions'))
@@ -152,8 +152,8 @@
                                         <td>
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#photoModal"
                                                 class="border-0 es-outline-none bg-transparent p-0 hover-darken-95"
-                                                data-image="{{ $plan->photo ?? url('/images/services-image.svg') }}">
-                                                <img src="{{ $plan->photo ? $plan->photo : url('/images/subscriptions-img.png') }}"
+                                                data-image="{{ $plan->photo ?? asset('images/services-image.svg') }}">
+                                                <img src="{{ $plan->photo ? $plan->photo : asset('images/subscriptions-img.png') }}"
                                                     width="40" height="40" alt="Subscription Image" />
                                             </button>
                                         </td>
@@ -216,13 +216,13 @@
                                             <div class="d-flex justify-content-end">
                                                 <a href="{{ $plan->subscription_form_url }}" target="_blank"
                                                     class="bg-transparent border-0">
-                                                    <img src="{{ url('/images/external-link.png') }}"
+                                                    <img src="{{ asset('images/external-link.png') }}"
                                                         alt="Open Form" />
                                                 </a>
                                                 <button class="bg-transparent border-0 position-relative"
                                                     onclick="copyToClipboard(event, this, '{{ $plan->subscription_form_url }}')"
                                                     title="Copy Link">
-                                                    <img src="{{ url('/images/copy.png') }}" alt="Copy Link" />
+                                                    <img src="{{ asset('images/copy.png') }}" alt="Copy Link" />
                                                     <span class="tooltip-text" style="display: none;">Copied!</span>
                                                 </button>
 
@@ -299,7 +299,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body es-p-6">
@@ -311,7 +311,10 @@
                                 Add Subscription
                             </div>
                             <div>
-                                <div>Photo</div>
+                                <div>Photo :</div>
+                                <div class="es-text-gray-500 es-mt-2 es-mb-4">
+                                    Resolution requirements: 500x200px
+                                </div>
                                 <div class="mt-2">
                                     <input type="file" name="photo" accept=".jpg,.jpeg,.png" hidden
                                         id="photo_input_subscription" />
@@ -331,19 +334,19 @@
                                         </svg>
                                     </label>
                                     <div class="d-none" id="file-preview-container-subscription">
-                                        <img src="#" alt="Preview Uploaded Image" id="photo-preview-subscription"
-                                            class="es-h-80 es-mb-3 file-preview" />
+                                        <img src="#" alt="Preview Uploaded Image" id="photo-preview-subscription" 
+                                            class="es-h-80 es-mb-3 file-preview img500x200" />
                                         <div class="d-flex es-gap-8">
                                             <label for="photo_input_subscription"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
                                                 Change
-                                                <img src="{{ url('/images/refresh.png') }}" width="14"
+                                                <img src="{{ asset('images/refresh.png') }}" width="14"
                                                     height="14" alt="" />
                                             </label>
                                             <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                                 id="clear_photo_input_subscription">
                                                 Delete
-                                                <img src="{{ url('/images/trash.png') }}" width="14"
+                                                <img src="{{ asset('images/trash.png') }}" width="14"
                                                     height="14" alt="" />
                                             </button>
                                         </div>
@@ -473,13 +476,13 @@
 
                                         <div class="d-flex gap-1 es--ml-16">
                                             <button class="bg-transparent border-0 p-0">
-                                                <img src="{{ url('/images/external-link-dark.png') }}"
+                                                <img src="{{ asset('images/external-link-dark.png') }}"
                                                     alt="" />
                                             </button>
                                             <button type="button" data-bs-toggle="modal"
                                                 data-bs-target="#subscriptionFormModal"
                                                 class="bg-transparent border-0 p-0 preview-subs-modal">
-                                                <img src="{{ url('/images/edit-dark.png') }}" alt="" />
+                                                <img src="{{ asset('images/edit-dark.png') }}" alt="" />
                                             </button>
                                         </div>
                                     </div>
@@ -505,7 +508,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body es-p-6">
@@ -546,13 +549,13 @@
                                             <label for="update_photo_input_subscription"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
                                                 Change
-                                                <img src="{{ url('/images/refresh.png') }}" width="14"
+                                                <img src="{{ asset('images/refresh.png') }}" width="14"
                                                     height="14" alt="" />
                                             </label>
                                             <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                                 id="clear_update_photo_input_subscription">
                                                 Delete
-                                                <img src="{{ url('/images/trash.png') }}" width="14"
+                                                <img src="{{ asset('images/trash.png') }}" width="14"
                                                     height="14" alt="" />
                                             </button>
                                         </div>
@@ -622,8 +625,8 @@
                                     </label>
                                     <div>
                                         <select class="form-select subscription_services"
-                                            id="update_subscription_service_subscription_modal" name="subscription_services[]"
-                                            multiple>
+                                            id="update_subscription_service_subscription_modal"
+                                            name="subscription_services[]" multiple>
                                             @foreach ($services as $service)
                                                 <option value="{{ $service->id }}">{{ $service->title }}</option>
                                             @endforeach
@@ -683,13 +686,13 @@
 
                                         <div class="d-flex align-items-center gap-1 es--ml-16">
                                             <a href="#" id="external-link" class="bg-transparent">
-                                                <img src="{{ url('/images/external-link-dark.png') }}"
+                                                <img src="{{ asset('images/external-link-dark.png') }}"
                                                     alt="" />
                                             </a>
                                             <button type="button" data-bs-toggle="modal"
                                                 data-bs-target="#subscriptionFormModal"
                                                 class="bg-transparent border-0 p-0">
-                                                <img src="{{ url('/images/edit-dark.png') }}" alt="" />
+                                                <img src="{{ asset('images/edit-dark.png') }}" alt="" />
                                             </button>
                                         </div>
                                     </div>
@@ -715,7 +718,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body es-p-6">
@@ -752,13 +755,13 @@
                                         <label for="view_photo_input_subscription"
                                             class="btn border-0 es-text-sm es-font-600 p-0" disabled>
                                             Change
-                                            <img src="{{ url('/images/refresh.png') }}" width="14"
+                                            <img src="{{ asset('images/refresh.png') }}" width="14"
                                                 height="14" alt="" />
                                         </label>
                                         <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                             id="clear_view_photo_input_subscription" disabled>
                                             Delete
-                                            <img src="{{ url('/images/trash.png') }}" width="14"
+                                            <img src="{{ asset('images/trash.png') }}" width="14"
                                                 height="14" alt="" />
                                         </button>
                                     </div>
@@ -780,31 +783,31 @@
                             </div>
 
                             <div class="col-xl-4 d-flex flex-column es-mt-6">
-                                    <label for="promo_price">Promo Price</label>
-                                    <input id="view_promo_price" name="promo_price" type="text"
-                                        class="form-control es-input mt-2" placeholder="Promo Price" disabled/>
-                                    <div class="es-input-error-message"></div>
+                                <label for="promo_price">Promo Price</label>
+                                <input id="view_promo_price" name="promo_price" type="text"
+                                    class="form-control es-input mt-2" placeholder="Promo Price" disabled />
+                                <div class="es-input-error-message"></div>
                             </div>
 
                             <div class="col-xl-4 d-flex flex-column es-mt-6">
-                                    <label for="promo_period">Promo Period</label>
-                                    <input id="view_promo_period" name="promo_period" type="text"
-                                        class="form-control es-input mt-2" placeholder="Promo Period" disabled />
-                                    <div class="es-input-error-message"></div>
+                                <label for="promo_period">Promo Period</label>
+                                <input id="view_promo_period" name="promo_period" type="text"
+                                    class="form-control es-input mt-2" placeholder="Promo Period" disabled />
+                                <div class="es-input-error-message"></div>
                             </div>
 
                             <div class="col-xl-4 d-flex flex-column es-mt-6">
-                                    <label for="promo_sub_title">Promo SubTitle</label>
-                                    <input id="view_promo_sub_title" name="promo_sub_title" type="text"
-                                        class="form-control es-input mt-2" placeholder="Promo SubTitle" disabled />
-                                    <div class="es-input-error-message"></div>
+                                <label for="promo_sub_title">Promo SubTitle</label>
+                                <input id="view_promo_sub_title" name="promo_sub_title" type="text"
+                                    class="form-control es-input mt-2" placeholder="Promo SubTitle" disabled />
+                                <div class="es-input-error-message"></div>
                             </div>
 
                             <div class="col-xl-4 d-flex flex-column es-mt-6">
-                                    <label for="promo_sub_title_price">Promo SubTitle Price</label>
-                                    <input id="view_promo_sub_title_price" name="promo_sub_title_price" type="text"
-                                        class="form-control es-input mt-2" placeholder="Promo SubTitle Price" disabled />
-                                    <div class="es-input-error-message"></div>
+                                <label for="promo_sub_title_price">Promo SubTitle Price</label>
+                                <input id="view_promo_sub_title_price" name="promo_sub_title_price" type="text"
+                                    class="form-control es-input mt-2" placeholder="Promo SubTitle Price" disabled />
+                                <div class="es-input-error-message"></div>
                             </div>
 
 
@@ -897,7 +900,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body es-p-6">
@@ -950,13 +953,13 @@
                                             <label for="photo_input_subscription_form"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
                                                 Change
-                                                <img src="{{ url('/images/refresh.png') }}" width="14"
+                                                <img src="{{ asset('images/refresh.png') }}" width="14"
                                                     height="14" alt="" />
                                             </label>
                                             <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                                 id="clear_photo_input_subscription_form">
                                                 Delete
-                                                <img src="{{ url('/images/trash.png') }}" width="14"
+                                                <img src="{{ asset('images/trash.png') }}" width="14"
                                                     height="14" alt="" />
                                             </button>
                                         </div>
@@ -1092,16 +1095,16 @@
     <!-- Photo Modal -->
     <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 540px">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 610px">
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" class="" />
                 </button>
                 <div class="card">
                     <div class="card-body p-5">
-                        <img id="modalImage" src="{{ url('/images/services-image.svg') }}" alt=""
-                            class="w-100" />
+                        <img id="modalImage" src="{{ asset('images/services-image.svg') }}" alt=""
+                            class="img500x200" />
                     </div>
                 </div>
             </div>
@@ -1268,9 +1271,9 @@
             var frequency_title = $(this).data('frequency_title');
             var frequency_description = $(this).data('frequency_description');
             var subscription_package = $(this).data(
-            'subscription_package');
+                'subscription_package');
             var subscription_services = $(this).data(
-            'subscription_services');
+                'subscription_services');
 
             // Update form fields
             $('#update_title').val(title);
@@ -1292,7 +1295,7 @@
             if (photo) {
                 $('#update-photo-preview-subscription').attr('src', photo); // Set the image source
                 $('#update-file-preview-container-subscription').removeClass(
-                'd-none'); // Show the preview container
+                    'd-none'); // Show the preview container
                 $('#update-photo-label-subscription').addClass('d-none'); // Show the preview container
                 $('#update_photo_url').val(photo);
             }
@@ -1379,13 +1382,13 @@
             }
 
             var subscriptionPackagesArray = subscription_package.split(
-            ','); // Split the comma-separated string into an array
+                ','); // Split the comma-separated string into an array
             $('#view_subscription_package_subscription_modal').val(subscriptionPackagesArray).trigger('change');
 
 
             var subscriptionServicesArray = String(subscription_services).split(','); // Split the string
 
-             $('#view_subscription_service_subscription_modal').val(subscriptionServicesArray).trigger('change');
+            $('#view_subscription_service_subscription_modal').val(subscriptionServicesArray).trigger('change');
 
 
             // Disable all fields for view-only mode
@@ -1532,7 +1535,7 @@
                         required: true,
                         minlength: 10
                     },
-                   
+
                     'subscription_package[]': {
                         required: true,
                         minlength: 1 // At least one package must be selected
@@ -1572,7 +1575,7 @@
                         required: "Please enter a description",
                         minlength: "Description must be at least 10 characters long"
                     },
-                   
+
                     'subscription_package[]': {
                         required: "Please select at least one subscription package"
                     },
@@ -1706,7 +1709,7 @@
                 } else {
                     $('#pagination').append(
                         `<span class="page prev" data-page="${currentPage - 1}"><i class="fa-solid fa-chevron-left"></i></span> `
-                        );
+                    );
                 }
 
                 // Add page numbers
@@ -1722,7 +1725,7 @@
                 } else {
                     $('#pagination').append(
                         `<span class="page next" data-page="${currentPage + 1}"><i class="fa-solid fa-chevron-right"></i></span> `
-                        );
+                    );
                 }
             }
 
@@ -1746,7 +1749,7 @@
             var src = $(this).closest('form').find('#photo-preview-subscription').attr('src');
 
             var subscriptionPackageSelect = $(this).closest('form').find(
-            '#subscription_package_subscription_modal');
+                '#subscription_package_subscription_modal');
             var selectedOptions = subscriptionPackageSelect.find('option:selected');
             var selectedTexts = [];
             selectedOptions.each(function() {

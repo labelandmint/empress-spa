@@ -521,6 +521,9 @@
                             </div>
                             <div>
                                 <div>Photo</div>
+                                <div class="es-text-gray-500 es-mt-2 es-mb-4">
+                                    Resolution requirements: 500x200px
+                                </div>
                                 <div class="mt-2">
                                     <input type="hidden" name="id" id="id" />
                                     <input type="hidden" name="photo_url" id="update_photo_url" />

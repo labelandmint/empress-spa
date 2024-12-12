@@ -229,6 +229,9 @@
                             <div class="es-text-lg es-font-600 es-mb-6">Update Product</div>
                             <div>
                                 <div>Photo</div>
+                                <div class="es-text-gray-500 es-mt-2 es-mb-4">
+                                    Resolution requirements: 500x500px
+                                </div>
                                 <div class="mt-2">
                                     <input type="hidden" name="id" hidden id="id" />
                                     <input type="hidden" name="image_url" hidden id="update_image_url" />

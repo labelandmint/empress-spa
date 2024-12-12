@@ -312,7 +312,10 @@
                                 <div class="es-input-error-message"></div>
                             </div>
                             <div class="es-mb-4">
-                                Photo
+                                <div>Photo</div>
+                                <div class="es-text-gray-500 es-mt-2 es-mb-4">
+                                    Resolution requirements: 500x500px
+                                </div>
                                 <div class="mt-2">
                                     <input name="photo" type="file" accept=".jpg,.jpeg,.png" hidden
                                         id="photo_input_update_service" />

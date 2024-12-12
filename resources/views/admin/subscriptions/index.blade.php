@@ -335,7 +335,7 @@
                                     </label>
                                     <div class="d-none" id="file-preview-container-subscription">
                                         <img src="#" alt="Preview Uploaded Image" id="photo-preview-subscription" 
-                                            class="es-h-80 es-mb-3 file-preview img500x200" />
+                                            class="es-h-80 es-mb-3 file-preview img500x200 img-fluid" />
                                         <div class="d-flex es-gap-8">
                                             <label for="photo_input_subscription"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
@@ -547,7 +547,7 @@
                                     <div class="d-none" id="update-file-preview-container-subscription">
                                         <img src="#" alt="Preview Uploaded Image"
                                             id="update-photo-preview-subscription"
-                                            class="img-fluid es-h-80 es-mb-3 file-preview img500x200" />
+                                            class="img-fluid es-h-80 es-mb-3 file-preview img500x200 img-fluid" />
                                         <div class="d-flex es-gap-8">
                                             <label for="update_photo_input_subscription"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
@@ -1107,7 +1107,7 @@
                 <div class="card">
                     <div class="card-body p-5">
                         <img id="modalImage" src="{{ asset('images/services-image.svg') }}" alt=""
-                            class="img500x200" />
+                            class="img500x200 img-fluid" />
                     </div>
                 </div>
             </div>

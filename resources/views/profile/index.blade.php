@@ -44,7 +44,7 @@
                             </label>
                             <div class="{{$user->photo ? '': 'd-none'}}" id="file-preview-container">
                                 <img src="{{$user->photo}}" alt="Preview Uploaded Image" id="photo-preview" 
-                                    class="es-h-80 es-mb-3 file-preview img500x500" />
+                                    class="es-h-80 es-mb-3 file-preview img500x500 img-fluid" />
                                 <div class="d-flex es-gap-8">
                                     <label for="photo_input" class="btn border-0 es-text-sm es-font-600 p-0">
                                         Change

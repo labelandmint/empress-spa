@@ -187,7 +187,7 @@
                         <div class="hero-text-content">
                             <div class="es-mb-8">
                                 <img src="{{ $settings->logo ?? asset('images/logo-white.svg') }}" alt=""
-                                class="img600x100" />
+                                class="img600x100 img-fluid" style="object-fit: contain"/>
                             </div>
                             <div class="es-mb-8">
                                 <div class="es-header-2 es-font-600 text-white es-font-inter es-mb-5">

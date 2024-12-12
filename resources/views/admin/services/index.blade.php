@@ -497,7 +497,7 @@
                 <div class="card">
                     <div class="card-body p-5">
                         <img id="modalImage" src="{{ asset('images/services-image.svg') }}" alt=""
-                            class="img500x500" />
+                            class="img500x500 img-fluid" />
                     </div>
                 </div>
             </div>

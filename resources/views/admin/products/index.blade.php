@@ -166,7 +166,7 @@
                                     </label>
                                     <div class="d-none" id="file-preview-container">
                                         <img src="#" alt="Preview Uploaded Image" id="photo-preview" 
-                                            class="es-h-80 es-mb-3 file-preview w-100 img500x500" />
+                                            class="es-h-80 es-mb-3 file-preview w-100 img500x500 img-fluid" />
                                         <div class="d-flex es-gap-8">
                                             <label for="photo_input" class="btn border-0 es-text-sm es-font-600 p-0">
                                                 Change
@@ -253,7 +253,7 @@
                                     </label>
                                     <div class="d-none" id="update-file-preview-container">
                                         <img src="#" alt="Preview Uploaded Image" id="update-photo-preview"
-                                            class="es-h-100 es-mb-3 update-file-preview w-100 img500x500" />
+                                            class="es-h-100 es-mb-3 update-file-preview w-100 img500x500 img-fluid" />
                                         <div class="d-flex es-gap-8">
                                             <label for="update_photo_input"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
@@ -345,7 +345,7 @@
                                     </label>
                                     <div class="d-none" id="view-file-preview-container">
                                         <img src="#" alt="Preview Uploaded Image" id="view-photo-preview"
-                                            class="es-h-80 es-mb-3 view-file-preview img500x500" />
+                                            class="es-h-80 es-mb-3 view-file-preview img500x500 img-fluid" />
                                     </div>
                                 </div>
                             </div>
@@ -387,7 +387,7 @@
                 <div class="card">
                     <div class="card-body p-5">
                         <img id="modalImage" src="{{ asset('images/services-image.svg') }}" alt=""
-                            class="img500x500" />
+                            class="img500x500 img-fluid" />
                     </div>
                 </div>
             </div>

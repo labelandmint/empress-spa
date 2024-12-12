@@ -544,7 +544,7 @@
                                     <div class="d-none" id="update-file-preview-container-subscription">
                                         <img src="#" alt="Preview Uploaded Image"
                                             id="update-photo-preview-subscription"
-                                            class="img-fluid es-h-80 es-mb-3 file-preview" />
+                                            class="img-fluid es-h-80 es-mb-3 file-preview img500x200" />
                                         <div class="d-flex es-gap-8">
                                             <label for="update_photo_input_subscription"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">

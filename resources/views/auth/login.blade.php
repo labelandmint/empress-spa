@@ -40,7 +40,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="icon" href="{{ url('/logo.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('logo.png') }}" type="image/x-icon">
 
     <!-- Bootstrap CSS v5.2.0 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -60,7 +60,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="{{ url('/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
     @if ($settings && $settings->page_background_image)
         <style>
@@ -76,6 +76,52 @@
         .hero-text-content {
             width: 80%;
         }
+
+
+        @media only screen and (max-width:400px) {
+            .custom-gap {
+                gap: 0.6rem;
+            }
+
+            .custom-font-size {
+                font-size: 24px !important;
+            }
+
+            .custom-font-size2 {
+                font-size: 12px !important;
+            }
+        }
+
+        @media only screen and (min-width: 401px) and (max-width: 600px) {
+            .custom-gap {
+                gap: 1rem;
+            }
+
+            .custom-font-size {
+                font-size: 29px !important;
+            }
+
+            .custom-font-size2 {
+                font-size: 17px !important;
+            }
+        }
+
+        @media only screen and (max-width:1000px) {
+            .col-reverse {
+                flex-direction: column-reverse !important;
+            }
+        }
+
+        @media only screen and (max-width:460px) {
+            .block {
+                display: block !important;
+            }
+
+            .mt {
+                margin: 12px 0px!important;
+            }
+        }
+
     </style>
 </head>
 
@@ -83,16 +129,16 @@
     <div class="es-navbar es-z-50">
         <nav class="navbar navbar-expand-lg es-h-20 bg-white es-drop-shadow">
             <div class="container-xxl">
-                <div class="d-flex align-items-center justify-content-between w-100">
+                <div class="d-flex block align-items-center justify-content-between w-100">
                     <div class="d-flex align-items-center">
                         <a href="#" class="">
-                            <img src="{{ url('/images/logo.svg') }}" alt="" class="es-h-8" />
+                            <img src="{{ asset('images/logo.svg') }}" alt="" class="es-h-8" />
                         </a>
                     </div>
-                    <div>
+                    <div class="mt">
                         <a href="{{ $fullUrl }}" class="text-decoration-none es-text-gray-900 es-font-500">
                             <div class="d-flex align-items-center gap-2 gap-md-3">
-                                <img src="{{ url('/images/left-arrow.png') }}" width="16" height="16"
+                                <img src="{{ asset('images/left-arrow.png') }}" width="16" height="16"
                                     alt="" />
                                 <div>
                                     <span class="d-none d-md-inline-block">Back to&nbsp;</span><span
@@ -109,7 +155,7 @@
     <div class="container-xxl es-z-10 position-relative">
         <form action="{{ url('login') }}" method="post">
             @csrf
-            <div class="row position-relative">
+            <div class="row col-reverse position-relative">
                 <div class="col-lg-6 es-pt-20 es-pb-24">
                     <div class="es-mb-3">
                         <div class="es-header-3 es-font-600 es-mb-3">Login</div>
@@ -138,7 +184,7 @@
                                 placeholder="Password" />
                             <button id="toggle-password" type="button"
                                 class="d-flex align-items-center bg-transparent border-0 es--ml-12 es-outline-none">
-                                <img src="{{ url('/images/eye-dark.png') }}" alt="Toggle Password Visibility" />
+                                <img src="{{ asset('images/eye-dark.png') }}" alt="Toggle Password Visibility" />
                             </button>
                             <div class="es-input-error-message"></div>
                         </div>
@@ -165,8 +211,8 @@
                     <div class="w-100 h-100">
                         <div class="hero-text-content">
                             <div class="es-mb-8">
-                                <img src="{{ $settings->logo ?? url('/images/logo-white.svg') }}" alt=""
-                                    class="w-100" />
+                            <img src="{{ $settings->logo ?? asset('images/logo-white.svg') }}" alt=""
+                            class="img600x100 img-fluid" style="object-fit: contain"/>
                             </div>
                             <div class="es-mb-8">
                                 <div class="es-header-2 es-font-600 text-white es-font-inter es-mb-5">
@@ -196,31 +242,31 @@
                                     <span>Seats Remaining</span>
                                 </div>
                             </div>
-                            <div class="text-white d-flex es-gap-7 text-center">
+                            <div class="text-white d-flex es-gap-7 custom-gap text-center">
                                 <div>
-                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="months">00
-                                    </div>
-                                    <div class="es-font-500">MONTHS</div>
+                                    <div class="es-text-15xl custom-font-size es-font-500 es-font-inter odometer"
+                                        id="months">00</div>
+                                    <div class="es-font-500 custom-font-size2">MONTHS</div>
                                 </div>
                                 <div>
-                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="days">00
-                                    </div>
-                                    <div class="es-font-500">DAYS</div>
+                                    <div class="es-text-15xl custom-font-size es-font-500 es-font-inter odometer"
+                                        id="days">00</div>
+                                    <div class="es-font-500 custom-font-size2">DAYS</div>
                                 </div>
                                 <div>
-                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="hours">00
-                                    </div>
-                                    <div class="es-font-500">HOURS</div>
+                                    <div class="es-text-15xl custom-font-size es-font-500 es-font-inter odometer"
+                                        id="hours">00</div>
+                                    <div class="es-font-500 custom-font-size2">HOURS</div>
                                 </div>
                                 <div>
-                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="minutes">00
-                                    </div>
-                                    <div class="es-font-500">MINUTES</div>
+                                    <div class="es-text-15xl custom-font-size es-font-500 es-font-inter odometer"
+                                        id="minutes">00</div>
+                                    <div class="es-font-500 custom-font-size2">MINUTES</div>
                                 </div>
                                 <div>
-                                    <div class="es-text-15xl es-font-500 es-font-inter odometer" id="seconds">00
-                                    </div>
-                                    <div class="es-font-500">SECONDS</div>
+                                    <div class="es-text-15xl custom-font-size es-font-500 es-font-inter odometer"
+                                        id="seconds">00</div>
+                                    <div class="es-font-500 custom-font-size2">SECONDS</div>
                                 </div>
                             </div>
                         </div>
@@ -365,8 +411,8 @@
             togglePasswordVisibility(
                 "password",
                 "toggle-password",
-                "{{ url('/images/eye-dark.png') }}",
-                "{{ url('/images/eye-off-dark.png') }}",
+                "{{ asset('images/eye-dark.png') }}",
+                "{{ asset('images/eye-off-dark.png') }}",
             );
         });
     </script>

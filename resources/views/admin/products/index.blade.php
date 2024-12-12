@@ -342,7 +342,7 @@
                                     </label>
                                     <div class="d-none" id="view-file-preview-container">
                                         <img src="#" alt="Preview Uploaded Image" id="view-photo-preview"
-                                            class="es-h-80 es-mb-3 view-file-preview w-100 img500x500" />
+                                            class="es-h-80 es-mb-3 view-file-preview img500x500" />
                                     </div>
                                 </div>
                             </div>

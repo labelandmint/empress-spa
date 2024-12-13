@@ -1585,7 +1585,7 @@ $(document).ready(function() {
             phone_no: {
                 // required: true,
                 digits: true,
-                validPhone: true, // Use the custom method here
+                validPhone: false, // Use the custom method here
             },
             email: {
                 required: true,

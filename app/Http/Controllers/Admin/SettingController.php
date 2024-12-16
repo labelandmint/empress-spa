@@ -1,24 +1,27 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-Use App\Http\Controllers\Controller;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Setting;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+
 class SettingController extends Controller
 {
     //
-    public function index(){
+    public function index()
+    {
 
         $user_id = 1;
         $settings = Setting::first();
-        $users = User::whereIn('user_role',[1,3,4])->orderBy('id','desc')->get();
-        $title='Settings';
+        $users = User::whereIn('user_role', [1, 3, 4])->orderBy('id', 'desc')->get();
+        $title = 'Settings';
 
-        return view('admin.settings.index',compact('title','settings','settings','users'));
+        return view('admin.settings.index', compact('title', 'settings', 'settings', 'users'));
     }
 
     public function store(Request $request)
@@ -29,36 +32,32 @@ class SettingController extends Controller
             // Check if a file has been uploaded
             if ($request->hasFile('logo')) {
                 $file = $request->file('logo');
-                $fileName = time() . '.' . $file->getClientOriginalExtension(); // Generate a unique file name
-                $url = $this->uploadImage($file, $fileName);
+                $url = $this->uploadImage($file);
                 $data['logo'] = $url; // Save the URL or path in the data array
             }
 
             if ($request->hasFile('page_background_image')) {
                 $file = $request->file('page_background_image');
-                $fileName = time() . '.' . $file->getClientOriginalExtension(); // Generate a unique file name
-                $url = $this->uploadImage($file, $fileName);
+                $url = $this->uploadImage($file);
                 $data['page_background_image'] = $url; // Save the URL or path in the data array
             }
 
             if ($request->hasFile('email_logo')) {
                 $file = $request->file('email_logo');
-                $fileName = time() . '.' . $file->getClientOriginalExtension(); // Generate a unique file name
-                $url = $this->uploadImage($file, $fileName);
+                $url = $this->uploadImage($file);
                 $data['email_logo'] = $url; // Save the URL or path in the data array
             }
 
             if ($request->hasFile('email_background_image')) {
                 $file = $request->file('email_background_image');
-                $fileName = time() . '.' . $file->getClientOriginalExtension(); // Generate a unique file name
-                $url = $this->uploadImage($file, $fileName);
+                $url = $this->uploadImage($file);
                 $data['email_background_image'] = $url; // Save the URL or path in the data array
             }
 
             // Add user ID to the data array
             $data['user_id'] = Auth::guard('admin')->user()->id;
 
-             $data['ratio_update_time'] = Carbon::now();
+            $data['ratio_update_time'] = Carbon::now();
 
             // Check if ID exists to determine if we're updating or creating
             if ($request->id) {
@@ -73,7 +72,6 @@ class SettingController extends Controller
                 Setting::create($data);
                 return redirect()->back()->with('success', 'Settings created successfully');
             }
-
         } catch (\Exception $e) {
             // Log the error for debugging
             return $e->getMessage();
@@ -84,12 +82,27 @@ class SettingController extends Controller
         }
     }
 
-    private function uploadImage($file, $fileName)
+    private function uploadImage($file)
     {
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images'), $filename);
-        // Return the path where the file is stored
-        return url('/') . '/public/images/'. $filename;
+        // Define the filename
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+
+        // Store the file in the 'images' directory
+        $file->storeAs('images', $fileName, 'public');
+
+        // Return only the filename
+        return $fileName;
     }
+
+
+
+    // private function uploadImage($file, $fileName)
+    // {
+    //     $filename = time() . '.' . $file->getClientOriginalExtension();
+    //     $file->move(public_path('images'), $filename);
+    //     // Return the path where the file is stored
+    //     return url('/') . '/public/images/'. $filename;
+
+    // }
 
 }

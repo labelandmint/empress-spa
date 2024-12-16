@@ -56,6 +56,32 @@ Route::post('password/confirm', [UserController::class, 'confirm']);
 // Route to Change the password
 Route::post('/change-password', [UserController::class, 'changePassword']);
 
+Route::get('/images/{filename}', function ($filename) {
+    // Define the paths
+    $publicPath = storage_path('public/images/' . $filename);
+    $protectedPath = storage_path('protected/images/' . $filename);
+
+    // Check if the file exists in the public directory
+    if (file_exists($publicPath)) {
+        return response()->file($publicPath);
+    }
+
+    // If the file exists in the protected directory, apply middleware
+    if (file_exists($protectedPath)) {
+        // Check if the user has 'admin' middleware privileges
+        if (Auth::guard('web')->check() || Auth::guard('admin')->check()) {
+            return response()->file($protectedPath);
+        }
+
+        // Return a 403 Forbidden if the user is not authorized
+        abort(403, 'Unauthorized access to protected file');
+    }
+
+    // If the file is not found in either location, return 404
+    abort(404, 'File not found');
+});
+
+
 Route::group(['middleware' => 'auth'], function () {
     //User Controller
     Route::get('/profile', [UserController::class, 'profile']);
@@ -86,7 +112,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/subscription/resume/{id}', [SubscriptionController::class, 'resumeMembership']);
     Route::get('/subscription/cancel/{id}', [SubscriptionController::class, 'cancelSubscription']);
 });
-
 
 Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
 

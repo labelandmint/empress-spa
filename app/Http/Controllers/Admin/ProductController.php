@@ -33,8 +33,8 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             // Store the file and get the file path
             $file = $request->file('image');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $data['image'] = $this->uploadImage($file, $fileName);
+            // $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $data['image'] = $this->uploadImage($file);
         }
         // return $data;
         if($request->id){
@@ -71,13 +71,25 @@ class ProductController extends Controller
     }
 
 
-    private function uploadImage($file, $fileName)
+    private function uploadImage($file)
     {
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images'), $filename);
-        // Return the path where the file is stored
-        return url('/') . '/public/images/'. $filename;
+        // Define the filename
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+
+        // Store the file in the 'images' directory
+        $file->storeAs('images', $fileName, 'public');
+
+        // Return only the filename
+        return $fileName;
     }
+    
+    // private function uploadImage($file, $fileName)
+    // {
+    //     $filename = time() . '.' . $file->getClientOriginalExtension();
+    //     $file->move(public_path('images'), $filename);
+    //     // Return the path where the file is stored
+    //     return url('/') . '/public/images/'. $filename;
+    // }
 
     // In ProductController.php
     public function filter(Request $request) {

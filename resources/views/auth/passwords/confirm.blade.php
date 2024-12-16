@@ -57,6 +57,19 @@
 
 		<!-- Stylesheet -->
 		<link rel="stylesheet" href="{{asset('css/style.css')}}" />
+		@if($settings && $settings->page_background_image)
+		<style>
+			.onboarding-page .hero-image {
+				background: url("{{ url('images/'. $settings->page_background_image) }}");
+				background-size: cover;
+			}
+	
+			.onboarding-page .hero-text .hero-text-bg {
+				background: url("{{  url('images/'. $settings->page_background_image) }}") !important;
+				background-size: cover !important;
+			}
+		</style>
+	    @endif
 
 		<style>
 			.hero-text-content {
@@ -119,7 +132,7 @@
 					<div class="d-flex block align-items-center justify-content-between w-100">
 						<div class="d-flex align-items-center">
 							<a href="#" class="">
-								<img src="{{asset('images/logo.svg')}}" alt="" class="es-h-8" />
+								<img src="{{ url('images/'.$settings->logo) }}" alt="" class="es-h-8" />
 							</a>
 						</div>
 						<div class="mt">
@@ -218,8 +231,8 @@
 						<div class="w-100 h-100">
 							<div class="hero-text-content">
 								<div class="es-mb-8">
-								<img src="{{ $settings->logo ?? asset('images/logo-white.svg') }}" alt=""
-                                class="img600x100 img-fluid" style="object-fit: contain"/>
+									<img src="{{ url('images/'.$settings->logo) ?? asset('images/logo-white.svg')}}"  style="object-fit: contain"
+                                    alt="" class="img600x100 img-fluid" />
 								</div>
 								<div class="es-mb-8">
 									<div

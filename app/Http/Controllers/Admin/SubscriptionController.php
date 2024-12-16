@@ -72,8 +72,8 @@ class SubscriptionController extends Controller
 
             if($request->hasFile('photo')){
                 $file = $request->file('photo');
-                $fileName = time() . '.' . $file->getClientOriginalExtension();
-                $data['photo']=$this->uploadImage($file,$fileName);
+                // $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $data['photo']=$this->uploadImage($file);
             }
             $data['subscription_package'] = implode(',',$request->subscription_package);
             $data['subscription_services'] = implode(',',$request->subscription_services);
@@ -95,13 +95,26 @@ class SubscriptionController extends Controller
         }
     }
 
-    private function uploadImage($file, $fileName)
+    private function uploadImage($file)
     {
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images'), $filename);
-        // Return the path where the file is stored
-        return url('/') . '/public/images/'. $filename;
+        // Define the filename
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+
+        // Store the file in the 'images' directory
+        $file->storeAs('images', $fileName, 'public');
+
+        // Return only the filename
+        return $fileName;
     }
+
+    
+    // private function uploadImage($file, $fileName)
+    // {
+    //     $filename = time() . '.' . $file->getClientOriginalExtension();
+    //     $file->move(public_path('images'), $filename);
+    //     // Return the path where the file is stored
+    //     return url('/') . '/public/images/'. $filename;
+    // }
 
     public function pauseMembership(Request $request)
     {

@@ -53,14 +53,18 @@
 
     <script src="https://js.stripe.com/v3/"></script>
 
-    @if ($settings && $settings->page_background_image)
+    @if($settings && $settings->page_background_image)
         <style>
             .onboarding-page .hero-image {
-                background: url("{{ $settings->page_background_image }}");
-                background-size: cover;
+                background: url("{{$settings->page_background_image}}");
+                background-size:  cover;
+            }
+            .onboarding-page .hero-text .hero-text-bg {
+                background: url("{{ $settings->page_background_image }}") !important;
+                background-size: cover !important;
             }
         </style>
-    @endif
+        @endif
 
     <style>
         .loader1 {

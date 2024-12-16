@@ -62,15 +62,18 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
-    @if ($settings && $settings->page_background_image)
+    @if($settings && $settings->page_background_image)
         <style>
             .onboarding-page .hero-image {
-
-                background: url("{{ $settings->page_background_image }}");
-                background-size: cover;
+                background: url("{{$settings->page_background_image}}");
+                background-size:  cover;
+            }
+            .onboarding-page .hero-text .hero-text-bg {
+                background: url("{{ $settings->page_background_image }}") !important;
+                background-size: cover !important;
             }
         </style>
-    @endif
+        @endif
 
     <style>
         .hero-text-content {

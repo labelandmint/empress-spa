@@ -489,8 +489,8 @@ public function register(Request $request, $sub_id)
 
             // Store the file and get the file path
             $file = $request->file('photo_input');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $client->photo = $this->uploadImage($file, $fileName);
+            // $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $client->photo = $this->uploadImage($file);
         }
 
         // Save the updated client data
@@ -500,13 +500,24 @@ public function register(Request $request, $sub_id)
     }
 
 
-    private function uploadImage($file, $fileName)
+    private function uploadImage($file)
     {
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images'), $filename);
-        // Return the path where the file is stored
-        return url('/') . '/public/images/' . $filename;
+        // Define the filename
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+
+        // Store the file in the 'images' directory
+        $file->storeAs('images', $fileName, 'protected');
+
+        // Return only the filename
+        return $fileName;
     }
+    // private function uploadImage($file, $fileName)
+    // {
+    //     $filename = time() . '.' . $file->getClientOriginalExtension();
+    //     $file->move(public_path('images'), $filename);
+    //     // Return the path where the file is stored
+    //     return url('/') . '/public/images/' . $filename;
+    // }
 
 
     public function admin_profile()

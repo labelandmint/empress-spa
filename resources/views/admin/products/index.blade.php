@@ -71,9 +71,9 @@
                                     <tr>
                                         <td>
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#photoModal"
-                                                data-image="{{ $list->image ?? asset('images/services-image.svg') }}"
+                                                data-image="{{ url('images/'.$list->image) ?? asset('images/services-image.svg') }}"
                                                 class="border-0 es-outline-none bg-transparent p-0 hover-darken-95">
-                                                <img src="{{ $list->image ?? asset('images/services-image.svg') }}"
+                                                <img src="{{ url('images/'.$list->image) ?? asset('images/services-image.svg') }}"
                                                     width="40" height="40" alt="" />
                                             </button>
                                         </td>
@@ -89,10 +89,10 @@
                                                     data-title="{{ $list->title }}"
                                                     data-description="{{ $list->description }}"
                                                     data-quantity="{{ $list->quantity }}"
-                                                    data-image="{{ $list->image }}"
+                                                    data-image="{{ url('images/'.$list->image) }}"
                                                     data-archived_at="{{ $list->archived_at }}"
                                                     >
-                                                    View/Edit
+                                                    View/Edit  
                                                 </a>
                                                 @else
                                                 <a href="#viewProductModal" class="es-link-primary" data-bs-toggle="modal"
@@ -100,7 +100,7 @@
                                                     data-title="{{ $list->title }}"
                                                     data-description="{{ $list->description }}"
                                                     data-quantity="{{ $list->quantity }}"
-                                                    data-image="{{ $list->image }}">
+                                                    data-image="{{ url('images/'.$list->image) }}"
                                                     View
                                                 </a>
                                                 @endif
@@ -166,7 +166,7 @@
                                     </label>
                                     <div class="d-none" id="file-preview-container">
                                         <img src="#" alt="Preview Uploaded Image" id="photo-preview" 
-                                            class="es-h-80 es-mb-3 file-preview w-100 img500x500 img-fluid" />
+                                            class="es-h-80 es-mb-3 file-preview img-fluid img500x500" />
                                         <div class="d-flex es-gap-8">
                                             <label for="photo_input" class="btn border-0 es-text-sm es-font-600 p-0">
                                                 Change
@@ -228,7 +228,7 @@
                             @csrf
                             <div class="es-text-lg es-font-600 es-mb-6">Update Product</div>
                             <div>
-                                <div>Photo</div>
+                                <div>Photo :</div>
                                 <div class="es-text-gray-500 es-mt-2 es-mb-4">
                                     Resolution requirements: 500x500px
                                 </div>
@@ -253,7 +253,7 @@
                                     </label>
                                     <div class="d-none" id="update-file-preview-container">
                                         <img src="#" alt="Preview Uploaded Image" id="update-photo-preview"
-                                            class="es-h-100 es-mb-3 update-file-preview w-100 img500x500 img-fluid" />
+                                            class="es-h-100 es-mb-3 update-file-preview img-fluid img500x500" />
                                         <div class="d-flex es-gap-8">
                                             <label for="update_photo_input"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
@@ -345,7 +345,7 @@
                                     </label>
                                     <div class="d-none" id="view-file-preview-container">
                                         <img src="#" alt="Preview Uploaded Image" id="view-photo-preview"
-                                            class="es-h-80 es-mb-3 view-file-preview img500x500 img-fluid" />
+                                            class=" es-mb-3 view-file-preview img-fluid  img500x500" />
                                     </div>
                                 </div>
                             </div>

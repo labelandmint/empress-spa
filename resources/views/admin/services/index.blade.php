@@ -96,9 +96,9 @@
                                             <td>{{ $service->title }}</td>
                                             <td>
                                                 <button type="button" data-bs-toggle="modal" data-bs-target="#photoModal"
-                                                    data-image="{{ $service->photo ?? asset('images/services-image.svg') }}"
+                                                    data-image="{{ url('images/'.$service->photo) ?? asset('images/services-image.svg') }}"
                                                     class="border-0 es-outline-none bg-transparent p-0 hover-darken-95">
-                                                    <img src="{{ $service->photo ?? asset('images/services-image.svg') }}"
+                                                    <img src="{{ url('images/'.$service->photo) ?? asset('images/services-image.svg') }}"
                                                         width="40" height="40" alt="Service Image" />
                                                 </button>
                                             </td>
@@ -124,7 +124,7 @@
                                                             data-session_timeframe="{{ $service->session_timeframe }}"
                                                             data-session_capacity="{{ $service->session_capacity }}"
                                                             data-blockout_time="{{ $service->blockout_time }}"
-                                                            data-photo="{{ $service->photo ?? '' }}" role="button"
+                                                            data-photo="{{ url('images/'.$service->photo) ?? '' }}" role="button"
                                                             data-archived_at="{{ $service->archived_at }}">
                                                             View/Edit
                                                         </a>
@@ -137,7 +137,7 @@
                                                             data-session_timeframe="{{ $service->session_timeframe }}"
                                                             data-session_capacity="{{ $service->session_capacity }}"
                                                             data-blockout_time="{{ $service->blockout_time }}"
-                                                            data-photo="{{ $service->photo ?? '' }}" role="button">
+                                                            data-photo="{{ url('images/'.$service->photo) ?? '' }}" role="button">
                                                             View
                                                         </a>
                                                     @endif
@@ -207,7 +207,7 @@
                                     </label>
                                     <div class="d-none" id="file-preview-container-add-service">
                                         <img src="#" alt="Preview Uploaded Image" id="photo-preview-add-service" 
-                                            class="img-fluid es-h-80 es-mb-3 file-preview img500x500" />
+                                            class="img-fluid es-h-80 es-mb-3 file-preview img-fluid img500x500" />
                                         <div class="d-flex es-gap-8">
                                             <label for="photo_input_add_service"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
@@ -312,7 +312,7 @@
                                 <div class="es-input-error-message"></div>
                             </div>
                             <div class="es-mb-4">
-                                <div>Photo</div>
+                                <div>Photo :</div>
                                 <div class="es-text-gray-500 es-mt-2 es-mb-4">
                                     Resolution requirements: 500x500px
                                 </div>
@@ -336,7 +336,7 @@
                                     </label>
                                     <div class="d-none" id="file-preview-container-update-service">
                                         <img src="#" alt="Preview Uploaded Image"
-                                            id="photo-preview-update-service" class="img-fluid es-h-80 es-mb-3 file-preview img500x500" />
+                                            id="photo-preview-update-service" class="img-fluid  es-mb-3 file-preview img500x500" />
                                         <div class="d-flex es-gap-8">
                                             <label for="photo_input_update_service"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
@@ -442,7 +442,7 @@
                             Photo
                             <div class="mt-2">
                                 <img src="#" alt="Service Image" id="view_photo_preview"
-                                    class="es-h-80 es-mb-3 file-preview d-none" />
+                                    class="es-h-80 es-mb-3 file-preview d-none img-fluid img500x500" />
                             </div>
                         </div>
                         <div class="es-mb-4">

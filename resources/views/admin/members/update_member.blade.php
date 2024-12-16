@@ -13,7 +13,10 @@
                         Personal Information
                     </div>
                     <div>
-                        Photo
+                        <div>Photo :</div>
+                        <div class="es-text-gray-500 es-mt-2 es-mb-4">
+                            Resolution requirements: 500x500px
+                        </div>
                         <div class="mt-2">
                             <input type="file" accept=".jpg,.jpeg,.png" hidden id="photo_input" name="photo_input" />
                             <label for="photo_input" class="es-file-input {{$user->photo ? 'd-none' :'' }}" id="photo-label">
@@ -31,17 +34,17 @@
                                 </svg>
                             </label>
                             <div class="{{$user->photo ? '' :'d-none' }}" id="file-preview-container">
-                                <img src="{{$user->photo ?? '#' }}" alt="Preview Uploaded Image" id="photo-preview"
-                                    class="es-h-80 es-mb-3 file-preview" />
+                                <img src="{{ url('images/' .$user->photo) ?? '#' }}" alt="Preview Uploaded Image 1" id="photo-preview"
+                                class="es-h-80 es-mb-3 file-preview img-fluid img500x500" />
                                 <div class="d-flex es-gap-8">
                                     <label for="photo_input" class="btn border-0 es-text-sm es-font-600 p-0">
                                         Change
-                                        <img src="{{url('/images/refresh.png')}}" width="14" height="14" alt="" />
+                                        <img src="{{asset('images/refresh.png')}}" width="14" height="14" alt="" />
                                     </label>
                                     <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                         id="clear_photo_input">
                                         Delete
-                                        <img src="{{url('/images/trash.png')}}" width="14" height="14" alt="" />
+                                        <img src="{{asset('images/trash.png')}}" width="14" height="14" alt="" />
                                     </button>
                                 </div>
                             </div>
@@ -247,7 +250,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{url('/images/close.png')}}" alt="" />
+                    <img src="{{asset('images/close.png')}}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body">

@@ -68,7 +68,7 @@
                                 <div
                                     class="d-flex align-items-center justify-content-center es-w-10 es-h-10 es-rounded-full es-bg-golden es-border-0">
                                     @if (Auth::guard('admin')->user()->photo)
-                                        <img src="{{ Auth::guard('admin')->user()->photo }}"
+                                        <img src="{{url('images/' . Auth::guard('admin')->user()->photo) }}"
                                             class="w-100 h-100 es-rounded-full">
                                     @else
                                         <span
@@ -86,7 +86,7 @@
                                 <div
                                     class="d-flex align-items-center justify-content-center es-w-10 es-h-10 es-rounded-full es-bg-golden es-border-0">
                                     @if (Auth::user()->photo)
-                                        <img src="{{ Auth::user()->photo }}" class="w-100 h-100 es-rounded-full">
+                                        <img src="{{url('images/' . Auth::user()->photo )}}" class="w-100 h-100 es-rounded-full">
                                     @else
                                         <span
                                             class="es-font-mulish text-white">{{ substr(Auth::user()->f_name, 0, 1) }}</span>
@@ -128,7 +128,7 @@
                                 <div
                                     class="d-flex align-items-center justify-content-center es-w-10 es-h-10 es-rounded-full es-bg-golden es-border-0">
                                     @if (Auth::guard('admin')->user()->photo)
-                                        <img src="{{ Auth::guard('admin')->user()->photo }}"
+                                        <img src="{{url('images/' . Auth::guard('admin')->user()->photo) }}"
                                             class="w-100 h-100 es-rounded-full">
                                     @else
                                         <span
@@ -249,7 +249,7 @@
                                 <div
                                     class="d-flex align-items-center justify-content-center es-w-10 es-h-10 es-rounded-full es-bg-golden es-border-0">
                                     @if (Auth::user()->photo)
-                                        <img src="{{ Auth::user()->photo }}" class="w-100 h-100 es-rounded-full">
+                                        <img src="{{ url('images/' . Auth::user()->photo) }}" class="w-100 h-100 es-rounded-full">
                                     @else
                                         <span
                                             class="es-font-mulish text-white">{{ substr(Auth::user()->f_name, 0, 1) }}</span>

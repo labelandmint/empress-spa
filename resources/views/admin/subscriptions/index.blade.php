@@ -152,8 +152,8 @@
                                         <td>
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#photoModal"
                                                 class="border-0 es-outline-none bg-transparent p-0 hover-darken-95"
-                                                data-image="{{ $plan->photo ?? asset('images/services-image.svg') }}">
-                                                <img src="{{ $plan->photo ? $plan->photo : asset('images/subscriptions-img.png') }}"
+                                                data-image="{{ url('images/' .$plan->photo) ?? asset('images/services-image.svg') }}">
+                                                <img src="{{ $plan->photo ? url('images/' .$plan->photo) : asset('images/subscriptions-img.png') }}"
                                                     width="40" height="40" alt="Subscription Image" />
                                             </button>
                                         </td>
@@ -239,7 +239,7 @@
                                                         data-promo_period="{{ $plan->promo_period }}"
                                                         data-promo_sub_title="{{ $plan->promo_sub_title }}"
                                                         data-promo_sub_title_price="{{ $plan->promo_sub_title_price }}"
-                                                        data-photo="{{ $plan->photo }}"
+                                                        data-photo="{{ url('images/'.$plan->photo) }}"
                                                         data-payment_frequency="{{ $plan->payment_frequency }}"
                                                         data-frequency_title="{{ $plan->frequency_title }}"
                                                         data-frequency_description="{{ $plan->frequency_description }}"
@@ -260,7 +260,7 @@
                                                         data-promo_period="{{ $plan->promo_period }}"
                                                         data-promo_sub_title="{{ $plan->promo_sub_title }}"
                                                         data-promo_sub_title_price="{{ $plan->promo_sub_title_price }}"
-                                                        data-photo="{{ $plan->photo }}"
+                                                         data-photo="{{ url('images/'.$plan->photo) }}"
                                                         data-payment_frequency="{{ $plan->payment_frequency }}"
                                                         data-frequency_title="{{ $plan->frequency_title }}"
                                                         data-frequency_description="{{ $plan->frequency_description }}"
@@ -335,7 +335,7 @@
                                     </label>
                                     <div class="d-none" id="file-preview-container-subscription">
                                         <img src="#" alt="Preview Uploaded Image" id="photo-preview-subscription" 
-                                            class="es-h-80 es-mb-3 file-preview img500x200 img-fluid" />
+                                            class=" es-mb-3 file-preview img-fluid img500x200" />
                                         <div class="d-flex es-gap-8">
                                             <label for="photo_input_subscription"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
@@ -520,7 +520,7 @@
                                 Update Subscription
                             </div>
                             <div>
-                                <div>Photo</div>
+                                <div>Photo :</div>
                                 <div class="es-text-gray-500 es-mt-2 es-mb-4">
                                     Resolution requirements: 500x200px
                                 </div>
@@ -547,7 +547,7 @@
                                     <div class="d-none" id="update-file-preview-container-subscription">
                                         <img src="#" alt="Preview Uploaded Image"
                                             id="update-photo-preview-subscription"
-                                            class="img-fluid es-h-80 es-mb-3 file-preview img500x200 img-fluid" />
+                                            class="img-fluid es-h-80 es-mb-3 file-preview img500x200" />
                                         <div class="d-flex es-gap-8">
                                             <label for="update_photo_input_subscription"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
@@ -753,7 +753,7 @@
                                 </label>
                                 <div class="d-none" id="view-file-preview-container-subscription">
                                     <img src="#" alt="Preview Uploaded Image" id="view-photo-preview-subscription"
-                                        class="es-h-80 es-mb-3 file-preview" />
+                                        class="es-h-80 es-mb-3 img-fluid file-preview img500x200" />
                                     <div class="d-flex es-gap-8">
                                         <label for="view_photo_input_subscription"
                                             class="btn border-0 es-text-sm es-font-600 p-0" disabled>
@@ -951,7 +951,7 @@
                                     </label>
                                     <div class="d-none" id="file-preview-container-subscription-form">
                                         <img src="#" alt="Preview Uploaded Image"
-                                            id="photo-preview-subscription-form" class="es-h-80 es-mb-3 file-preview" />
+                                            id="photo-preview-subscription-form" class="es-h-80 es-mb-3 img-fluid file-preview img500x200" />
                                         <div class="d-flex es-gap-8">
                                             <label for="photo_input_subscription_form"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">

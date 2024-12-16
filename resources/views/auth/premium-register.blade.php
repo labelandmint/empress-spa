@@ -53,18 +53,19 @@
 
     <script src="https://js.stripe.com/v3/"></script>
 
-    @if($settings && $settings->page_background_image)
-        <style>
-            .onboarding-page .hero-image {
-                background: url("{{$settings->page_background_image}}");
-                background-size:  cover;
-            }
-            .onboarding-page .hero-text .hero-text-bg {
-                background: url("{{ $settings->page_background_image }}") !important;
-                background-size: cover !important;
-            }
-        </style>
-        @endif
+    @if ($settings && $settings->page_background_image)
+    <style>
+        .onboarding-page .hero-image {
+            background: url("{{ url('images/'. $settings->page_background_image) }}");
+            background-size: cover;
+        }
+
+        .onboarding-page .hero-text .hero-text-bg {
+            background: url("{{  url('images/'. $settings->page_background_image) }}") !important;
+            background-size: cover !important;
+        }
+    </style>
+    @endif
 
     <style>
         .loader1 {
@@ -253,7 +254,7 @@
                 <div class="d-flex block align-items-center justify-content-between w-100">
                     <div class="d-flex align-items-center">
                         <a href="#" class="">
-                            <img src="{{ asset('images/logo.svg') }}" alt="" class="es-h-8" />
+                            <img src="{{ url('images/'.$settings->logo) }}" alt="" class="es-h-8" />
                         </a>
                     </div>
                     <div class="mt">
@@ -301,7 +302,7 @@
                     <div class="es-mb-4 es-mb-6">
                         {{-- <input type="file" accept=”.jpg,.jpeg,.png” hidden id="photo_input" /> --}}
                         <div for="photo_input" class="es-file-input mt-2 es-h-48 p-0" id="photo-label">
-                            <img src="{{ $plan ? $plan->photo : '#' }}" style="width: 100%;height:100%">
+                            <img src="{{ $plan ? url('images/'.$plan->photo) : '#' }}" style="width: 100%;height:100%">
                         </div>
                         {{-- <div class="d-none" id="file-preview-container">
                             <img
@@ -571,8 +572,8 @@
                     <div class="w-100 h-100">
                         <div class="hero-text-content">
                             <div class="es-mb-8">
-                            <img src="{{ $settings->logo ?? asset('images/logo-white.svg') }}" alt=""
-                            class="img600x100 img-fluid" style="object-fit: contain"/>
+                                <img src="{{ url('images/'.$settings->logo) ?? asset('images/logo-white.svg') }}"  style="object-fit: contain"
+                                    alt="" class="img600x100 img-fluid" />
                             </div>
                             <div class="es-mb-8">
                                 <div class="es-header-2 es-font-600 text-white es-font-inter es-mb-5">

@@ -38,8 +38,8 @@ class AdminController extends Controller
     public function index()
     {
 
-        $settings = Setting::where('user_id',1)->first();
-        return view('auth.login',compact('settings'));
+        $settings = Setting::where('user_id', 1)->first();
+        return view('auth.login', compact('settings'));
     }
 
     public function store(Request $request)
@@ -103,7 +103,7 @@ class AdminController extends Controller
     public function profile()
     {
         $title = 'Profile';
-        return view('profile.index',compact('title'));
+        return view('profile.index', compact('title'));
     }
 
     public function admin_profile()
@@ -127,11 +127,11 @@ class AdminController extends Controller
             'role'      => $adminUser->user_role,
             'status'    => $adminUser->status, // Include this if you need it in the view
         ];
-        
-         $title = 'Profile';
+
+        $title = 'Profile';
 
         // Return the profile view with the collected data
-        return view('admin.profile.index',$profileData, compact('title'));
+        return view('admin.profile.index', $profileData, compact('title'));
     }
 
     public function update_admin_profile(Request $request)
@@ -178,8 +178,8 @@ class AdminController extends Controller
         if ($request->hasFile('photo_input')) {
             // Store the file and get the file path
             $file = $request->file('photo_input');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $admin->photo = $this->uploadImage($file, $fileName);
+            // $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $admin->photo = $this->uploadImage($file);
         }
 
         // Save the updated admin data
@@ -189,39 +189,92 @@ class AdminController extends Controller
     }
 
 
-    private function uploadImage($file, $fileName)
+    private function uploadImage($file)
     {
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images'), $filename);
-        return url('/') . '/public/images/' . $filename;
+        // Define the filename
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+
+        // Store the file in the 'images' directory
+        $file->storeAs('images', $fileName, 'protected');
+
+        // Return only the filename
+        return $fileName;
     }
+
+
+    // private function uploadImage($file, $fileName)
+    // {
+    //     $filename = time() . '.' . $file->getClientOriginalExtension();
+    //     $file->move(public_path('images'), $filename);
+    //     return url('/') . '/public/images/' . $filename;
+    // }
+
+
+
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+            'user_role' => 2
+        ];
+
+        if (Auth::guard('web')->attempt($credentials)) {
+            return redirect()->intended('transactions');
+        }
+
+        return redirect()->back()
+            ->withErrors(['email' => 'Invalid credentials'])
+            ->withInput();
+    }
+
+    // public function admin(Request $request)
+    // {
+    //     $settings = Setting::where('user_id',1)->first();
+    //     $counter = [];
+    //     if($settings){
+    //         $counter = explode(' ',$settings->countdown_timer);
+    //     }
+    //     return view('auth.admin_login',compact('settings','counter'));
+    // }
 
     public function admin(Request $request)
     {
-        $settings = Setting::where('user_id',1)->first();
+        $settings = Setting::where('user_id', 1)->first();
         $counter = [];
-        if($settings){
-            $counter = explode(' ',$settings->countdown_timer);
+        if ($settings) {
+            $counter = explode(' ', $settings->countdown_timer);
         }
 
-            if ($settings) {
-                $ratio_1 = $settings->ratio_1 ?? 1; // Fallback to 1 if null
-                $ratio_2 = $settings->ratio_2 ?? 1; // Fallback to 1 if null
-                $number = $settings->number ?? 0;
-                $updatedAt = $settings->ratio_update_time;
+        if ($settings) {
+            $ratio_1 = $settings->ratio_1 ?? 1; // Fallback to 1 if null
+            $ratio_2 = $settings->ratio_2 ?? 1; // Fallback to 1 if null
+            $number = $settings->number ?? 0;
+            $updatedAt = $settings->ratio_update_time;
 
-                $userCount = User::where('user_role', 2)
-                    ->where('created_at', '>', $updatedAt)
-                    ->count();
-                $userdata = ($userCount / $ratio_1) * $ratio_2;
+            $userCount = User::where('user_role', 2)
+                ->where('created_at', '>', $updatedAt)
+                ->count();
+            $userdata = ($userCount / $ratio_1) * $ratio_2;
 
-                $remainingSeats = max($number - $userdata, 0);
-            } else {
-                // Default values if no settings are found
-                $remainingSeats = 0;
-            }
+            $remainingSeats = max($number - $userdata, 0);
+        } else {
+            // Default values if no settings are found
+            $remainingSeats = 0;
+        }
 
-        return view('auth.admin_login',compact('settings','counter','remainingSeats'));
+        return view('auth.admin_login', compact('settings', 'counter', 'remainingSeats'));
     }
 
     public function members(Request $request)
@@ -241,7 +294,7 @@ class AdminController extends Controller
 
         // Member Detail
 
-            $members = User::leftjoin('subscriptions', 'users.id', '=', 'subscriptions.user_id')
+        $members = User::leftjoin('subscriptions', 'users.id', '=', 'subscriptions.user_id')
             ->leftjoin('subscription_plans', 'subscription_plans.id', '=', 'subscriptions.subscription_plan_id')
             ->leftjoin('bookings', function ($join) {
                 $join->on('bookings.member_id', '=', 'users.id')
@@ -257,16 +310,16 @@ class AdminController extends Controller
                     ->where('transactions.id', function ($query) {
                         $query->select(DB::raw('MAX(id)'))
                             ->from('transactions as t')
-                            ->where('t.status',1)
+                            ->where('t.status', 1)
                             ->whereColumn('t.member_id', 'transactions.member_id');
                     });
             })
             ->where('user_role', 2)
-            ->select('users.id','users.f_name', 'users.l_name', 'subscription_plans.title', 'subscriptions.status', 'services.id AS service_id', 'services.title AS service','services.description AS service_desc', 'bookings.booking_date', 'bookings.id as booking_id', 'transactions.created_at as payment_date', 'users.rating', 'bookings.slot_id', 'bookings.booking_start_time', 'bookings.booking_end_time')
+            ->select('users.id', 'users.f_name', 'users.l_name', 'subscription_plans.title', 'subscriptions.status', 'services.id AS service_id', 'services.title AS service', 'services.description AS service_desc', 'bookings.booking_date', 'bookings.id as booking_id', 'transactions.created_at as payment_date', 'users.rating', 'bookings.slot_id', 'bookings.booking_start_time', 'bookings.booking_end_time')
             ->get();
 
-   $title='Members';
-        return view('admin.members.index', compact('title','totalMember', 'activeMember', 'pauseMember', 'cancelledMember', 'members'));
+        $title = 'Members';
+        return view('admin.members.index', compact('title', 'totalMember', 'activeMember', 'pauseMember', 'cancelledMember', 'members'));
     }
 
     public function exportExcel()
@@ -287,33 +340,33 @@ class AdminController extends Controller
                     });
             })
             ->leftjoin('services', 'services.id', '=', 'bookings.service_id')
-            ->leftjoin('slots','bookings.slot_id','slots.id')
+            ->leftjoin('slots', 'bookings.slot_id', 'slots.id')
             ->leftjoin('transactions', function ($join) {
                 $join->on('transactions.member_id', '=', 'users.id')
                     ->where('transactions.id', function ($query) {
                         $query->select(DB::raw('MAX(id)'))
                             ->from('transactions as t')
-                            ->where('t.status',1)
+                            ->where('t.status', 1)
                             ->whereColumn('t.member_id', 'transactions.member_id');
                     });
             })
             ->where('user_role', 2)
-            ->select('users.id','users.f_name', 'users.l_name', 'subscription_plans.title', 'subscriptions.status', 'services.title AS service', 'bookings.booking_date', 'transactions.created_at as payment_date', 'users.rating', 'slots.start_time', 'slots.end_time')
+            ->select('users.id', 'users.f_name', 'users.l_name', 'subscription_plans.title', 'subscriptions.status', 'services.title AS service', 'bookings.booking_date', 'transactions.created_at as payment_date', 'users.rating', 'slots.start_time', 'slots.end_time')
             ->get();
 
         $setting = Setting::first();
-        $subsCount = User::where('user_role',2)->count();
-        $subsCountThisMonth = User::where('user_role',2)
-        ->whereMonth('created_at',date('m'))
-        ->count();
+        $subsCount = User::where('user_role', 2)->count();
+        $subsCountThisMonth = User::where('user_role', 2)
+            ->whereMonth('created_at', date('m'))
+            ->count();
         $subsCountLastMonth = User::where('user_role', 2)
-        ->whereMonth('created_at', Carbon::now()->subMonth()->month)
-        ->whereYear('created_at', Carbon::now()->subMonth()->year)
-        ->count();
+            ->whereMonth('created_at', Carbon::now()->subMonth()->month)
+            ->whereYear('created_at', Carbon::now()->subMonth()->year)
+            ->count();
 
-        $subsAmount = Transaction::where('status',1)->sum('amount');
+        $subsAmount = Transaction::where('status', 1)->sum('amount');
 
-        $pdf = PDF::loadView('admin.members.pdf', compact('members','setting','subsCount','subsCountThisMonth','subsCountLastMonth','subsAmount'));
+        $pdf = PDF::loadView('admin.members.pdf', compact('members', 'setting', 'subsCount', 'subsCountThisMonth', 'subsCountLastMonth', 'subsAmount'));
         $pdf->setOptions(['defaultFont' => 'Poppins']);
         return $pdf->download('members.pdf');
     }
@@ -474,10 +527,10 @@ class AdminController extends Controller
         // If validation passes, continue with user creation
         $data = $request->all();
         // return $data;
-        if($request->id){
+        if ($request->id) {
             $user = User::find($request->id);
             $user->update($data);
-        }else{
+        } else {
             // Validate the request
             $request->validate([
                 'email' => 'required|email|unique:users,email',
@@ -519,32 +572,33 @@ class AdminController extends Controller
             $email = $setting->business_email_address;
 
             // Send the welcome email
-            Mail::to($user->email)->send(new AddUser($name, $user_role,$website_address, $phone, $email,$resetLink));
-
+            Mail::to($user->email)->send(new AddUser($name, $user_role, $website_address, $phone, $email, $resetLink));
         }
 
         return redirect()->back()->with('success', 'User added successfully');
     }
 
 
-    public function editUser(Request $request,$id){
+    public function editUser(Request $request, $id)
+    {
         $user = User::find($id);
-        $subscription = Subscription::where('user_id',$id)->first();
-        $BankDetail = BankDetail::where('user_id',$id)->first();
+        $subscription = Subscription::where('user_id', $id)->first();
+        $BankDetail = BankDetail::where('user_id', $id)->first();
 
         // return $subscription;
-        return view('admin.members.update_member',compact('user','subscription','BankDetail'));
+        return view('admin.members.update_member', compact('user', 'subscription', 'BankDetail'));
     }
 
-    public function updateUser(Request $request){
+    public function updateUser(Request $request)
+    {
         $data = $request->all();
         // return $data;
         $user = User::find($request->id);
         if ($request->hasFile('photo_input')) {
             // Store the file and get the file path
             $file = $request->file('photo_input');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $data['photo'] = $this->uploadImage($file, $fileName);
+            // $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $data['photo'] = $this->uploadImage($file);
         }
         $user->update($data);
         return redirect()->back();
@@ -553,13 +607,13 @@ class AdminController extends Controller
     public function addBankDetail(Request $request)
     {
         $data = $request->all();
-        if($request->bank_id){
+        if ($request->bank_id) {
             $BankDetail = BankDetail::find($request->bank_id);
             $BankDetail->update($data);
-            return redirect()->back()->with('success','Bank information updated successfully');
-        }else{
+            return redirect()->back()->with('success', 'Bank information updated successfully');
+        } else {
             BankDetail::create($data);
-            return redirect()->back()->with('success','Bank information added successfully');
+            return redirect()->back()->with('success', 'Bank information added successfully');
         }
     }
 
@@ -597,6 +651,6 @@ class AdminController extends Controller
         $user = User::find($request->id);
         $user->password = bcrypt($request->password);
         $user->save();
-        return redirect()->back()->with('success','Password has been changed successfully.');
+        return redirect()->back()->with('success', 'Password has been changed successfully.');
     }
 }

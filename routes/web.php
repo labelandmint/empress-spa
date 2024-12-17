@@ -30,7 +30,6 @@ use Illuminate\Support\Facades\Storage;
 */
 
 
-
 Auth::routes();
 
 
@@ -61,12 +60,24 @@ Route::get('/images/{filename}', function ($filename) {
     $filePath = 'images/' . $filename;
     if(Storage::disk('public')->exists($filePath))
     {
-        return response()->file(Storage::disk('public')->path($filePath));
+        $fileStream = Storage::disk('public')->readStream($filePath);
+        return response()->stream(function () use ($fileStream) {
+            fpassthru($fileStream);
+        }, 200, [
+            'Content-Type' => Storage::disk('public')->mimeType($filePath),
+            'Content-Disposition' => 'inline; filename="' . basename($filePath) . '"',
+        ]);
     }
     elseif( Storage::disk('protected')->exists($filePath) )
     {
+            $fileStream = Storage::disk('protected')->readStream($filePath);
             if (Auth::guard('web')->check() || Auth::guard('admin')->check()) {
-                return response()->file(Storage::disk('protected')->path($filePath));
+                return response()->stream(function () use ($fileStream) {
+                    fpassthru($fileStream);
+                }, 200, [
+                    'Content-Type' => Storage::disk('protected')->mimeType($filePath),
+                    'Content-Disposition' => 'inline; filename="' . basename($filePath) . '"',
+                ]);
             }
             // Return a 403 Forbidden if the user is not authorized
             abort(403, 'Unauthorized access to protected file');

@@ -58,7 +58,7 @@ Route::post('/change-password', [UserController::class, 'changePassword']);
 
 Route::get('/images/{filename}', function ($filename) {
 
-    $filePath = './images/' . $filename;
+    $filePath = 'images/' . $filename;
     if(Storage::disk('public')->exists($filePath))
     {
         return response()->file(Storage::disk('public')->path($filePath));

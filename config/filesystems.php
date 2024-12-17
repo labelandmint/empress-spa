@@ -45,8 +45,13 @@ return [
         ],
 
         'public' => [
-            'driver' => 'local',
-            'root' => storage_path('public'),
+            'driver' => env('FILESYSTEM_DRIVER', 'local'),
+            'key' => env('DO_SPACES_KEY'),
+            'secret' => env('DO_SPACES_SECRET'),
+            'region' => env('DO_SPACES_REGION'),
+            'bucket' => env('DO_SPACES_BUCKET'),
+            'endpoint' => env('DO_SPACES_ENDPOINT'),
+            'root' => env('DO_SPACES_PUBLIC_FOLDER',storage_path('public')),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,

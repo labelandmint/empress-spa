@@ -17,7 +17,7 @@ use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\SubscriptionController as AdminSubscriptionController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
-
+use Illuminate\Support\Facades\Storage;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,26 +57,22 @@ Route::post('password/confirm', [UserController::class, 'confirm']);
 Route::post('/change-password', [UserController::class, 'changePassword']);
 
 Route::get('/images/{filename}', function ($filename) {
-    // Define the paths
-    $publicPath = storage_path('public/images/' . $filename);
-    $protectedPath = storage_path('protected/images/' . $filename);
 
-    // Check if the file exists in the public directory
-    if (file_exists($publicPath)) {
-        return response()->file($publicPath);
+    $filePath = './images/' . $filename;
+    if(Storage::disk('public')->exists($filePath))
+    {
+        return response()->file(Storage::disk('public')->path($filePath));
     }
-
+    elseif( Storage::disk('protected')->exists($filePath) )
+    {
+            if (Auth::guard('web')->check() || Auth::guard('admin')->check()) {
+                return response()->file(Storage::disk('protected')->path($filePath));
+            }
+            // Return a 403 Forbidden if the user is not authorized
+            abort(403, 'Unauthorized access to protected file');
+    }
     // If the file exists in the protected directory, apply middleware
-    if (file_exists($protectedPath)) {
-        // Check if the user has 'admin' middleware privileges
-        if (Auth::guard('web')->check() || Auth::guard('admin')->check()) {
-            return response()->file($protectedPath);
-        }
-
-        // Return a 403 Forbidden if the user is not authorized
-        abort(403, 'Unauthorized access to protected file');
-    }
-
+    
     // If the file is not found in either location, return 404
     abort(404, 'File not found');
 });

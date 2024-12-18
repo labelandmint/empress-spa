@@ -13,10 +13,10 @@
         </div> -->
     </div>
     <div class=""  style="text-align: center;padding: 100px 0px;" >
-        <img class="img600x100" src="{{$logo}}" alt=""/>
+        <img class="img600x100 img-fluid" src="{{url('images/'.$logo)}}" alt=""/>
     </div>
     <div class="" style="text-align: center;">
-        <img class="es-w-full" src="{{$graphic}}" alt="" />
+        <img class="img600x300 img-fluid" src="{{url('images/'.$graphic)}}" alt="" />
     </div>
     <div class="" style="text-align: center; font-size : 24px;">
         <h3>{{$header}}</h3>

@@ -717,11 +717,11 @@
                             </div>
                         </div>
                         <div class="d-flex es-py-28 align-items-center justify-content-center">
-                            <img id="email-logo" class="es-w-40" src="{{ asset('images/logo.svg') }}"
+                            <img id="email-logo" class="img-fluid img600x100" src="{{ url('public/images/logo.svg') }}"
                                 alt="" />
                         </div>
                         <div class="es-mb-8">
-                            <img id="email-graphic" class="es-w-full" src="{{ asset('images/settings-img.png') }}"
+                            <img id="email-graphic" class="img-fluid img600x300" src="{{ url('public/images/settings-img.png') }}"
                                 alt="" />
                         </div>
                         <div class="es-font-mulish-bold es-text-3xl text-center es-mb-8">
@@ -1021,8 +1021,8 @@
             var template = $(this).data('type');
 
             // Check if settings exist
-            var emailLogo = '{{ $settings->email_logo ?? '' }}';
-            var emailBackgroundImage = '{{ $settings->email_background_image ?? '' }}';
+            var emailLogo = '{{ url('images/'. $settings->email_logo) ?? '' }}';
+            var emailBackgroundImage = '{{url('images/'.  $settings->email_background_image) ?? '' }}';
             var successfulRegistrationSubject = '{{ $settings->successful_registration_subject ?? '' }}';
             var successfulRegistrationBody = '{{ $settings->successful_registration_body ?? '' }}';
             var paymentFailedSubject = '{{ $settings->payment_failed_subject ?? '' }}';

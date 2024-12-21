@@ -289,7 +289,7 @@ class UserController extends Controller
             // Create an instance of Money
             $money = new Money();
             $money->setAmount(floatval($request->amount) * 100); // Convert total to cents
-            $money->setCurrency(Currency::USD); // Adjust as needed
+            $money->setCurrency(Currency::AUD); // Adjust as needed
 
             // Create payment request
             $createPaymentRequest = new CreatePaymentRequest($request->nonce, uniqid('', true));

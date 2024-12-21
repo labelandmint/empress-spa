@@ -720,7 +720,8 @@
     <!-- Include jQuery Validation Plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
 
-    <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+    <!-- <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script> -->
+    <script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script>
 
     <script>
         // Hide fields when selecting afterpay (Square)

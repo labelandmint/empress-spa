@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use App\Console\Commands\ProcessRecurringPayments;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,9 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Artisan::command('payments:process-recurring', function () {
+    $this->info('Processing recurring payments...');
+    // Call the function to handle the recurring payments
+    (new ProcessRecurringPayments())->handle();
+})->describe('Process recurring payments for active subscriptions');

@@ -18,7 +18,7 @@
 <head>
     <title>Create Account</title>
 
-    <link rel="icon" href="{{ asset('logo.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url('public/logo.png') }}" type="image/x-icon">
 
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -47,24 +47,24 @@
 
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url('public/css/style.css') }}" />
 
 
 
     <script src="https://js.stripe.com/v3/"></script>
 
     @if ($settings && $settings->page_background_image)
-    <style>
-        .onboarding-page .hero-image {
-            background: url("{{ url('images/'. $settings->page_background_image) }}");
-            background-size: cover;
-        }
+        <style>
+            .onboarding-page .hero-image {
+                background: url("{{ url('images/' . $settings->page_background_image) }}");
+                background-size: cover;
+            }
 
-        .onboarding-page .hero-text .hero-text-bg {
-            background: url("{{  url('images/'. $settings->page_background_image) }}") !important;
-            background-size: cover !important;
-        }
-    </style>
+            .onboarding-page .hero-text .hero-text-bg {
+                background: url("{{ url('images/' . $settings->page_background_image) }}") !important;
+                background-size: cover !important;
+            }
+        </style>
     @endif
 
     <style>
@@ -226,11 +226,11 @@
             }
 
             .mt {
-                margin: 12px 0px!important;
+                margin: 12px 0px !important;
             }
 
-            .cust-size{
-                font-size: 30px!important;
+            .cust-size {
+                font-size: 30px !important;
             }
         }
     </style>
@@ -254,13 +254,13 @@
                 <div class="d-flex block align-items-center justify-content-between w-100">
                     <div class="d-flex align-items-center">
                         <a href="#" class="">
-                            <img src="{{ url('images/'.$settings->logo) }}" alt="" class="es-h-8" />
+                            <img src="{{ url('images/' . $settings->logo) }}" alt="" class="es-h-8" />
                         </a>
                     </div>
                     <div class="mt">
                         <a href="{{ $fullUrl }}" class="text-decoration-none es-text-gray-900 es-font-500">
                             <div class="d-flex align-items-center gap-2 gap-md-3">
-                                <img src="{{ asset('images/left-arrow.png') }}" width="16" height="16"
+                                <img src="{{ url('public/images/left-arrow.png') }}" width="16" height="16"
                                     alt="" />
                                 <div>
                                     <span class="d-none d-md-inline-block">Back to&nbsp;</span><span
@@ -302,7 +302,8 @@
                     <div class="es-mb-4 es-mb-6">
                         {{-- <input type="file" accept=”.jpg,.jpeg,.png” hidden id="photo_input" /> --}}
                         <div for="photo_input" class="es-file-input mt-2 es-h-48 p-0" id="photo-label">
-                            <img src="{{ $plan ? url('images/'.$plan->photo) : '#' }}" style="width: 100%;height:100%">
+                            <img src="{{ $plan ? url('images/' . $plan->photo) : '#' }}" class=" img-fluid"
+                                style="width:100%; height:100%; object-fit:cover">
                         </div>
                         {{-- <div class="d-none" id="file-preview-container">
                             <img
@@ -317,7 +318,7 @@
                                     class="btn border-0 es-text-sm es-font-600 p-0"
                                 >
                                     Change
-                                    <img src="{{asset('images/refresh.png')}}" width="14" height="14" alt="">
+                                    <img src="{{url('public/images/refresh.png')}}" width="14" height="14" alt="">
                                 </label>
                                 <button
                                     type="button"
@@ -325,7 +326,7 @@
                                     id="clear_photo_input"
                                 >
                                     Delete
-                                    <img src="{{asset('images/trash.png')}}" width="14" height="14" alt="">
+                                    <img src="{{url('public/images/trash.png')}}" width="14" height="14" alt="">
                                 </button>
                             </div>
                         </div> --}}
@@ -396,14 +397,14 @@
                             Create Account
                         </div>
                         <!--  @if ($errors->any())
-                            <div class="alert alert-danger">
+<div class="alert alert-danger">
                                                             <ul>
                                                                 @foreach ($errors->all() as $error)
 <li>{{ $error }}</li>
 @endforeach
                                                             </ul>
                                                         </div>
-                            @endif -->
+@endif -->
                         <input type="hidden" name="stripeToken" id="stripeToken" />
                     </div>
                     @error('payment_error')
@@ -450,7 +451,7 @@
                                     placeholder="Password" />
                                 <button id="toggle-password" type="button"
                                     class="d-flex align-items-center bg-transparent border-0 es--ml-12 es-outline-none">
-                                    <img src="{{ asset('images/eye-dark.png') }}"
+                                    <img src="{{ url('public/images/eye-dark.png') }}"
                                         alt="Toggle Password Visibility" />
                                 </button>
                             </div>
@@ -489,6 +490,10 @@
                         </div>
                         <div id="card-element" class="form-control d-none es-input mt-2"></div>
                         <div class="row hidee">
+                            <div class="es-text-gray-500 es-mb-4">
+                                Kindly re-enter your credit card details below to ensure uninterrupted processing of
+                                your recurring payments.
+                            </div>
                             <div class="col-lg-6">
                                 <div class="es-mb-5">
                                     <input id="payment_name" name="name_on_card" type="text"
@@ -511,6 +516,7 @@
                             </div>
                         </div>
                         <div class="row hidee">
+
                             <div class="col-lg-6">
                                 <div class="es-mb-5">
                                     <input id="expiry" name="expiry" type="text"
@@ -572,8 +578,8 @@
                     <div class="w-100 h-100">
                         <div class="hero-text-content">
                             <div class="es-mb-8">
-                                <img src="{{ url('images/'.$settings->logo) ?? asset('images/logo-white.svg') }}"  style="object-fit: contain"
-                                    alt="" class="img600x100 img-fluid" />
+                                <img src="{{ url('images/' . $settings->logo) ?? url('public/images/logo-white.svg') }}"
+                                    style="object-fit: contain" alt="" class="img600x100 img-fluid" />
                             </div>
                             <div class="es-mb-8">
                                 <div class="es-header-2 es-font-600 text-white es-font-inter es-mb-5">
@@ -652,12 +658,12 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ asset('images/close.png') }}" alt="" />
+                    <img src="{{ url('public/images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div
                         class="card-body d-flex align-items-center justify-content-center es-py-24 mt-3 flex-column es-gap-6">
-                        <img src="{{ asset('images/logo.svg') }}" alt="" class="" />
+                        <img src="{{ url('public/images/logo.svg') }}" alt="" class="" />
                         <div class="es-text-3xl es-font-mulish-bold">Congratulations!</div>
                         <div class="es-text-gray-500 text-center es-w-auto es-w-md-96 es-mb-4">
                             We're pleased to have you as an Empress Spa Member, and look forward to meeting you.
@@ -684,12 +690,12 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ asset('images/close.png') }}" alt="" />
+                    <img src="{{ url('public/images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div
                         class="card-body d-flex align-items-center justify-content-center es-py-12 mt-3 flex-column es-gap-6">
-                        <img src="{{ asset('images/logo.svg') }}" alt="" class="" />
+                        <img src="{{ url('public/images/logo.svg') }}" alt="" class="" />
                         <div class="es-text-3xl es-font-mulish-bold">Payment Terms and Conditions</div>
                         <div class="es-text-gray-500 text-center es-w-auto es-w-md-96 es-mb-4"
                             style="width:35rem; height: 400px; overflow-y: scroll;">
@@ -720,8 +726,7 @@
     <!-- Include jQuery Validation Plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
 
-    <!-- <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script> -->
-    <script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script>
+    <script src="https://web.squarecdn.com/v1/square.js"></script>
 
     <script>
         // Hide fields when selecting afterpay (Square)
@@ -770,7 +775,7 @@
                     createAccountButton.disabled = false; // Enable for Stripe or Square
                     cardContainer.classList.remove('d-none'); // Show card input
                     document.getElementById('afterpay-button').classList.add(
-                    'd-none'); // Hide Afterpay button
+                        'd-none'); // Hide Afterpay button
                     initializePaymentMethod(selectedMethod); // Initialize selected payment method
 
                 } else if (selectedMethod === '3') { // Afterpay
@@ -780,10 +785,10 @@
                     initializeAfterpay(); // Initialize Afterpay
                 } else {
                     createAccountButton.disabled =
-                    true; // Disable Create Account button for no selection
+                        true; // Disable Create Account button for no selection
                     cardContainer.classList.add('d-none'); // Hide card input
                     document.getElementById('afterpay-button').classList.add(
-                    'd-none'); // Hide Afterpay button
+                        'd-none'); // Hide Afterpay button
                 }
             });
 
@@ -817,6 +822,7 @@
                     });
                 } else if (method === '2') { // Square
                     const payments = Square.payments("{{ get_setting('square_application_id') }}");
+                    console.log(payments)
                     const card = await payments.card();
                     await card.attach(cardContainer);
 
@@ -851,6 +857,7 @@
                 const amount = "{{ $plan->price_of_subscription }}";
 
                 const payments = Square.payments(application_id, location_id);
+
                 const paymentRequest = payments.paymentRequest({
                     countryCode: 'AU',
                     currencyCode: 'AUD',
@@ -900,9 +907,9 @@
                             createAccountButton.disabled = false;
                             createAccountButton.addEventListener('click', function() {
                                 if ($("#payment-form")
-                                .valid()) { // Validate the form before submission
+                                    .valid()) { // Validate the form before submission
                                     paymentForm
-                                .submit(); // Submit the form to create the account
+                                        .submit(); // Submit the form to create the account
                                 }
                             });
                             afterpayButton.classList.add('d-none');
@@ -1154,8 +1161,8 @@
             togglePasswordVisibility(
                 "password",
                 "toggle-password",
-                "{{ asset('images/eye-dark.png') }}",
-                "{{ asset('images/eye-off-dark.png') }}",
+                "{{ url('public/images/eye-dark.png') }}",
+                "{{ url('public/images/eye-off-dark.png') }}",
             );
         });
     </script>

@@ -27,6 +27,8 @@ use App\Mail\EmailTemplate;
 use App\Models\Service;
 use Square\SquareClient;
 use Square\Models\CreatePaymentRequest;
+use Square\Models\CreateCustomerRequest;
+use Square\Models\CreateCustomerCardRequest;
 use Square\Models\Money;
 use Square\Models\Currency;
 
@@ -73,109 +75,109 @@ class UserController extends Controller
     //     }
     // }
 
-//       public function register(Request $request, $sub_id)
-// {
-//     try {
-//         $subscription = SubscriptionPlan::find($sub_id);
-//         if ($subscription) {
-//             $stripePublishableKey = get_setting('stripe_publishable_key');
-//             $plan = SubscriptionPlan::find($sub_id);
-//             if ($sub_id == 'null') {
-//                 abort(404, 'Page Not Found');
-//             }
-//             $settings = Setting::where('user_id', 1)->first();
-//             $counter = [];
-//             if ($settings) {
-//                 $counter = explode(':', $settings->countdown_timer);
-//             }
-//             $products = [];
-//             if ($plan) {
-//                 $products = Product::whereIn('id', explode(',', $plan->subscription_package))->get();
-//                 $services = Service::whereIn('id', explode(',', $plan->subscription_services))->get();
-//             }
+    //       public function register(Request $request, $sub_id)
+    // {
+    //     try {
+    //         $subscription = SubscriptionPlan::find($sub_id);
+    //         if ($subscription) {
+    //             $stripePublishableKey = get_setting('stripe_publishable_key');
+    //             $plan = SubscriptionPlan::find($sub_id);
+    //             if ($sub_id == 'null') {
+    //                 abort(404, 'Page Not Found');
+    //             }
+    //             $settings = Setting::where('user_id', 1)->first();
+    //             $counter = [];
+    //             if ($settings) {
+    //                 $counter = explode(':', $settings->countdown_timer);
+    //             }
+    //             $products = [];
+    //             if ($plan) {
+    //                 $products = Product::whereIn('id', explode(',', $plan->subscription_package))->get();
+    //                 $services = Service::whereIn('id', explode(',', $plan->subscription_services))->get();
+    //             }
 
-//             $ratio_1 = $settings->ratio_1; 
-//             $ratio_2 = $settings->ratio_2; 
-//             $number = $settings->number; 
+    //             $ratio_1 = $settings->ratio_1; 
+    //             $ratio_2 = $settings->ratio_2; 
+    //             $number = $settings->number; 
 
-//             // Get the count of users with user_role = 2
-//             $userCount = User::where('user_role', 2)->count();
-            
-//             // Calculate the number of seats taken (userdata)
-//             $userdata = $userCount / $ratio_1 * $ratio_2;
-            
-//             // Calculate the remaining seats
-//             $remainingSeats = max($number - $userdata, 0); // Ensure it's not negative
+    //             // Get the count of users with user_role = 2
+    //             $userCount = User::where('user_role', 2)->count();
 
-//             return view('auth.premium-register', compact('stripePublishableKey', 'plan', 'products', 'services', 'settings', 'counter', 'remainingSeats'));
-//         } else {
-//             abort(404, 'Page Not Found');
-//         }
-//     } catch (Exception $e) {
-//         abort(404, 'Page Not Found');
-//     }
-// }
+    //             // Calculate the number of seats taken (userdata)
+    //             $userdata = $userCount / $ratio_1 * $ratio_2;
+
+    //             // Calculate the remaining seats
+    //             $remainingSeats = max($number - $userdata, 0); // Ensure it's not negative
+
+    //             return view('auth.premium-register', compact('stripePublishableKey', 'plan', 'products', 'services', 'settings', 'counter', 'remainingSeats'));
+    //         } else {
+    //             abort(404, 'Page Not Found');
+    //         }
+    //     } catch (Exception $e) {
+    //         abort(404, 'Page Not Found');
+    //     }
+    // }
 
 
-public function register(Request $request, $sub_id)
-{
-    try {
-        $subscription = SubscriptionPlan::find($sub_id);
-        if ($subscription) {
-            $stripePublishableKey = get_setting('stripe_publishable_key');
-            $plan = SubscriptionPlan::find($sub_id);
-            if ($sub_id == 'null') {
+    public function register(Request $request, $sub_id)
+    {
+        try {
+            $subscription = SubscriptionPlan::find($sub_id);
+            if ($subscription) {
+                $stripePublishableKey = get_setting('stripe_publishable_key');
+                $plan = SubscriptionPlan::find($sub_id);
+                if ($sub_id == 'null') {
+                    abort(404, 'Page Not Found');
+                }
+
+                // Retrieve the settings
+                $settings = Setting::where('user_id', 1)->first();
+                $counter = [];
+                if ($settings && $settings->countdown_timer) {
+                    $counter = explode(':', $settings->countdown_timer);
+                }
+
+                $products = [];
+                $services = [];
+                if ($plan) {
+                    $products = Product::whereIn('id', explode(',', $plan->subscription_package))->get();
+                    $services = Service::whereIn('id', explode(',', $plan->subscription_services))->get();
+                }
+
+                // Check if settings are found
+                if ($settings) {
+                    $ratio_1 = $settings->ratio_1 ?? 1; // Fallback to 1 if null
+                    $ratio_2 = $settings->ratio_2 ?? 1; // Fallback to 1 if null
+                    $number = $settings->number ?? 0;
+                    $updatedAt = $settings->ratio_update_time;
+
+                    $userCount = User::where('user_role', 2)
+                        ->where('created_at', '>', $updatedAt)
+                        ->count();
+                    $userdata = ($userCount / $ratio_1) * $ratio_2;
+
+                    $remainingSeats = max($number - $userdata, 0);
+                } else {
+                    // Default values if no settings are found
+                    $remainingSeats = 0;
+                }
+
+                return view('auth.premium-register', compact(
+                    'stripePublishableKey',
+                    'plan',
+                    'products',
+                    'services',
+                    'settings',
+                    'counter',
+                    'remainingSeats'
+                ));
+            } else {
                 abort(404, 'Page Not Found');
             }
-
-            // Retrieve the settings
-            $settings = Setting::where('user_id', 1)->first();
-            $counter = [];
-            if ($settings && $settings->countdown_timer) {
-                $counter = explode(':', $settings->countdown_timer);
-            }
-
-            $products = [];
-            $services = [];
-            if ($plan) {
-                $products = Product::whereIn('id', explode(',', $plan->subscription_package))->get();
-                $services = Service::whereIn('id', explode(',', $plan->subscription_services))->get();
-            }
-
-            // Check if settings are found
-            if ($settings) {
-                $ratio_1 = $settings->ratio_1 ?? 1; // Fallback to 1 if null
-                $ratio_2 = $settings->ratio_2 ?? 1; // Fallback to 1 if null
-                $number = $settings->number ?? 0;
-                $updatedAt = $settings->ratio_update_time;
-
-                $userCount = User::where('user_role', 2)
-                    ->where('created_at', '>', $updatedAt)
-                    ->count();
-                $userdata = ($userCount / $ratio_1) * $ratio_2;
-
-                $remainingSeats = max($number - $userdata, 0);
-            } else {
-                // Default values if no settings are found
-                $remainingSeats = 0;
-            }
-
-            return view('auth.premium-register', compact(
-                'stripePublishableKey',
-                'plan',
-                'products',
-                'services',
-                'settings',
-                'counter',
-                'remainingSeats'
-            ));
-        } else {
+        } catch (Exception $e) {
             abort(404, 'Page Not Found');
         }
-    } catch (Exception $e) {
-        abort(404, 'Page Not Found');
     }
-}
 
 
 
@@ -205,7 +207,7 @@ public function register(Request $request, $sub_id)
             'acceptTerms.required' => 'Please check to proceed',
         ]);
 
-        
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -270,6 +272,9 @@ public function register(Request $request, $sub_id)
 
     protected function handleSquarePayment(Request $request)
     {
+
+        // return $request->all();
+
         $client = new SquareClient([
             'environment' => 'production',
             'accessToken' => get_setting('square_access_token'), // Use your Square access token
@@ -277,7 +282,10 @@ public function register(Request $request, $sub_id)
 
         $paymentsApi = $client->getPaymentsApi();
 
+        $customersApi = $client->getCustomersApi();
+
         try {
+
             // Create an instance of Money
             $money = new Money();
             $money->setAmount(floatval($request->amount) * 100); // Convert total to cents
@@ -302,11 +310,46 @@ public function register(Request $request, $sub_id)
                     ]);
                     $user = $existingUser;
                 } else {
+
+                    // CREATE CUSTOMER ON SQUARE
+
+                    $name = $request->f_name . $request->l_name;
+                    $email = $request->email;
+                    $customerRequest = new CreateCustomerRequest();
+                    $customerRequest->setGivenName($name);
+                    $customerRequest->setEmailAddress($email);
+
+                    $customerResponse = $customersApi->createCustomer($customerRequest);
+
+                    if (!$customerResponse->isSuccess()) {
+                        \Log::error('Failed to create customer', $customerResponse->getErrors());
+                        return null;
+                    }
+
+                    $customerId = $customerResponse->getResult()->getCustomer()->getId();
+
+
+                    // Save the card on file
+                    $createCustomerCardRequest = new CreateCustomerCardRequest($request->nonce);
+                    $cardResponse = $customersApi->createCustomerCard($customerId, $createCustomerCardRequest);
+
+                    if (!$cardResponse->isSuccess()) {
+                        \Log::error('Failed to save card on file', $cardResponse->getErrors());
+                        return null;
+                    }
+                    $cardResult = $cardResponse->getResult();
+                    \Log::info('Card save response', ['result' => $cardResult]);
+                    $cardId = $cardResponse->getResult()->getCard()->getId();
                     $data = $request->all();
                     $data['user_role'] = 2;
                     $data['status'] = 1;
+                    $data['profile_id'] = $customerId;
+                    $data['card_id'] = $cardId;
                     $data['password'] = bcrypt($data['password']);
                     $user = User::create($data);
+
+                    // return $cardId; // Save this in your database for future transactions
+
                 }
 
                 return $this->finalizeRegistration($user, $request, $response->getResult()->getPayment()->getId());
@@ -436,7 +479,7 @@ public function register(Request $request, $sub_id)
         $subscription = Subscription::where('user_id', Auth::user()->id)->first();
         $title = "Profile";
 
-        return view('profile.index', compact('title','user', 'subscription', 'isCancel'));
+        return view('profile.index', compact('title', 'user', 'subscription', 'isCancel'));
     }
 
     public function updateProfile(Request $request)
@@ -621,27 +664,27 @@ public function register(Request $request, $sub_id)
         if ($settings) {
             $counter = explode(' ', $settings->countdown_timer);
         }
-        
-        
-            if ($settings) {
-                $ratio_1 = $settings->ratio_1 ?? 1; // Fallback to 1 if null
-                $ratio_2 = $settings->ratio_2 ?? 1; // Fallback to 1 if null
-                $number = $settings->number ?? 0;
-                $updatedAt = $settings->ratio_update_time;
 
-                $userCount = User::where('user_role', 2)
-                    ->where('created_at', '>', $updatedAt)
-                    ->count();
-                $userdata = ($userCount / $ratio_1) * $ratio_2;
 
-                $remainingSeats = max($number - $userdata, 0);
-            } else {
-                // Default values if no settings are found
-                $remainingSeats = 0;
-            }
-        
-        
-        return view('auth.passwords.reset', compact('settings', 'counter','remainingSeats'));
+        if ($settings) {
+            $ratio_1 = $settings->ratio_1 ?? 1; // Fallback to 1 if null
+            $ratio_2 = $settings->ratio_2 ?? 1; // Fallback to 1 if null
+            $number = $settings->number ?? 0;
+            $updatedAt = $settings->ratio_update_time;
+
+            $userCount = User::where('user_role', 2)
+                ->where('created_at', '>', $updatedAt)
+                ->count();
+            $userdata = ($userCount / $ratio_1) * $ratio_2;
+
+            $remainingSeats = max($number - $userdata, 0);
+        } else {
+            // Default values if no settings are found
+            $remainingSeats = 0;
+        }
+
+
+        return view('auth.passwords.reset', compact('settings', 'counter', 'remainingSeats'));
     }
 
     public function sendResetLinkEmail(Request $request)
@@ -698,29 +741,29 @@ public function register(Request $request, $sub_id)
         if ($settings) {
             $counter = explode(' ', $settings->countdown_timer);
         }
-        
-        
-            if ($settings) {
-                $ratio_1 = $settings->ratio_1 ?? 1; // Fallback to 1 if null
-                $ratio_2 = $settings->ratio_2 ?? 1; // Fallback to 1 if null
-                $number = $settings->number ?? 0;
-                $updatedAt = $settings->ratio_update_time;
 
-                $userCount = User::where('user_role', 2)
-                    ->where('created_at', '>', $updatedAt)
-                    ->count();
-                $userdata = ($userCount / $ratio_1) * $ratio_2;
 
-                $remainingSeats = max($number - $userdata, 0);
-            } else {
-                // Default values if no settings are found
-                $remainingSeats = 0;
-            }
-        
-        
+        if ($settings) {
+            $ratio_1 = $settings->ratio_1 ?? 1; // Fallback to 1 if null
+            $ratio_2 = $settings->ratio_2 ?? 1; // Fallback to 1 if null
+            $number = $settings->number ?? 0;
+            $updatedAt = $settings->ratio_update_time;
+
+            $userCount = User::where('user_role', 2)
+                ->where('created_at', '>', $updatedAt)
+                ->count();
+            $userdata = ($userCount / $ratio_1) * $ratio_2;
+
+            $remainingSeats = max($number - $userdata, 0);
+        } else {
+            // Default values if no settings are found
+            $remainingSeats = 0;
+        }
+
+
         // return view('auth.passwords.reset', compact('settings', 'counter','remainingSeats'));
-        
-        return view('auth.passwords.confirm', compact('settings', 'counter','remainingSeats'))->with(
+
+        return view('auth.passwords.confirm', compact('settings', 'counter', 'remainingSeats'))->with(
             ['token' => $token, 'email' => $request->email]
         );
     }

@@ -286,76 +286,76 @@ class UserController extends Controller
 
         try {
 
+            $cardNonce = $request->nonce; // Pass the nonce received from the frontend
+
+            // Step 1: Create a Customer
+            $name = $request->f_name . $request->l_name;
+            $email = $request->email;
+            $customerRequest = new CreateCustomerRequest();
+            $customerRequest->setGivenName($name);
+            $customerRequest->setEmailAddress($email);
+
+            $customerResponse = $customersApi->createCustomer($customerRequest);
+
+            if (!$customerResponse->isSuccess()) {
+                \Log::error('Failed to create customer', $customerResponse->getErrors());
+                return response()->json(['error' => 'Failed to create customer'], 500);
+            }
+
+            $customerId = $customerResponse->getResult()->getCustomer()->getId();
+
+            // Step 2: Save the Card on File
+            $createCustomerCardRequest = new CreateCustomerCardRequest($cardNonce);
+            $cardResponse = $customersApi->createCustomerCard($customerId, $createCustomerCardRequest);
+
+            if (!$cardResponse->isSuccess()) {
+                \Log::error('Failed to save card on file', $cardResponse->getErrors());
+                return response()->json(['error' => 'Failed to save card on file'], 500);
+            }
+
+            $cardId = $cardResponse->getResult()->getCard()->getId();
+
             // Create an instance of Money
             $money = new Money();
             $money->setAmount(floatval($request->amount) * 100); // Convert total to cents
             $money->setCurrency(Currency::AUD); // Adjust as needed
 
             // Create payment request
-            $createPaymentRequest = new CreatePaymentRequest($request->nonce, uniqid('', true));
+            $createPaymentRequest = new CreatePaymentRequest($cardId, uniqid('', true));
+            $createPaymentRequest->setCustomerId($customerId);
             $createPaymentRequest->setAmountMoney($money);
-
+            $createPaymentRequest->setAutocomplete(false);
             // Process payment
-            $response = $paymentsApi->createPayment($createPaymentRequest);
+            $paymentResponse = $paymentsApi->createPayment($createPaymentRequest);
 
-            if ($response->isSuccess()) {
-                // Check if the user was previously soft deleted or had status 2 and restore or reuse the record
-                $existingUser = User::withTrashed()->where('email', $request->email)->first();
-                if ($existingUser && ($existingUser->trashed() || $existingUser->status == 2)) {
-                    $existingUser->restore();
-                    $existingUser->update([
-                        'user_role' => 2,
-                        'status' => 1,
-                        'password' => bcrypt($request->password),
-                    ]);
-                    $user = $existingUser;
-                } else {
-
-                    // CREATE CUSTOMER ON SQUARE
-
-                    $name = $request->f_name . $request->l_name;
-                    $email = $request->email;
-                    $customerRequest = new CreateCustomerRequest();
-                    $customerRequest->setGivenName($name);
-                    $customerRequest->setEmailAddress($email);
-
-                    $customerResponse = $customersApi->createCustomer($customerRequest);
-
-                    if (!$customerResponse->isSuccess()) {
-                        \Log::error('Failed to create customer', $customerResponse->getErrors());
-                        return null;
-                    }
-
-                    $customerId = $customerResponse->getResult()->getCustomer()->getId();
-
-
-                    // Save the card on file
-                    $createCustomerCardRequest = new CreateCustomerCardRequest($request->nonce);
-                    $cardResponse = $customersApi->createCustomerCard($customerId, $createCustomerCardRequest);
-
-                    if (!$cardResponse->isSuccess()) {
-                        \Log::error('Failed to save card on file', $cardResponse->getErrors());
-                        return null;
-                    }
-                    $cardResult = $cardResponse->getResult();
-                    \Log::info('Card save response', ['result' => $cardResult]);
-                    $cardId = $cardResponse->getResult()->getCard()->getId();
-                    $data = $request->all();
-                    $data['user_role'] = 2;
-                    $data['status'] = 1;
-                    $data['profile_id'] = $customerId;
-                    $data['card_id'] = $cardId;
-                    $data['password'] = bcrypt($data['password']);
-                    $user = User::create($data);
-
-                    // return $cardId; // Save this in your database for future transactions
-
-                }
-
-                return $this->finalizeRegistration($user, $request, $response->getResult()->getPayment()->getId());
-            } else {
-                return redirect()->back()->withErrors(['payment_error' => 'Payment failed. Please try again.'])->withInput();
+            if (!$paymentResponse->isSuccess()) {
+                \Log::error('Failed to process payment', $paymentResponse->getErrors());
+                return response()->json(['error' => 'Failed to process payment'], 500);
             }
+            // Success
+            $paymentId = $paymentResponse->getResult()->getPayment()->getId();
+
+            // Check if the user was previously soft deleted or had status 2 and restore or reuse the record
+            $existingUser = User::withTrashed()->where('email', $request->email)->first();
+            if ($existingUser && ($existingUser->trashed() || $existingUser->status == 2)) {
+                $existingUser->restore();
+                $existingUser->update([
+                    'user_role' => 2,
+                    'status' => 1,
+                    'password' => bcrypt($request->password),
+                ]);
+                $user = $existingUser;
+            } else {
+                $data = $request->all();
+                $data['user_role'] = 2;
+                $data['status'] = 1;
+                $data['profile_id'] = $customerId;
+                $data['card_id'] = $cardId;
+                $data['password'] = bcrypt($data['password']);
+                $user = User::create($data);
+            }
+
+            return $this->finalizeRegistration($user, $request, $paymentId);
         } catch (\Square\Exceptions\ApiException $e) {
             return redirect()->back()->withErrors(['payment_error' => 'Payment processing error.'])->withInput();
         }

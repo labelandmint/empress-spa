@@ -50,11 +50,13 @@ class ProcessRecurringPayments extends Command
                 // Create the payment amount in cents
                 $money = new Money();
                 $money->setAmount($user->amount * 100); // Assuming amount is in dollars
+                $money->setCurrency(Currency::AUD); 
 
                 // Create payment request (you need to have customer profile ID and nonce or card info)
-                $paymentRequest = new CreatePaymentRequest($user->subscription_token, uniqid('', true));
+                $paymentRequest = new CreatePaymentRequest($user->card_id, uniqid('', true));
+                $paymentRequest->setCustomerId($user->profile_id);
                 $paymentRequest->setAmountMoney($money);
-
+                $paymentRequest->setCurrency(Currency::AUD);
                 // Process the payment
                 $paymentResponse = $paymentsApi->createPayment($paymentRequest);
 

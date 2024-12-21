@@ -271,7 +271,7 @@ public function register(Request $request, $sub_id)
     protected function handleSquarePayment(Request $request)
     {
         $client = new SquareClient([
-            'environment' => 'sandbox',
+            'environment' => 'production',
             'accessToken' => get_setting('square_access_token'), // Use your Square access token
         ]);
 

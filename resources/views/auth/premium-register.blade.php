@@ -852,8 +852,8 @@
 
                 const payments = Square.payments(application_id, location_id);
                 const paymentRequest = payments.paymentRequest({
-                    countryCode: 'US',
-                    currencyCode: 'USD',
+                    countryCode: 'AU',
+                    currencyCode: 'AUD',
                     total: {
                         amount: amount,
                         label: 'Total',

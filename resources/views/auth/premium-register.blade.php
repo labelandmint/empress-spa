@@ -18,7 +18,7 @@
 <head>
     <title>Create Account</title>
 
-    <link rel="icon" href="{{ url('public/logo.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('logo.png') }}" type="image/x-icon">
 
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -47,7 +47,7 @@
 
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="{{ url('public/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
 
 
@@ -260,7 +260,7 @@
                     <div class="mt">
                         <a href="{{ $fullUrl }}" class="text-decoration-none es-text-gray-900 es-font-500">
                             <div class="d-flex align-items-center gap-2 gap-md-3">
-                                <img src="{{ url('public/images/left-arrow.png') }}" width="16" height="16"
+                                <img src="{{ asset('images/left-arrow.png') }}" width="16" height="16"
                                     alt="" />
                                 <div>
                                     <span class="d-none d-md-inline-block">Back to&nbsp;</span><span
@@ -318,7 +318,7 @@
                                     class="btn border-0 es-text-sm es-font-600 p-0"
                                 >
                                     Change
-                                    <img src="{{url('public/images/refresh.png')}}" width="14" height="14" alt="">
+                                    <img src="{{asset('images/refresh.png')}}" width="14" height="14" alt="">
                                 </label>
                                 <button
                                     type="button"
@@ -326,7 +326,7 @@
                                     id="clear_photo_input"
                                 >
                                     Delete
-                                    <img src="{{url('public/images/trash.png')}}" width="14" height="14" alt="">
+                                    <img src="{{asset('images/trash.png')}}" width="14" height="14" alt="">
                                 </button>
                             </div>
                         </div> --}}
@@ -451,7 +451,7 @@
                                     placeholder="Password" />
                                 <button id="toggle-password" type="button"
                                     class="d-flex align-items-center bg-transparent border-0 es--ml-12 es-outline-none">
-                                    <img src="{{ url('public/images/eye-dark.png') }}"
+                                    <img src="{{ asset('images/eye-dark.png') }}"
                                         alt="Toggle Password Visibility" />
                                 </button>
                             </div>
@@ -578,7 +578,7 @@
                     <div class="w-100 h-100">
                         <div class="hero-text-content">
                             <div class="es-mb-8">
-                                <img src="{{ url('images/' . $settings->logo) ?? url('public/images/logo-white.svg') }}"
+                                <img src="{{ url('images/' . $settings->logo) ?? asset('images/logo-white.svg') }}"
                                     style="object-fit: contain" alt="" class="img600x100 img-fluid" />
                             </div>
                             <div class="es-mb-8">
@@ -658,12 +658,12 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('public/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div
                         class="card-body d-flex align-items-center justify-content-center es-py-24 mt-3 flex-column es-gap-6">
-                        <img src="{{ url('public/images/logo.svg') }}" alt="" class="" />
+                        <img src="{{ asset('images/logo.svg') }}" alt="" class="" />
                         <div class="es-text-3xl es-font-mulish-bold">Congratulations!</div>
                         <div class="es-text-gray-500 text-center es-w-auto es-w-md-96 es-mb-4">
                             We're pleased to have you as an Empress Spa Member, and look forward to meeting you.
@@ -690,12 +690,12 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('public/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div
                         class="card-body d-flex align-items-center justify-content-center es-py-12 mt-3 flex-column es-gap-6">
-                        <img src="{{ url('public/images/logo.svg') }}" alt="" class="" />
+                        <img src="{{ asset('images/logo.svg') }}" alt="" class="" />
                         <div class="es-text-3xl es-font-mulish-bold">Payment Terms and Conditions</div>
                         <div class="es-text-gray-500 text-center es-w-auto es-w-md-96 es-mb-4"
                             style="width:35rem; height: 400px; overflow-y: scroll;">
@@ -1161,8 +1161,8 @@
             togglePasswordVisibility(
                 "password",
                 "toggle-password",
-                "{{ url('public/images/eye-dark.png') }}",
-                "{{ url('public/images/eye-off-dark.png') }}",
+                "{{ asset('images/eye-dark.png') }}",
+                "{{ asset('images/eye-off-dark.png') }}",
             );
         });
     </script>

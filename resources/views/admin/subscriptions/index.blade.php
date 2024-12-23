@@ -44,7 +44,7 @@
                     <div class="d-flex align-items-center es-mb-4">
                         <div
                             class="es-rounded-full es-w-8 es-h-8 es-bg-brown-100 d-flex align-items-center justify-content-center es-mr-4">
-                            <img src="{{ url('public/images/users-black.png') }}" alt="" />
+                            <img src="{{ asset('images/users-black.png') }}" alt="" />
                         </div>
                         <div class="es-text-sm es-font-500">Total Subscriptions</div>
                     </div>
@@ -56,7 +56,7 @@
                     <div class="d-flex align-items-center es-mb-4">
                         <div
                             class="es-rounded-full es-w-8 es-h-8 es-bg-brown-100 d-flex align-items-center justify-content-center es-mr-4">
-                            <img src="{{ url('public/images/credit-card.png') }}" alt="" />
+                            <img src="{{ asset('images/credit-card.png') }}" alt="" />
                         </div>
                         <div class="es-text-sm es-font-500">
                             Total Subscriptions Value
@@ -70,7 +70,7 @@
                     <div class="d-flex align-items-center es-mb-4">
                         <div
                             class="es-rounded-full es-w-8 es-h-8 es-bg-brown-100 d-flex align-items-center justify-content-center es-mr-4">
-                            <img src="{{ url('public/images/shopping-bag.png') }}" alt="" />
+                            <img src="{{ asset('images/shopping-bag.png') }}" alt="" />
                         </div>
                         <div class="es-text-sm es-font-500">Total This Month</div>
                     </div>
@@ -82,7 +82,7 @@
                     <div class="d-flex align-items-center es-mb-4">
                         <div
                             class="es-rounded-full es-w-8 es-h-8 es-bg-brown-100 d-flex align-items-center justify-content-center es-mr-4">
-                            <img src="{{ url('public/images/refresh.png') }}" alt="" />
+                            <img src="{{ asset('images/refresh.png') }}" alt="" />
                         </div>
                         <div class="es-text-sm es-font-500">Total Last Month</div>
                     </div>
@@ -102,11 +102,11 @@
                         <div class="d-flex align-items-center gap-3">
                             <div>
                                 <button type="button" id="sortAsc" class="border-0 bg-transparent p-0">
-                                    <img src="{{ url('public/images/filter-up-dark.png') }}" alt="" />
+                                    <img src="{{ asset('images/filter-up-dark.png') }}" alt="" />
                                 </button>
 
                                 <button type="button" id="sortDesc" class="border-0 bg-transparent p-0">
-                                    <img src="{{ url('public/images/filter-down-dark.png') }}" alt="" />
+                                    <img src="{{ asset('images/filter-down-dark.png') }}" alt="" />
                                 </button>
                             </div>
                             @if (auth()->guard('admin')->user()->hasPermission('add_subscriptions'))
@@ -152,8 +152,8 @@
                                         <td>
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#photoModal"
                                                 class="border-0 es-outline-none bg-transparent p-0 hover-darken-95"
-                                                data-image="{{ url('images/' .$plan->photo) ?? url('public/images/services-image.svg') }}">
-                                                <img src="{{ $plan->photo ? url('images/' .$plan->photo) : url('public/images/subscriptions-img.png') }}"
+                                                data-image="{{ url('images/' .$plan->photo) ?? asset('images/services-image.svg') }}">
+                                                <img src="{{ $plan->photo ? url('images/' .$plan->photo) : asset('images/subscriptions-img.png') }}"
                                                     width="40" height="40" alt="Subscription Image" />
                                             </button>
                                         </td>
@@ -216,13 +216,13 @@
                                             <div class="d-flex justify-content-end">
                                                 <a href="{{ $plan->subscription_form_url }}" target="_blank"
                                                     class="bg-transparent border-0">
-                                                    <img src="{{ url('public/images/external-link.png') }}"
+                                                    <img src="{{ asset('images/external-link.png') }}"
                                                         alt="Open Form" />
                                                 </a>
                                                 <button class="bg-transparent border-0 position-relative"
                                                     onclick="copyToClipboard(event, this, '{{ $plan->subscription_form_url }}')"
                                                     title="Copy Link">
-                                                    <img src="{{ url('public/images/copy.png') }}" alt="Copy Link" />
+                                                    <img src="{{ asset('images/copy.png') }}" alt="Copy Link" />
                                                     <span class="tooltip-text" style="display: none;">Copied!</span>
                                                 </button>
 
@@ -299,7 +299,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('public/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body es-p-6">
@@ -340,13 +340,13 @@
                                             <label for="photo_input_subscription"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
                                                 Change
-                                                <img src="{{ url('public/images/refresh.png') }}" width="14"
+                                                <img src="{{ asset('images/refresh.png') }}" width="14"
                                                     height="14" alt="" />
                                             </label>
                                             <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                                 id="clear_photo_input_subscription">
                                                 Delete
-                                                <img src="{{ url('public/images/trash.png') }}" width="14"
+                                                <img src="{{ asset('images/trash.png') }}" width="14"
                                                     height="14" alt="" />
                                             </button>
                                         </div>
@@ -476,13 +476,13 @@
 
                                         <div class="d-flex gap-1 es--ml-16">
                                             <button class="bg-transparent border-0 p-0">
-                                                <img src="{{ url('public/images/external-link-dark.png') }}"
+                                                <img src="{{ asset('images/external-link-dark.png') }}"
                                                     alt="" />
                                             </button>
                                             <button type="button" data-bs-toggle="modal"
                                                 data-bs-target="#subscriptionFormModal"
                                                 class="bg-transparent border-0 p-0 preview-subs-modal">
-                                                <img src="{{ url('public/images/edit-dark.png') }}" alt="" />
+                                                <img src="{{ asset('images/edit-dark.png') }}" alt="" />
                                             </button>
                                         </div>
                                     </div>
@@ -508,7 +508,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('public/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body es-p-6">
@@ -552,13 +552,13 @@
                                             <label for="update_photo_input_subscription"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
                                                 Change
-                                                <img src="{{ url('public/images/refresh.png') }}" width="14"
+                                                <img src="{{ asset('images/refresh.png') }}" width="14"
                                                     height="14" alt="" />
                                             </label>
                                             <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                                 id="clear_update_photo_input_subscription">
                                                 Delete
-                                                <img src="{{ url('public/images/trash.png') }}" width="14"
+                                                <img src="{{ asset('images/trash.png') }}" width="14"
                                                     height="14" alt="" />
                                             </button>
                                         </div>
@@ -689,13 +689,13 @@
 
                                         <div class="d-flex align-items-center gap-1 es--ml-16">
                                             <a href="#" id="external-link" class="bg-transparent">
-                                                <img src="{{ url('public/images/external-link-dark.png') }}"
+                                                <img src="{{ asset('images/external-link-dark.png') }}"
                                                     alt="" />
                                             </a>
                                             <button type="button" data-bs-toggle="modal"
                                                 data-bs-target="#subscriptionFormModal"
                                                 class="bg-transparent border-0 p-0">
-                                                <img src="{{ url('public/images/edit-dark.png') }}" alt="" />
+                                                <img src="{{ asset('images/edit-dark.png') }}" alt="" />
                                             </button>
                                         </div>
                                     </div>
@@ -721,7 +721,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('public/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body es-p-6">
@@ -758,13 +758,13 @@
                                         <label for="view_photo_input_subscription"
                                             class="btn border-0 es-text-sm es-font-600 p-0" disabled>
                                             Change
-                                            <img src="{{ url('public/images/refresh.png') }}" width="14"
+                                            <img src="{{ asset('images/refresh.png') }}" width="14"
                                                 height="14" alt="" />
                                         </label>
                                         <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                             id="clear_view_photo_input_subscription" disabled>
                                             Delete
-                                            <img src="{{ url('public/images/trash.png') }}" width="14"
+                                            <img src="{{ asset('images/trash.png') }}" width="14"
                                                 height="14" alt="" />
                                         </button>
                                     </div>
@@ -903,7 +903,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('public/images/close.png') }}" alt="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body es-p-6">
@@ -956,13 +956,13 @@
                                             <label for="photo_input_subscription_form"
                                                 class="btn border-0 es-text-sm es-font-600 p-0">
                                                 Change
-                                                <img src="{{ url('public/images/refresh.png') }}" width="14"
+                                                <img src="{{ asset('images/refresh.png') }}" width="14"
                                                     height="14" alt="" />
                                             </label>
                                             <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                                 id="clear_photo_input_subscription_form">
                                                 Delete
-                                                <img src="{{ url('public/images/trash.png') }}" width="14"
+                                                <img src="{{ asset('images/trash.png') }}" width="14"
                                                     height="14" alt="" />
                                             </button>
                                         </div>
@@ -1102,11 +1102,11 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ url('public/images/close.png') }}" alt="" class="" />
+                    <img src="{{ asset('images/close.png') }}" alt="" class="" />
                 </button>
                 <div class="card">
                     <div class="card-body p-5">
-                        <img id="modalImage" src="{{ url('public/images/services-image.svg') }}" alt=""
+                        <img id="modalImage" src="{{ asset('images/services-image.svg') }}" alt=""
                             class="img630x200 img-fluid" />
                     </div>
                 </div>

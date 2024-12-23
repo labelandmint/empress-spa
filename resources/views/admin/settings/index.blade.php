@@ -717,11 +717,11 @@
                             </div>
                         </div>
                         <div class="d-flex es-py-28 align-items-center justify-content-center">
-                            <img id="email-logo" class="img-fluid img600x100" src="{{ url('public/images/logo.svg') }}"
+                            <img id="email-logo" class="img-fluid img600x100" src="{{ asset('images/logo.svg') }}"
                                 alt="" />
                         </div>
                         <div class="es-mb-8">
-                            <img id="email-graphic" class="img-fluid img600x300" src="{{ url('public/images/settings-img.png') }}"
+                            <img id="email-graphic" class="img-fluid img600x300" src="{{ asset('images/settings-img.png') }}"
                                 alt="" />
                         </div>
                         <div class="es-font-mulish-bold es-text-3xl text-center es-mb-8">

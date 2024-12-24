@@ -392,14 +392,19 @@ class UserController extends Controller
         switch ($plan->payment_frequency) {
             case 1: // Weekly
                 $subscription_end = $start_date->addWeek()->format('Y-m-d');
+                break;
             case 2: // Monthly
                 $subscription_end = $start_date->addMonth()->format('Y-m-d');
+                break;
             case 3: // Quarterly
                 $subscription_end = $start_date->addMonths(3)->format('Y-m-d');
+                break;
             case 4: // Half-Yearly
                 $subscription_end = $start_date->addMonths(6)->format('Y-m-d');
+                break;
             case 5: // Yearly
                 $subscription_end = $start_date->addYear()->format('Y-m-d');
+                break;
             default:
                 $subscription_end = $start_date->format('Y-m-d');
         };

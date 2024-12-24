@@ -21,7 +21,7 @@
                 ->where('created_at', '>', $updatedAt) 
                 ->count();
         
-             $userdata = ($userCount / $ratio_1) * $ratio_2;
+             $userdata = (floor($userCount / $ratio_1)) * $ratio_2;
             
             $remainingSeats = max($number - $userdata, 0);
 

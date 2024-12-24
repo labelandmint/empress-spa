@@ -347,7 +347,7 @@
                                         <div class="tab4"><span>Sub Total</span></div>
                                     </td>
                                     <td width="15%" align="center" valign="center">
-                                        <div class="tab4"><span>${{ number_format($transaction->amount, 2) }}</span>
+                                        <div class="tab4"><span>${{ number_format($transaction->amount * 0.9, 2) }}</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -425,7 +425,7 @@
                       padding: 3px 14px;border-top-left-radius:0px;border-bottom-left-radius:0px;">
                                             <!-- <span
                                                 style="font-size:22px;">${{ number_format($transaction->amount, 2) }}</span> -->
-                                                <span style="font-size:22px;">${{ number_format($transaction->amount * 1.10, 2) }}</span>
+                                                <span style="font-size:22px;">${{ number_format($transaction->amount, 2) }}</span>
                                         </div>
                                     </td>
                                 </tr>

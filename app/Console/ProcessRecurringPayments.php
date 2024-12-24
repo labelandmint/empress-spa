@@ -65,7 +65,7 @@ class ProcessRecurringPayments extends Command
 
                     $currentDate = now();
 
-                    $newSubscriptionEndDate = match ($subscriptionPlan->frequency) {
+                    $newSubscriptionEndDate = match ($user->frequency) {
                         1 => $currentDate->addWeek()->format('Y-m-d'), // Weekly
                         2 => $currentDate->addMonth()->format('Y-m-d'), // Monthly
                         3 => $currentDate->addMonths(3)->format('Y-m-d'), // Quarterly

@@ -57,7 +57,9 @@ class SettingController extends Controller
             // Add user ID to the data array
             $data['user_id'] = Auth::guard('admin')->user()->id;
 
-            $data['ratio_update_time'] = Carbon::now();
+            if ($request->input('update_ratio_time') === 'true') {
+                $data['ratio_update_time'] = Carbon::now();
+            }
 
             // Check if ID exists to determine if we're updating or creating
             if ($request->id) {

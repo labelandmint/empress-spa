@@ -33,6 +33,8 @@ use Square\Models\Money;
 use Square\Models\Currency;
 
 
+
+
 use Carbon\Carbon;
 use DB;
 
@@ -122,6 +124,7 @@ class UserController extends Controller
     public function register(Request $request, $sub_id)
     {
         try {
+
             $subscription = SubscriptionPlan::find($sub_id);
             if ($subscription) {
                 $stripePublishableKey = get_setting('stripe_publishable_key');
@@ -155,6 +158,7 @@ class UserController extends Controller
                         ->where('created_at', '>', $updatedAt)
                         ->count();
                     $userdata = (floor($userCount / $ratio_1)) * $ratio_2;
+                    // return $userdata;
 
                     $remainingSeats = max($number - $userdata, 0);
                 } else {
@@ -357,6 +361,7 @@ class UserController extends Controller
 
             return $this->finalizeRegistration($user, $request, $paymentId);
         } catch (\Square\Exceptions\ApiException $e) {
+            \Log::error('Catch exception: ' . $e->getMessage(), ['exception' => $e]);
             return redirect()->back()->withErrors(['payment_error' => 'Payment processing error.'])->withInput();
         }
     }
@@ -387,7 +392,19 @@ class UserController extends Controller
 
     protected function finalizeRegistration($user, Request $request, $paymentId)
     {
+        \Log::info('Finalizing registration', [
+            'user_id' => $user->id,
+            'payment_id' => $paymentId,
+            'subscription_id' => $request->subscription_id,
+        ]);
+
+
         $plan = SubscriptionPlan::find($request->subscription_id);
+
+        \Log::info('Retrieved subscription plan', [
+            'plan_id' => $plan->id,
+            'payment_frequency' => $plan->payment_frequency,
+        ]);
         $start_date = Carbon::now();
         switch ($plan->payment_frequency) {
             case 1: // Weekly
@@ -408,6 +425,8 @@ class UserController extends Controller
             default:
                 $subscription_end = $start_date->format('Y-m-d');
         };
+
+        \Log::warning('Defaulted subscription end date', ['subscription_end' => $subscription_end]);
 
         // Create subscription
         Subscription::create([
@@ -483,6 +502,8 @@ class UserController extends Controller
 
         $subscription = Subscription::where('user_id', Auth::user()->id)->first();
         $title = "Profile";
+
+        // return $subscription;
 
         return view('profile.index', compact('title', 'user', 'subscription', 'isCancel'));
     }
@@ -858,7 +879,36 @@ class UserController extends Controller
     {
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
-        // return $data;
+
+        if ($request->nonce && $request->profile_id) {
+         
+            $cardId =  $this->updateSquarePayment($request->profile_id, $request->card_id, $request->nonce);
+            $user = User::find($request->user_id);
+            $user->card_id = $cardId;
+            $user->save();
+            \Log::info('Successfully updated customer card', [
+                'user_id' => $user->id,
+                'profile_id' => $request->profile_id,
+                'card_id' => $cardId,
+            ]);
+        } else {
+      
+            $response = $this->addSquarePaymentDetail($request->cardholder_name, $request->email, $request->nonce);
+            if ($response) {
+                $profileId = $response[0];
+                $cardId = $response[1];
+            }
+            $user = User::find($request->user_id);
+            $user->profile_id = $profileId;
+            $user->card_id = $cardId;
+            $user->save();
+            \Log::info('Successfully added customer card', [
+                'user_id' => $user->id,
+                'profile_id' => $request->profile_id,
+                'card_id' => $cardId,
+            ]);
+        }
+        
         if ($request->bank_id) {
             $BankDetail = BankDetail::find($request->bank_id);
             $BankDetail->update($data);
@@ -866,6 +916,88 @@ class UserController extends Controller
         } else {
             BankDetail::create($data);
             return redirect()->back()->with('success', 'Bank information added successfully');
+        }
+    }
+
+    protected function addSquarePaymentDetail($name, $email, $cardNonce)
+    {
+
+        $client = new SquareClient([
+            'environment' => 'production',
+            'accessToken' => get_setting('square_access_token'), // Use your Square access token
+        ]);
+
+        $customersApi = $client->getCustomersApi();
+
+        try {
+            $customerRequest = new CreateCustomerRequest();
+            $customerRequest->setGivenName($name);
+            $customerRequest->setEmailAddress($email);
+
+            $customerResponse = $customersApi->createCustomer($customerRequest);
+
+            if (!$customerResponse->isSuccess()) {
+                \Log::error('Failed to create customer', $customerResponse->getErrors());
+                return response()->json(['error' => 'Failed to create customer'], 500);
+            }
+
+            $customerId = $customerResponse->getResult()->getCustomer()->getId();
+
+            // Step 2: Save the Card on File
+            $createCustomerCardRequest = new CreateCustomerCardRequest($cardNonce);
+            $cardResponse = $customersApi->createCustomerCard($customerId, $createCustomerCardRequest);
+
+            if (!$cardResponse->isSuccess()) {
+                \Log::error('Failed to save card on file', $cardResponse->getErrors());
+                return response()->json(['error' => 'Failed to save card on file'], 500);
+            }
+
+            $cardId = $cardResponse->getResult()->getCard()->getId();
+
+            return [$customerId, $cardId];
+
+        } catch (\Square\Exceptions\ApiException $e) {
+            \Log::error('Catch exception: ' . $e->getMessage(), ['exception' => $e]);
+            return redirect()->back()->withErrors(['square_error' => 'Update customer card.'])->withInput();
+        }
+    }
+
+    protected function updateSquarePayment($customerId, $cardId, $cardNonce)
+    {
+
+        $client = new SquareClient([
+            'environment' => 'production',
+            'accessToken' => get_setting('square_access_token'), // Use your Square access token
+        ]);
+
+        $paymentsApi = $client->getPaymentsApi();
+
+        $customersApi = $client->getCustomersApi();
+
+        try {
+            $deleteResponse = $client->getCustomersApi()->deleteCustomerCard($customerId, $cardId);
+
+            if (!$deleteResponse->isSuccess()) {
+                \Log::error('Failed to delete customer previos card', $deleteResponse->getErrors());
+                return response()->json(['error' => 'Failed to delete customer card'], 500);
+            }
+
+            // Step 2: Save the Card on File
+            $createCustomerCardRequest = new CreateCustomerCardRequest($cardNonce);
+            $cardResponse = $customersApi->createCustomerCard($customerId, $createCustomerCardRequest);
+
+            if (!$cardResponse->isSuccess()) {
+                \Log::error('Failed to save card on file', $cardResponse->getErrors());
+                return response()->json(['error' => 'Failed to save card on file'], 500);
+            }
+
+            $cardId = $cardResponse->getResult()->getCard()->getId();
+
+
+            return $cardId;
+        } catch (\Square\Exceptions\ApiException $e) {
+            \Log::error('Catch exception: ' . $e->getMessage(), ['exception' => $e]);
+            return redirect()->back()->withErrors(['square_error' => 'Update customer card.'])->withInput();
         }
     }
 }

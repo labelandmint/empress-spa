@@ -23,6 +23,9 @@ class CheckIfUserPaused
             if (Auth::guard('web')->user()->status === 3) {
                 return redirect()->back()->with('error', 'Your account is currently paused. Access denied.');
             }
+            if (Auth::guard('web')->user()->status === 2) {
+                return redirect()->back()->with('error', 'Your have cancelled subscription. Access denied.');
+            }
         }
 
         return $next($request);

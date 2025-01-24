@@ -139,13 +139,13 @@
                                 <div class="d-flex es-gap-8">
                                     <label for="photo_input_page_logo" class="btn border-0 es-text-sm es-font-600 p-0">
                                         Change
-                                        <img src="{{ asset('images/refresh.png') }}" width="14" height="14"
+                                        <img src="{{ url('public/images/refresh.png') }}" width="14" height="14"
                                             alt="" />
                                     </label>
                                     <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                         id="clear_photo_input_page_logo">
                                         Delete
-                                        <img src="{{ asset('images/trash.png') }}" width="14" height="14"
+                                        <img src="{{ url('public/images/trash.png') }}" width="14" height="14"
                                             alt="Trash Icon" />
                                     </button>
                                 </div>
@@ -187,13 +187,13 @@
                                     <label for="photo_input_page_background"
                                         class="btn border-0 es-text-sm es-font-600 p-0">
                                         Change
-                                        <img src="{{ asset('images/refresh.png') }}" width="14" height="14"
+                                        <img src="{{ url('public/images/refresh.png') }}" width="14" height="14"
                                             alt="Refresh Icon" />
                                     </label>
                                     <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                         id="clear_photo_input_page_background">
                                         Delete
-                                        <img src="{{ asset('images/trash.png') }}" width="14" height="14"
+                                        <img src="{{ url('public/images/trash.png') }}" width="14" height="14"
                                             alt="Trash Icon" />
                                     </button>
                                 </div>
@@ -265,6 +265,7 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="update_ratio_time" value="true" />
             <input type="hidden" value="{{ old('id', $settings->id ?? '') }}" name="id" />
         </form>
 
@@ -404,13 +405,13 @@
                                 <div class="d-flex es-gap-8">
                                     <label for="photo_input_email_logo" class="btn border-0 es-text-sm es-font-600 p-0">
                                         Change
-                                        <img src="{{ asset('images/refresh.png') }}" width="14" height="14"
+                                        <img src="{{ url('public/images/refresh.png') }}" width="14" height="14"
                                             alt="" />
                                     </label>
                                     <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                         id="clear_photo_input_email_logo">
                                         Delete
-                                        <img src="{{ asset('images/trash.png') }}" width="14" height="14"
+                                        <img src="{{ url('public/images/trash.png') }}" width="14" height="14"
                                             alt="" />
                                     </button>
                                 </div>
@@ -450,13 +451,13 @@
                                     <label for="photo_input_email_graphic"
                                         class="btn border-0 es-text-sm es-font-600 p-0">
                                         Change
-                                        <img src="{{ asset('images/refresh.png') }}" width="14" height="14"
+                                        <img src="{{ url('public/images/refresh.png') }}" width="14" height="14"
                                             alt="" />
                                     </label>
                                     <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                         id="clear_photo_input_email_graphic">
                                         Delete
-                                        <img src="{{ asset('images/trash.png') }}" width="14" height="14"
+                                        <img src="{{ url('public/images/trash.png') }}" width="14" height="14"
                                             alt="" />
                                     </button>
                                 </div>
@@ -471,7 +472,7 @@
                                     class="bg-transparent border-0 es-text-brown-500 es-font-mulish-bold d-flex align-items-center gap-1 px-0 v-temp"
                                     data-type="registration">
                                     Preview
-                                    <img src="{{ asset('images/eye-brown.png') }}" alt="" />
+                                    <img src="{{ url('public/images/eye-brown.png') }}" alt="" />
                                 </button>
                             </div>
                             <label for="successful_registration_subject"></label>
@@ -496,7 +497,7 @@
                                     class="bg-transparent border-0 es-text-brown-500 es-font-mulish-bold d-flex align-items-center gap-1 px-0 v-temp"
                                     data-type="failed">
                                     Preview
-                                    <img src="{{ asset('images/eye-brown.png') }}" alt="" />
+                                    <img src="{{ url('public/images/eye-brown.png') }}" alt="" />
                                 </button>
                             </div>
                             <label for="payment_failed_subject"></label>
@@ -521,7 +522,7 @@
                                     class="bg-transparent border-0 es-text-brown-500 es-font-mulish-bold d-flex align-items-center gap-1 px-0 v-temp"
                                     data-type="success">
                                     Preview
-                                    <img src="{{ asset('images/eye-brown.png') }}" alt="" />
+                                    <img src="{{ url('public/images/eye-brown.png') }}" alt="" />
                                 </button>
                             </div>
                             <label for="successful_payment_subject"></label>
@@ -625,11 +626,11 @@
                         <div class="es-font-mulish-bold es-text-lg">Users</div>
                         <div>
                             <button class="border-0 bg-transparent">
-                                <img src="{{ asset('images/filter-up-dark.png') }}" alt="" />
+                                <img src="{{ url('public/images/filter-up-dark.png') }}" alt="" />
                             </button>
 
                             <button class="border-0 bg-transparent">
-                                <img src="{{ asset('images/filter-down-dark.png') }}" alt="" />
+                                <img src="{{ url('public/images/filter-down-dark.png') }}" alt="" />
                             </button>
                         </div>
                     </div>
@@ -712,16 +713,16 @@
                             <p id="email-header">Successful Registration Preview</p>
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="border-0 bg-transparent" data-bs-dismiss="modal">
-                                    <img src="{{ asset('images/close.png') }}" alt="" />
+                                    <img src="{{ url('public/images/close.png') }}" alt="" />
                                 </button>
                             </div>
                         </div>
                         <div class="d-flex es-py-28 align-items-center justify-content-center">
-                            <img id="email-logo" class="img-fluid img600x100" src="{{ asset('images/logo.svg') }}"
+                            <img id="email-logo" class="img-fluid img600x100" src="{{ url('public/images/logo.svg') }}"
                                 alt="" />
                         </div>
                         <div class="es-mb-8">
-                            <img id="email-graphic" class="img-fluid img600x300" src="{{ asset('images/settings-img.png') }}"
+                            <img id="email-graphic" class="img-fluid img600x300" src="{{ url('public/images/settings-img.png') }}"
                                 alt="" />
                         </div>
                         <div class="es-font-mulish-bold es-text-3xl text-center es-mb-8">
@@ -752,7 +753,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{ asset('images/close.png') }}" alt="" />
+                    <img src="{{ url('public/images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body es-p-6">

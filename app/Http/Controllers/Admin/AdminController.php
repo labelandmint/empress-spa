@@ -32,6 +32,13 @@ use App\Mail\AddUser;
 use Carbon\Carbon;
 use PDF;
 
+use Square\SquareClient;
+use Square\Models\CreatePaymentRequest;
+use Square\Models\CreateCustomerRequest;
+use Square\Models\CreateCustomerCardRequest;
+use Square\Models\Money;
+use Square\Models\Currency;
+
 class AdminController extends Controller
 {
     //
@@ -266,6 +273,7 @@ class AdminController extends Controller
             $userCount = User::where('user_role', 2)
                 ->where('created_at', '>', $updatedAt)
                 ->count();
+
             $userdata = (floor($userCount / $ratio_1)) * $ratio_2;
 
             $remainingSeats = max($number - $userdata, 0);
@@ -585,8 +593,9 @@ class AdminController extends Controller
         $subscription = Subscription::where('user_id', $id)->first();
         $BankDetail = BankDetail::where('user_id', $id)->first();
 
-        // return $subscription;
-        return view('admin.members.update_member', compact('user', 'subscription', 'BankDetail'));
+        $title = 'Update Member';
+
+        return view('admin.members.update_member', compact('title', 'user', 'subscription', 'BankDetail'));
     }
 
     public function updateUser(Request $request)
@@ -607,6 +616,37 @@ class AdminController extends Controller
     public function addBankDetail(Request $request)
     {
         $data = $request->all();
+// return $data;
+        if ($request->nonce && $request->profile_id) {
+         
+            $cardId =  $this->updateSquarePayment($request->profile_id, $request->card_id, $request->nonce);
+            $user = User::find($request->user_id);
+            $user->card_id = $cardId;
+            $user->save();
+            \Log::info('Successfully updated customer card', [
+                'user_id' => $user->id,
+                'profile_id' => $request->profile_id,
+                'card_id' => $cardId,
+            ]);
+        } else {
+      
+            $response = $this->addSquarePaymentDetail($request->cardholder_name, $request->email, $request->nonce);
+            if ($response) {
+                $profileId = $response[0];
+                $cardId = $response[1];
+            }
+            $user = User::find($request->user_id);
+            $user->profile_id = $profileId;
+            $user->card_id = $cardId;
+            $user->save();
+            \Log::info('Successfully added customer card', [
+                'user_id' => $user->id,
+                'profile_id' => $request->profile_id,
+                'card_id' => $cardId,
+            ]);
+        }
+
+        // return $data;
         if ($request->bank_id) {
             $BankDetail = BankDetail::find($request->bank_id);
             $BankDetail->update($data);
@@ -614,6 +654,89 @@ class AdminController extends Controller
         } else {
             BankDetail::create($data);
             return redirect()->back()->with('success', 'Bank information added successfully');
+        }
+    }
+
+
+    protected function addSquarePaymentDetail($name, $email, $cardNonce)
+    {
+
+        $client = new SquareClient([
+            'environment' => 'production',
+            'accessToken' => get_setting('square_access_token'), // Use your Square access token
+        ]);
+
+        $customersApi = $client->getCustomersApi();
+
+        try {
+            $customerRequest = new CreateCustomerRequest();
+            $customerRequest->setGivenName($name);
+            $customerRequest->setEmailAddress($email);
+
+            $customerResponse = $customersApi->createCustomer($customerRequest);
+
+            if (!$customerResponse->isSuccess()) {
+                \Log::error('Failed to create customer', $customerResponse->getErrors());
+                return response()->json(['error' => 'Failed to create customer'], 500);
+            }
+
+            $customerId = $customerResponse->getResult()->getCustomer()->getId();
+
+            // Step 2: Save the Card on File
+            $createCustomerCardRequest = new CreateCustomerCardRequest($cardNonce);
+            $cardResponse = $customersApi->createCustomerCard($customerId, $createCustomerCardRequest);
+
+            if (!$cardResponse->isSuccess()) {
+                \Log::error('Failed to save card on file', $cardResponse->getErrors());
+                return response()->json(['error' => 'Failed to save card on file'], 500);
+            }
+
+            $cardId = $cardResponse->getResult()->getCard()->getId();
+
+            return [$customerId, $cardId];
+
+        } catch (\Square\Exceptions\ApiException $e) {
+            \Log::error('Catch exception: ' . $e->getMessage(), ['exception' => $e]);
+            return redirect()->back()->withErrors(['square_error' => 'Update customer card.'])->withInput();
+        }
+    }
+
+    protected function updateSquarePayment($customerId, $cardId, $cardNonce)
+    {
+
+        $client = new SquareClient([
+            'environment' => 'production',
+            'accessToken' => get_setting('square_access_token'), // Use your Square access token
+        ]);
+
+        $paymentsApi = $client->getPaymentsApi();
+
+        $customersApi = $client->getCustomersApi();
+
+        try {
+            $deleteResponse = $client->getCustomersApi()->deleteCustomerCard($customerId, $cardId);
+
+            if (!$deleteResponse->isSuccess()) {
+                \Log::error('Failed to delete customer previos card', $deleteResponse->getErrors());
+                return response()->json(['error' => 'Failed to delete customer card'], 500);
+            }
+
+            // Step 2: Save the Card on File
+            $createCustomerCardRequest = new CreateCustomerCardRequest($cardNonce);
+            $cardResponse = $customersApi->createCustomerCard($customerId, $createCustomerCardRequest);
+
+            if (!$cardResponse->isSuccess()) {
+                \Log::error('Failed to save card on file', $cardResponse->getErrors());
+                return response()->json(['error' => 'Failed to save card on file'], 500);
+            }
+
+            $cardId = $cardResponse->getResult()->getCard()->getId();
+
+
+            return $cardId;
+        } catch (\Square\Exceptions\ApiException $e) {
+            \Log::error('Catch exception: ' . $e->getMessage(), ['exception' => $e]);
+            return redirect()->back()->withErrors(['square_error' => 'Update customer card.'])->withInput();
         }
     }
 

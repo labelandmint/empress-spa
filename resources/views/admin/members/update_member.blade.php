@@ -19,7 +19,8 @@
                         </div>
                         <div class="mt-2">
                             <input type="file" accept=".jpg,.jpeg,.png" hidden id="photo_input" name="photo_input" />
-                            <label for="photo_input" class="es-file-input {{$user->photo ? 'd-none' :'' }}" id="photo-label">
+                            <label for="photo_input" class="es-file-input {{ $user->photo ? 'd-none' : '' }}"
+                                id="photo-label">
                                 Upload
                                 <svg class="es-svg-download" width="16" height="16" viewBox="0 0 16 16"
                                     fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,18 +34,20 @@
                                         stroke-linejoin="round" />
                                 </svg>
                             </label>
-                            <div class="{{$user->photo ? '' :'d-none' }}" id="file-preview-container">
-                                <img src="{{ url('images/' .$user->photo) ?? '#' }}" alt="Preview Uploaded Image 1" id="photo-preview"
-                                class="es-h-80 es-mb-3 file-preview img-fluid img500x500" />
+                            <div class="{{ $user->photo ? '' : 'd-none' }}" id="file-preview-container">
+                                <img src="{{ url('images/' . $user->photo) ?? '#' }}" alt="Preview Uploaded Image 1"
+                                    id="photo-preview" class="es-h-80 es-mb-3 file-preview img-fluid img500x500" />
                                 <div class="d-flex es-gap-8">
                                     <label for="photo_input" class="btn border-0 es-text-sm es-font-600 p-0">
                                         Change
-                                        <img src="{{asset('images/refresh.png')}}" width="14" height="14" alt="" />
+                                        <img src="{{ url('public/images/refresh.png') }}" width="14" height="14"
+                                            alt="" />
                                     </label>
                                     <button type="button" class="btn border-0 es-text-sm es-font-600 p-0"
                                         id="clear_photo_input">
                                         Delete
-                                        <img src="{{asset('images/trash.png')}}" width="14" height="14" alt="" />
+                                        <img src="{{ url('public/images/trash.png') }}" width="14" height="14"
+                                            alt="" />
                                     </button>
                                 </div>
                             </div>
@@ -54,35 +57,37 @@
                         <div class="col-xl-4 es-mt-6">
                             <label for="first_name"> First Name </label>
                             <input id="first_name" type="text" class="form-control es-input mt-2"
-                                placeholder="First Name" name="f_name" value="{{$user->f_name}}" />
+                                placeholder="First Name" name="f_name" value="{{ $user->f_name }}" />
                             <div class="es-input-error-message"></div>
                         </div>
                         <div class="col-xl-4 es-mt-6">
                             <label for="last_name"> Last Name </label>
-                            <input id="last_name" type="text" class="form-control es-input mt-2" placeholder="Last Name"  name="l_name" value="{{$user->l_name}}" />
+                            <input id="last_name" type="text" class="form-control es-input mt-2" placeholder="Last Name"
+                                name="l_name" value="{{ $user->l_name }}" />
                             <div class="es-input-error-message"></div>
                         </div>
                         <div class="col-xl-4 es-mt-6">
                             <label for="address"> Address </label>
-                            <input id="address" type="text" class="form-control es-input mt-2" placeholder="Address" name="address" value="{{$user->address}}" />
+                            <input id="address" type="text" class="form-control es-input mt-2" placeholder="Address"
+                                name="address" value="{{ $user->address }}" />
                             <div class="es-input-error-message"></div>
                         </div>
                         <div class="col-xl-4 es-mt-6">
                             <label for="email_address"> Email Address </label>
                             <input id="email_address" type="email" class="form-control es-input mt-2"
-                                placeholder="Email Address" name="email" value="{{$user->email}}"/>
+                                placeholder="Email Address" name="email" value="{{ $user->email }}" />
                             <div class="es-input-error-message"></div>
                         </div>
                         <div class="col-xl-4 es-mt-6">
                             <label for="phone_number"> Phone Number </label>
                             <input id="phone_number" type="text" class="form-control es-input mt-2"
-                                placeholder="Phone Number" name="phone_no" value="{{$user->phone_no}}"/>
+                                placeholder="Phone Number" name="phone_no" value="{{ $user->phone_no }}" />
                             <div class="es-input-error-message"></div>
                         </div>
                         <div class="col-xl-4 es-mt-6">
                             <label for="phone_number"> Tag ID </label>
-                            <input id="tag_id" type="text" class="form-control es-input mt-2"
-                                placeholder="Tag ID" name="tag_id" value="{{$user->tag_id}}"/>
+                            <input id="tag_id" type="text" class="form-control es-input mt-2" placeholder="Tag ID"
+                                name="tag_id" value="{{ $user->tag_id }}" />
                             <div class="es-input-error-message"></div>
                         </div>
                         <div class="col-xl-4 es-mt-6 d-flex align-items-end">
@@ -94,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="id" value="{{$user->id}}">
+            <input type="hidden" name="id" value="{{ $user->id }}">
         </form>
 
         <form action="#" method="post" enctype="multipart/form-data">
@@ -104,65 +109,72 @@
                     <div class="es-pb-6 es-pt-2 es-font-mulish-bold es-header-6">
                         Membership Information
                     </div>
-                    @if(session()->has('error'))
+                    @if (session()->has('error'))
                         <div class="es-input-error-message">{{ session('error') }}</div>
                     @endif
 
                     <div class="row">
                         <div class="col-xl-4 d-flex flex-column es-mt-6">
                             Join Date
-                            <input id="my_join_date" type="text" class="es-input mt-2" placeholder="My Join Date" disabled value="{{ $subscription ? \Carbon\Carbon::parse($subscription->subscription_start)->format('M j, Y') : '' }}" />
+                            <input id="my_join_date" type="text" class="es-input mt-2" placeholder="My Join Date"
+                                disabled
+                                value="{{ $subscription ? \Carbon\Carbon::parse($subscription->subscription_start)->format('M j, Y') : '' }}" />
 
                             <div class="es-input-error-message"></div>
                         </div>
                         <div class="col-xl-4 d-flex flex-column es-mt-6">
                             <label for="next_renewal_date">Next Renewal Date</label>
                             <input id="next_renewal_date" type="text" class="es-input mt-2"
-                                placeholder="Next Renewal Date" disabled value="{{ $subscription ? \Carbon\Carbon::parse($subscription->subscription_end)->format('F j, Y') : '' }}" />
+                                placeholder="Next Renewal Date" disabled
+                                value="{{ $subscription ? \Carbon\Carbon::parse($subscription->subscription_end)->format('F j, Y') : '' }}" />
                             <div class="es-input-error-message"></div>
                         </div>
 
                         <div class="col-xl-4 d-flex flex-column es-mt-6">
                             Last Pause Date
                             <input id="last_pause_date" type="text" class="es-input mt-2"
-                                placeholder="Last Pause Date" disabled value="{{$subscription && $subscription->pause_date ? \Carbon\Carbon::parse($subscription->pause_date)->format('M j, Y') : '' }}"/>
+                                placeholder="Last Pause Date" disabled
+                                value="{{ $subscription && $subscription->pause_date ? \Carbon\Carbon::parse($subscription->pause_date)->format('M j, Y') : '' }}" />
                             <div class="es-input-error-message"></div>
                         </div>
-                        @if($user->status != 2)
-                        <div class="col-xl-4 es-mt-6 d-flex align-items-start">
-                            @if($user->status == 1)
-                            <button type="button" class="es-btn-outline es-w-full es-h-auto" data-bs-toggle="modal"
-                                data-bs-target="#pauseMembershipModal">
-                                Pause Membership
-                            </button>
-                            @elseif($user->status == 3)
-                            <a style="" href="{{ url('admin/subscription/resume/'.$subscription->id) }}"  class="es-btn-outline es-w-full text-decoration-none es-h-auto" >
-                                Resume Membership
-                            </a>
-                            @endif
-                        </div>
+                        @if ($user->status != 2)
+                            <div class="col-xl-4 es-mt-6 d-flex align-items-start">
+                                @if ($user->status == 1)
+                                    <button type="button" class="es-btn-outline es-w-full es-h-auto"
+                                        data-bs-toggle="modal" data-bs-target="#pauseMembershipModal">
+                                        Pause Membership
+                                    </button>
+                                @elseif($user->status == 3)
+                                    <a style="" href="{{ url('admin/subscription/resume/' . $subscription->id) }}"
+                                        class="es-btn-outline es-w-full text-decoration-none es-h-auto">
+                                        Resume Membership
+                                    </a>
+                                @endif
+                            </div>
                         @endif
                         <div class="col-xl-4 es-mt-6 d-flex align-items-end d-flex flex-column es-text-justify">
-                            @if($user->status == 1 || $user->status == 3)
-                            <a href="{{url('admin/subscription/cancel/'.$user->id)}}"  class="es-btn es-w-full es-h-auto mb-2">
-                                Cancel Membership
-                            </a>
-                            <p >You can cancel your membership after 48 hours of joining.</p>
-                            <!-- , but will only be refunded half of the subscription fee -->
+                            @if ($user->status == 1 || $user->status == 3)
+                                <a href="{{ url('admin/subscription/cancel/' . $user->id) }}"
+                                    class="es-btn es-w-full es-h-auto mb-2">
+                                    Cancel Membership
+                                </a>
+                                <p>You can cancel your membership after 48 hours of joining.</p>
+                                <!-- , but will only be refunded half of the subscription fee -->
                             @elseif($user->status == 2)
-                            <button type="button" class="es-btn es-w-full es-h-auto mb-2">Cancelled</button>
+                                <button type="button" class="es-btn es-w-full es-h-auto mb-2">Cancelled</button>
                             @endif
-                            
+
                         </div>
                         <div class="d-none d-xl-flex flex-column col-4 es-mt-6"></div>
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="id" value="{{$user->id}}">
-            
+            <input type="hidden" name="id" value="{{ $user->id }}">
+
         </form>
 
-        <form action="{{url('admin/bank-detail/store')}}" method="post" enctype="multipart/form-data">
+        <form action="{{ url('admin/bank-detail/store') }}" method="post" enctype="multipart/form-data"
+            id="payment-form">
             @csrf
             <div class="card border-0 es-mb-6">
                 <div class="card-body d-flex flex-column es-font-mulish es-px-6 es-pb-8">
@@ -172,72 +184,88 @@
                     <div class="row">
                         <div class="col-xl-4 es-mt-6">
                             <label for="name"> Name </label>
-                            <input id="name" name="cardholder_name" type="text" class="form-control es-input mt-2" placeholder="Name" value="{{$BankDetail ? $BankDetail->cardholder_name : ''}}" />
+                            <input id="name" name="cardholder_name" type="text"
+                                class="form-control es-input mt-2" placeholder="Name"
+                                value="{{ $BankDetail ? $BankDetail->cardholder_name : '' }}" />
                             <div class="es-input-error-message"></div>
                         </div>
                         <div class="col-xl-4 es-mt-6">
                             <label for="card_number"> Card Number </label>
-                            <input id="card_number" name="card_no" type="password" class="form-control es-input mt-2" placeholder="Card Number" value="{{$BankDetail ? $BankDetail->card_no : ''}}" />
-                            <input type="hidden" name="bank_id" value="{{$BankDetail ? $BankDetail->id : ''}}">
+                            <input id="card_number" name="card_no" type="password" class="form-control es-input mt-2"
+                                placeholder="Card Number" value="{{ $BankDetail ? $BankDetail->card_no : '' }}" />
+                            <input type="hidden" name="bank_id" value="{{ $user ? $user->bank_id : '' }}">
+                            <input type="hidden" name="profile_id" value="{{ $user ? $user->profile_id : '' }}">
+                            <input type="hidden" name="card_id" value="{{ $user ? $user->card_id : '' }}">
+                            <input type="hidden" name="user_id" value="{{ $user ? $user->id : '' }}">
+                            <input type="hidden" name="email" value="{{ $user ? $user->email : '' }}">
                             <div class="es-input-error-message"></div>
                         </div>
                         <div class="col-xl-4 es-mt-6">
                             Expiration Date
-                            <input id="expiration_date" name="expiration" type="text" class="es-input mt-2 flatpickr" placeholder="Expiration Date" value="{{ $BankDetail ? date('m/y', strtotime($BankDetail->expiration)) : '' }}" />
+                            <input id="expiration_date" name="expiration" type="text" class="es-input mt-2 flatpickr"
+                                placeholder="Expiration Date"
+                                value="{{ $BankDetail ? date('m/y', strtotime($BankDetail->expiration)) : '' }}" />
                             <div class="es-input-error-message"></div>
                         </div>
                         <div class="col-xl-4 es-mt-6">
                             <label for="security_code"> Security Code </label>
-                            <input id="security_code" name="security" type="password" class="form-control es-input mt-2" placeholder="Security Code" value="{{$BankDetail ? $BankDetail->security : ''}}"/>
+                            <input id="security_code" name="security" type="password" class="form-control es-input mt-2"
+                                placeholder="Security Code" value="{{ $BankDetail ? $BankDetail->security : '' }}" />
                             <div class="es-input-error-message"></div>
                         </div>
-                        <div class="col-xl-4 es-mt-6 d-flex align-items-end">
-                            <button type="submit" class="es-btn-outline es-w-full es-h-auto">
+                        <div class="col-xl-8 es-mt-6">
+                            <div id="card-element" class="form-control d-none es-input mt-2" style="height:60%"></div>
+                        </div>
+
+                        @if ($user->card_id)
+                            <button type="submit" class="es-btn-outline es-w-full es-h-auto" id="submit-button">
                                 Update
                             </button>
-                        </div>
-                        <div class="col-xl-4 es-mt-6 d-flex align-items-end">
-                            <button type="submit" class="es-btn es-w-full es-h-auto">
+                        @else
+                            <button type="submit" class="es-btn es-w-full es-h-auto" id="submit-button">
                                 Save
                             </button>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="user_id" value="{{$user->id}}">
+            <input type="hidden" name="user_id" value="{{ $user->id }}">
         </form>
-        
-        @if(auth()->guard('admin')->user()->hasPermission('change_password'))
-        <form action="{{url('admin/members/password/change')}}" method="post" enctype="multipart/form-data" id="change-password-form">
-            @csrf
-            <div class="card border-0">
-                <div class="card-body d-flex flex-column es-font-mulish es-px-6 es-pb-8">
-                    <div class="es-pb-6 es-pt-2 es-font-mulish-bold es-header-6">
-                        Change Password
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-4 es-mt-6">
-                            <label for="new_password"> New Password </label>
-                            <input id="new_password" name="password" type="password" class="form-control es-input mt-2"
-                                placeholder="New Password" />
-                            <div class="es-input-error-message"></div>
+
+
+
+        @if (auth()->guard('admin')->user()->hasPermission('change_password'))
+            <form action="{{ url('admin/members/password/change') }}" method="post" enctype="multipart/form-data"
+                id="change-password-form">
+                @csrf
+                <div class="card border-0">
+                    <div class="card-body d-flex flex-column es-font-mulish es-px-6 es-pb-8">
+                        <div class="es-pb-6 es-pt-2 es-font-mulish-bold es-header-6">
+                            Change Password
                         </div>
-                        <div class="col-xl-4 es-mt-6">
-                            <label for="confirm_password"> Confirm Password </label>
-                            <input id="confirm_password" name="confirm_password" type="password" class="form-control es-input mt-2"
-                                placeholder="Confirm Password" />
-                            <div class="es-input-error-message"></div>
-                        </div>
-                        <div class="col-xl-4 es-mt-6 d-flex align-items-end">
-                            <button type="submit" class="es-btn es-w-full es-h-auto">
-                                Save
-                            </button>
+                        <div class="row">
+                            <div class="col-xl-4 es-mt-6">
+                                <label for="new_password"> New Password </label>
+                                <input id="new_password" name="password" type="password"
+                                    class="form-control es-input mt-2" placeholder="New Password" />
+                                <div class="es-input-error-message"></div>
+                            </div>
+                            <div class="col-xl-4 es-mt-6">
+                                <label for="confirm_password"> Confirm Password </label>
+                                <input id="confirm_password" name="confirm_password" type="password"
+                                    class="form-control es-input mt-2" placeholder="Confirm Password" />
+                                <div class="es-input-error-message"></div>
+                            </div>
+                            <div class="col-xl-4 es-mt-6 d-flex align-items-end">
+                                <button type="submit" class="es-btn es-w-full es-h-auto">
+                                    Save
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <input type="hidden" name="id" value="{{$user->id}}">
-        </form>
+                <input type="hidden" name="id" value="{{ $user->id }}">
+            </form>
         @endif
     </div>
     </div>
@@ -250,7 +278,7 @@
             <div class="modal-content position-relative">
                 <button type="button" class="border-0 bg-transparent position-absolute es-top-6 es-right-6 es-z-50"
                     data-bs-dismiss="modal">
-                    <img src="{{asset('images/close.png')}}" alt="" />
+                    <img src="{{ url('public/images/close.png') }}" alt="" />
                 </button>
                 <div class="card">
                     <div class="card-body">
@@ -262,15 +290,17 @@
                             <div class="">
                                 <div class="d-flex flex-column col es-mt-6">
                                     <label for="reason_for_pausing">Reason for Pausing</label>
-                                    <input id="reason_for_pausing" name="reason_for_pausing" type="text" class="form-control es-input mt-2"
-                                        placeholder="Reason for Pausing" id="reason" />
+                                    <input id="reason_for_pausing" name="reason_for_pausing" type="text"
+                                        class="form-control es-input mt-2" placeholder="Reason for Pausing"
+                                        id="reason" />
                                     <div class="es-input-error-message"></div>
                                 </div>
                                 <div class="d-flex flex-column col es-mt-6">
                                     <label for="days">How Long</label>
-                                    <input type="number" class="form-control es-input mt-2" placeholder="0 Days" id="days" name="pause_days" />
+                                    <input type="number" class="form-control es-input mt-2" placeholder="0 Days"
+                                        id="days" name="pause_days" />
                                     <input type="hidden" name="status" value="3">
-                                    <input type="hidden" name="pause_date" value="{{date('Y-m-d')}}">
+                                    <input type="hidden" name="pause_date" value="{{ date('Y-m-d') }}">
                                     <div class="es-input-error-message"></div>
                                 </div>
                                 <div class="col es-mt-6">
@@ -279,8 +309,9 @@
                                     </button>
                                 </div>
                             </div>
-                            <input type="hidden" name="id" value="{{$user->id}}">
-                            <input type="hidden" name="subscription_id" value="{{$subscription ? $subscription->id : ''}}">
+                            <input type="hidden" name="id" value="{{ $user->id }}">
+                            <input type="hidden" name="subscription_id"
+                                value="{{ $subscription ? $subscription->id : '' }}">
                         </form>
                     </div>
                 </div>
@@ -307,9 +338,59 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
 
+    <script src="https://web.squarecdn.com/v1/square.js"></script>
+
 
     <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+                const cardContainer = document.getElementById('card-element');
+                const paymentStatus = document.getElementById('card-status');
+                const paymentForm = document.getElementById('payment-form');
+                const submitButton = document.getElementById('submit-button');
 
+                try {
+                    cardContainer.classList.remove('d-none');
+                    const payments = Square.payments("{{ get_setting('square_application_id') }}");
+                    const card = await payments.card();
+
+                    await card.attach(cardContainer);
+
+
+                    paymentForm.addEventListener('submit', async (event) => {
+                        event.preventDefault();
+
+                        submitButton.disabled = true;
+                        if (!$("#payment-form").valid()) return; // Validate the form
+
+                        const result = await card.tokenize();
+                        if (result.status === 'OK') {
+                            handleSuccessfulPayment(result.token);
+                        } else {
+                            paymentStatus.textContent = result.errors[0].message;
+                            paymentStatus.classList.add('visible', 'text-danger');
+                        }
+                    });
+
+                    function handleSuccessfulPayment(token) {
+                        const tokenInput = document.createElement('input');
+                        tokenInput.type = 'hidden';
+                        tokenInput.name = 'nonce'; // Assuming Square is being used
+                        tokenInput.value = token;
+
+                        paymentForm.appendChild(tokenInput);
+                        paymentForm.submit();
+                    }
+                } catch (error) {
+                    console.error('Error initializing Square payment:', error);
+                    paymentStatus.textContent = 'Failed to load payment form. Please try again.';
+                    submitButton.disabled = false;
+                    paymentStatus.classList.add('visible', 'text-danger');
+                }
+            });
+    </script>
+
+
+    <script>
         flatpickr(".flatpickr", {
             plugins: [
                 new monthSelectPlugin({
@@ -340,14 +421,14 @@
         });
 
         document
-        .getElementById("clear_photo_input")
-        .addEventListener("click", () => {
-            document.getElementById("photo_input").value = null;
-            document.getElementById("photo-label").classList.remove("d-none");
-            document
-                .getElementById("file-preview-container")
-                .classList.add("d-none");
-        });
+            .getElementById("clear_photo_input")
+            .addEventListener("click", () => {
+                document.getElementById("photo_input").value = null;
+                document.getElementById("photo-label").classList.remove("d-none");
+                document
+                    .getElementById("file-preview-container")
+                    .classList.add("d-none");
+            });
     </script>
 
     <script>

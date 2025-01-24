@@ -134,7 +134,7 @@ class UserController extends Controller
                 }
 
                 // Retrieve the settings
-                $settings = Setting::where('user_id', 1)->first();
+                $settings = Setting::first();
                 $counter = [];
                 if ($settings && $settings->countdown_timer) {
                     $counter = explode(':', $settings->countdown_timer);

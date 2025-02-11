@@ -77,7 +77,8 @@ class ProcessRecurringPayments extends Command
                             'status' => 1,
                         ]);
                 } else {
-                    $this->error("Failed to process payment for user: {$user->name}");
+                    $errors = $paymentResponse->getErrors();
+                    $this->error("Failed to process payment for user: {$user->name}. Error: " . json_encode($errors, JSON_PRETTY_PRINT));
                 }
             } catch (\Exception $e) {
                 $this->error("Error processing payment for user: {$user->name} - {$e->getMessage()}");

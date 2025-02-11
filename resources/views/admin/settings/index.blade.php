@@ -648,7 +648,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($users as $user)
-                                    <tr>
+                                    <tr class="{{$user->deleted_at ? 'archived-row':''}}">
                                         <td>{{ $user->f_name }}</td>
                                         <td>{{ $user->l_name }}</td>
                                         <td>{{ $user->phone_no }}</td>
@@ -1088,7 +1088,7 @@
             if (deletedAt) {
                 $('.archiveButton').text('Unarchive').removeClass('btn-danger').addClass('btn-success') .attr('data-status', 'true');
             } else {
-                $('.archiveButton').text('Archive').removeClass('btn-success').addClass('btn-danger') .attr('data-status', 'fasse');
+                $('.archiveButton').text('Archive').removeClass('btn-success').addClass('btn-danger') .attr('data-status', 'false');
             }
 
 

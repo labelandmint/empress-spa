@@ -7733,3 +7733,7 @@ body {
     background: var(--brown500);
     color: white;
 }
+
+.archived-row {
+    background-color: var(--gray200);
+}

@@ -18,7 +18,10 @@ class SettingController extends Controller
 
         $user_id = 1;
         $settings = Setting::first();
-        $users = User::whereIn('user_role', [1, 3, 4])->orderBy('id', 'desc')->get();
+        $users = User::withTrashed()
+        ->whereIn('user_role', [1, 3, 4])
+        ->orderBy('id', 'desc')
+        ->get();
         $title = 'Settings';
 
         return view('admin.settings.index', compact('title', 'settings', 'settings', 'users'));

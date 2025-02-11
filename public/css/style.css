@@ -7713,3 +7713,23 @@ body {
     object-fit: cover;
     object-position: center;
 }
+
+.archive-btn {
+    background: white;
+    color: #bb7e45;
+    border: 2px solid #bb7e45;
+    outline: none;
+    font-family: "Mulish-Bold", "Arial";
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 4px;
+}
+.archive-btn:hover {
+    background: var(--brown500);
+    color: white;
+}

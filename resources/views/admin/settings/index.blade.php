@@ -180,7 +180,7 @@
                             </label>
                             <div class="{{ $settings && $settings->page_background_image ? '' : 'd-none' }}"
                                 id="file_preview_container_page_background">
-                                <img src="{{ $settings && $settings->page_background_image ?  url('images/' . $settings->page_background_image) : '#' }}"
+                                <img src="{{ $settings && $settings->page_background_image ? url('images/' . $settings->page_background_image) : '#' }}"
                                     alt="Preview Uploaded Image" id="photo_preview_page_background"
                                     class="es-h-80 es-mb-3 file-preview img960x1080 img-fluid" />
                                 <div class="d-flex es-gap-8">
@@ -399,7 +399,7 @@
                             </label>
                             <div class="{{ $settings && $settings->email_logo ? '' : 'd-none' }}"
                                 id="file_preview_container_email_logo">
-                                <img src="{{ $settings && $settings->email_logo ?  url('images/' . $settings->email_logo) : '#' }}"
+                                <img src="{{ $settings && $settings->email_logo ? url('images/' . $settings->email_logo) : '#' }}"
                                     alt="Preview Uploaded Image" id="photo_preview_email_logo"
                                     class="es-h-24 es-mb-3 file-preview img600x100 img-fluid" />
                                 <div class="d-flex es-gap-8">
@@ -672,6 +672,7 @@
                                                         data-phone_no="{{ $user->phone_no }}"
                                                         data-email="{{ $user->email }}"
                                                         data-user_role="{{ $user->user_role }}"
+                                                        data-deleted_at="{{ $user->deleted_at }}"
                                                         data-user_id="{{ $user->id }}">
                                                         View/Edit
                                                     </a>
@@ -722,8 +723,8 @@
                                 alt="" />
                         </div>
                         <div class="es-mb-8">
-                            <img id="email-graphic" class="img-fluid img600x300" src="{{ asset('images/settings-img.png') }}"
-                                alt="" />
+                            <img id="email-graphic" class="img-fluid img600x300"
+                                src="{{ asset('images/settings-img.png') }}" alt="" />
                         </div>
                         <div class="es-font-mulish-bold es-text-3xl text-center es-mb-8">
                             <div id="email-subject">Welcome to Empress Spa!</div>
@@ -804,6 +805,18 @@
                                 <div class="col-xl-6 es-mt-6 d-flex align-items-end">
                                     <button type="submit" class="es-btn es-w-full es-h-auto" data-bs-dismiss="modal">
                                         Save
+                                    </button>
+                                </div>
+                                <div class="col-xl-6 es-mt-6 d-flex align-items-end">
+                                    <button type="button" class="archive-btn es-w-full es-h-auto archiveButton"
+                                        data-bs-dismiss="modal">
+                                        Archive
+                                    </button>
+                                </div>
+                                <div class="col-xl-6 es-mt-6 d-flex align-items-end">
+                                    <button type="button" class="es-btn es-w-full es-h-auto deleteButton"
+                                        data-bs-dismiss="modal">
+                                        Delete
                                     </button>
                                 </div>
                             </div>
@@ -1022,8 +1035,8 @@
             var template = $(this).data('type');
 
             // Check if settings exist
-            var emailLogo = '{{ url('images/'. $settings->email_logo) ?? '' }}';
-            var emailBackgroundImage = '{{url('images/'.  $settings->email_background_image) ?? '' }}';
+            var emailLogo = '{{ url('images/' . $settings->email_logo) ?? '' }}';
+            var emailBackgroundImage = '{{ url('images/' . $settings->email_background_image) ?? '' }}';
             var successfulRegistrationSubject = '{{ $settings->successful_registration_subject ?? '' }}';
             var successfulRegistrationBody = '{{ $settings->successful_registration_body ?? '' }}';
             var paymentFailedSubject = '{{ $settings->payment_failed_subject ?? '' }}';
@@ -1061,6 +1074,7 @@
             var phoneNo = $(this).data('phone_no');
             var email = $(this).data('email');
             var userRole = $(this).data('user_role');
+            var deletedAt = $(this).data('deleted_at');
             var user_id = $(this).data('user_id');
 
             // Populate modal inputs with the fetched data
@@ -1071,10 +1085,82 @@
             $('#update_role').val(userRole).change(); // Ensure the role is selected correctly
             $('#user_id').val(user_id); // Ensure the role is selected correctly
 
+            if (deletedAt) {
+                $('.archiveButton').text('Unarchive').removeClass('btn-danger').addClass('btn-success') .attr('data-status', 'true');
+            } else {
+                $('.archiveButton').text('Archive').removeClass('btn-success').addClass('btn-danger') .attr('data-status', 'fasse');
+            }
+
 
             // Show the modal
             // $('#viewEditUserModal').modal('show');
         });
+
+        $(document).ready(function() {
+            $(".deleteButton").click(function() {
+                let userId = $("#user_id").val(); // Get the user ID
+
+                if (!userId) {
+                    alert("User ID is missing!");
+                    return;
+                }
+
+                if (confirm("Are you sure you want to delete this user?")) {
+                    $.ajax({
+                        url: "{{ url('/admin/delete-user') }}",
+                        type: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: userId
+                        },
+                        success: function(response) {
+                            $("#viewEditUserModal").modal("hide"); // Close modal
+                            location.reload(); // Refresh page to reflect changes
+                        },
+                        error: function(xhr) {
+                            console.log(xhr.responseText);
+                            // alert("Error deleting user: " + xhr.responseText);
+                        }
+                    });
+                }
+            });
+        });
+        
+        $(document).ready(function() {
+            $(".archiveButton").click(function() {
+                let userId = $("#user_id").val(); // Get the user ID
+                let isArchived = $(this).data("status"); // Get archived status
+
+                if (!userId) {
+                    alert("User ID is missing!");
+                    return;
+                }
+
+                // Show a dynamic confirmation message
+                let confirmMessage = isArchived ?
+                    "Are you sure you want to unarchive this user?" :
+                    "Are you sure you want to archive this user?";
+
+                if (confirm(confirmMessage)) {
+                    $.ajax({
+                        url: "{{ url('/admin/archive-user') }}",
+                        type: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: userId
+                        },
+                        success: function(response) {
+                            $("#viewEditUserModal").modal("hide"); // Close modal
+                            location.reload(); // Refresh page to reflect changes
+                        },
+                        error: function(xhr) {
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+            });
+        });
+
 
 
         $(document).ready(function() {

@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 Auth::routes();
+Route::get('/payment-cron', [UserController::class, 'handlePaymentDeductionCron']);
 
 
 //user Controller
@@ -135,6 +136,8 @@ Route::group(['middleware' => 'admin', 'prefix' => 'admin'], function () {
         Route::middleware('permission:payment_information')->post('bank-detail/store', [AdminController::class, 'addBankDetail']);
 
         Route::middleware('permission:add_user')->post('/add-user', [AdminController::class, 'addUser']);
+        Route::middleware('permission:delete_user')->post('/delete-user', [AdminController::class, 'deleteUser']);
+        Route::middleware('permission:delete_user')->post('/archive-user', [AdminController::class, 'archiveUser']);
     });
 
 

@@ -613,6 +613,34 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+
+    public function deleteUser(Request $request)
+    {
+        $user = User::find($request->id);
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found');
+        }
+        $user->forceDelete();
+        return redirect()->back()->with('success', 'User deleted successfully');
+    }
+    public function archiveUser(Request $request)
+    {
+        $user = User::withTrashed()->find($request->id);
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found');
+        }
+        if ($user->deleted_at) {
+            // If the user is archived, restore them
+            $user->restore();
+            return redirect()->back()->with('success', 'User unarchived successfully');
+        } else {
+            // If the user is active, archive them
+            $user->delete();
+            return redirect()->back()->with('success', 'User archived successfully');
+        }
+    }
+
+
     public function addBankDetail(Request $request)
     {
         $data = $request->all();

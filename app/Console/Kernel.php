@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        // $schedule->command('payments:process-recurring')->dailyAt('00:00');
+        $schedule->command('payments:process-recurring')->dailyAt('00:00');
     }
 
     /**

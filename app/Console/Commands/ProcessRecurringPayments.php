@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use Square\SquareClient;
 use Square\Models\Money;
 use Square\Models\CreatePaymentRequest;
+use Square\Models\Currency;
 class ProcessRecurringPayments extends Command
 {
     protected $signature = 'payments:process-recurring';

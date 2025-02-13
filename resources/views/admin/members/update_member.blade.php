@@ -96,6 +96,20 @@
                                 Update
                             </button>
                         </div>
+                        @if (auth()->guard('admin')->user()->hasPermission('delete_user'))
+                        <div class="col-xl-4 es-mt-6 d-flex align-items-end">
+                            <div class="d-none d-md-block" style="padding-top: 29.33px"></div>
+                            <button type="button" class="archive-btn es-w-full es-h-auto archiveButton">
+                               {{$user->deleted_at ? "UnArchived":"Archived"}} 
+                            </button>
+                        </div>
+                        <div class="col-xl-4 es-mt-6 d-flex align-items-end">
+                            <div class="d-none d-md-block" style="padding-top: 29.33px"></div>
+                            <button type="button" class="es-btn es-w-full es-h-auto deleteButton">
+                                Delete
+                            </button>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -229,7 +243,8 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="user_id" value="{{ $user->id }}">
+            <input type="hidden" id="user_id" name="user_id" value="{{ $user->id }}">
+            <input type="hidden" id="deleted_at" name="deleted_at" value="{{ $user->deleted_at ? true : false }}">
         </form>
 
 
@@ -342,55 +357,120 @@
 
 
     <script>
-            document.addEventListener('DOMContentLoaded', async () => {
-                const cardContainer = document.getElementById('card-element');
-                const paymentStatus = document.getElementById('card-status');
-                const paymentForm = document.getElementById('payment-form');
-                const submitButton = document.getElementById('submit-button');
+        document.addEventListener('DOMContentLoaded', async () => {
+            const cardContainer = document.getElementById('card-element');
+            const paymentStatus = document.getElementById('card-status');
+            const paymentForm = document.getElementById('payment-form');
+            const submitButton = document.getElementById('submit-button');
 
-                try {
-                    cardContainer.classList.remove('d-none');
-                    const payments = Square.payments("{{ get_setting('square_application_id') }}");
-                    const card = await payments.card();
+            try {
+                cardContainer.classList.remove('d-none');
+                const payments = Square.payments("{{ get_setting('square_application_id') }}");
+                const card = await payments.card();
 
-                    await card.attach(cardContainer);
+                await card.attach(cardContainer);
 
 
-                    paymentForm.addEventListener('submit', async (event) => {
-                        event.preventDefault();
+                paymentForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
 
-                        submitButton.disabled = true;
-                        if (!$("#payment-form").valid()) return; // Validate the form
+                    submitButton.disabled = true;
+                    if (!$("#payment-form").valid()) return; // Validate the form
 
-                        const result = await card.tokenize();
-                        if (result.status === 'OK') {
-                            handleSuccessfulPayment(result.token);
-                        } else {
-                            paymentStatus.textContent = result.errors[0].message;
-                            paymentStatus.classList.add('visible', 'text-danger');
-                        }
-                    });
-
-                    function handleSuccessfulPayment(token) {
-                        const tokenInput = document.createElement('input');
-                        tokenInput.type = 'hidden';
-                        tokenInput.name = 'nonce'; // Assuming Square is being used
-                        tokenInput.value = token;
-
-                        paymentForm.appendChild(tokenInput);
-                        paymentForm.submit();
+                    const result = await card.tokenize();
+                    if (result.status === 'OK') {
+                        handleSuccessfulPayment(result.token);
+                    } else {
+                        paymentStatus.textContent = result.errors[0].message;
+                        paymentStatus.classList.add('visible', 'text-danger');
                     }
-                } catch (error) {
-                    console.error('Error initializing Square payment:', error);
-                    paymentStatus.textContent = 'Failed to load payment form. Please try again.';
-                    submitButton.disabled = false;
-                    paymentStatus.classList.add('visible', 'text-danger');
+                });
+
+                function handleSuccessfulPayment(token) {
+                    const tokenInput = document.createElement('input');
+                    tokenInput.type = 'hidden';
+                    tokenInput.name = 'nonce'; // Assuming Square is being used
+                    tokenInput.value = token;
+
+                    paymentForm.appendChild(tokenInput);
+                    paymentForm.submit();
                 }
-            });
+            } catch (error) {
+                console.error('Error initializing Square payment:', error);
+                paymentStatus.textContent = 'Failed to load payment form. Please try again.';
+                submitButton.disabled = false;
+                paymentStatus.classList.add('visible', 'text-danger');
+            }
+        });
     </script>
 
 
     <script>
+        $(document).ready(function() {
+            $(".deleteButton").click(function() {
+                let userId = $("#user_id").val(); // Get the user ID
+
+                if (!userId) {
+                    alert("User ID is missing!");
+                    return;
+                }
+
+                if (confirm("Are you sure you want to delete this user?")) {
+                    $.ajax({
+                        url: "{{ url('/admin/delete-user') }}",
+                        type: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: userId
+                        },
+                        success: function(response) {
+
+                            window.location.href = "{{ url('/admin/members') }}"; 
+                        },
+                        error: function(xhr) {
+                            console.log(xhr.responseText);
+                            // alert("Error deleting user: " + xhr.responseText);
+                        }
+                    });
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $(".archiveButton").click(function() {
+                let userId = $("#user_id").val(); // Get the user ID
+                let isArchived = $("#deleted_at").val(); // Get archived status
+
+                if (!userId) {
+                    alert("User ID is missing!");
+                    return;
+                }
+
+                // Show a dynamic confirmation message
+                let confirmMessage = isArchived ?
+                    "Are you sure you want to unarchive this user?" :
+                    "Are you sure you want to archive this user?";
+
+                if (confirm(confirmMessage)) {
+                    $.ajax({
+                        url: "{{ url('/admin/archive-user') }}",
+                        type: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id: userId
+                        },
+                        success: function(response) {
+                            location.reload(); // Refresh page to reflect changes
+                        },
+                        error: function(xhr) {
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+            });
+        });
+
+
         flatpickr(".flatpickr", {
             plugins: [
                 new monthSelectPlugin({

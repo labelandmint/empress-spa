@@ -302,7 +302,8 @@ class AdminController extends Controller
 
         // Member Detail
 
-        $members = User::leftjoin('subscriptions', 'users.id', '=', 'subscriptions.user_id')
+        $members = User::withTrashed()
+            ->leftjoin('subscriptions', 'users.id', '=', 'subscriptions.user_id')
             ->leftjoin('subscription_plans', 'subscription_plans.id', '=', 'subscriptions.subscription_plan_id')
             ->leftjoin('bookings', function ($join) {
                 $join->on('bookings.member_id', '=', 'users.id')
@@ -323,8 +324,10 @@ class AdminController extends Controller
                     });
             })
             ->where('user_role', 2)
-            ->select('users.id', 'users.f_name', 'users.l_name', 'subscription_plans.title', 'subscriptions.status', 'services.id AS service_id', 'services.title AS service', 'services.description AS service_desc', 'bookings.booking_date', 'bookings.id as booking_id', 'transactions.created_at as payment_date', 'users.rating', 'bookings.slot_id', 'bookings.booking_start_time', 'bookings.booking_end_time')
+            ->select('users.id', 'users.f_name', 'users.l_name', 'users.deleted_at', 'subscription_plans.title', 'subscriptions.status', 'services.id AS service_id', 'services.title AS service', 'services.description AS service_desc', 'bookings.booking_date', 'bookings.id as booking_id', 'transactions.created_at as payment_date', 'users.rating', 'bookings.slot_id', 'bookings.booking_start_time', 'bookings.booking_end_time')
             ->get();
+
+
 
         $title = 'Members';
         return view('admin.members.index', compact('title', 'totalMember', 'activeMember', 'pauseMember', 'cancelledMember', 'members'));
@@ -534,7 +537,7 @@ class AdminController extends Controller
 
         // If validation passes, continue with user creation
         $data = $request->all();
-        // return $data;
+
         if ($request->id) {
             $user = User::find($request->id);
             $user->update($data);
@@ -589,7 +592,7 @@ class AdminController extends Controller
 
     public function editUser(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = User::withTrashed()->find($id);
         $subscription = Subscription::where('user_id', $id)->first();
         $BankDetail = BankDetail::where('user_id', $id)->first();
 
@@ -613,40 +616,57 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-
     public function deleteUser(Request $request)
     {
-        $user = User::find($request->id);
+        $user = User::withTrashed()->find($request->id);
+
         if (!$user) {
             return redirect()->back()->with('error', 'User not found');
         }
+
+        // Delete the related subscription before deleting the user
+        if (Subscription::where('user_id', $user->id)->exists()) {
+            Subscription::where('user_id', $user->id)->forceDelete();
+        }
+        
+        if (BankDetail::where('user_id', $user->id)->exists()) {
+            BankDetail::where('user_id', $user->id)->forceDelete();
+        }
+        
+
+        // Now delete the user
         $user->forceDelete();
-        return redirect()->back()->with('success', 'User deleted successfully');
+
+        return response()->json(['success' => 'User deleted successfully']);
     }
+
     public function archiveUser(Request $request)
     {
         $user = User::withTrashed()->find($request->id);
+
         if (!$user) {
             return redirect()->back()->with('error', 'User not found');
         }
+
         if ($user->deleted_at) {
             // If the user is archived, restore them
             $user->restore();
-            return redirect()->back()->with('success', 'User unarchived successfully');
+            return response()->json(['success' => 'User unarchived successfully']);
         } else {
             // If the user is active, archive them
             $user->delete();
-            return redirect()->back()->with('success', 'User archived successfully');
+            return response()->json(['success' => 'User archived successfully']);
         }
     }
+
 
 
     public function addBankDetail(Request $request)
     {
         $data = $request->all();
-// return $data;
+        // return $data;
         if ($request->nonce && $request->profile_id) {
-         
+
             $cardId =  $this->updateSquarePayment($request->profile_id, $request->card_id, $request->nonce);
             $user = User::find($request->user_id);
             $user->card_id = $cardId;
@@ -657,7 +677,7 @@ class AdminController extends Controller
                 'card_id' => $cardId,
             ]);
         } else {
-      
+
             $response = $this->addSquarePaymentDetail($request->cardholder_name, $request->email, $request->nonce);
             if ($response) {
                 $profileId = $response[0];
@@ -722,7 +742,6 @@ class AdminController extends Controller
             $cardId = $cardResponse->getResult()->getCard()->getId();
 
             return [$customerId, $cardId];
-
         } catch (\Square\Exceptions\ApiException $e) {
             \Log::error('Catch exception: ' . $e->getMessage(), ['exception' => $e]);
             return redirect()->back()->withErrors(['square_error' => 'Update customer card.'])->withInput();

@@ -124,7 +124,7 @@
                             </thead>
                             <tbody>
                                 @forelse ($members as $member)
-                                    <tr>
+                                    <tr class="{{$member->deleted_at ? 'archived-row':''}}">
                                         <td>{{ $member->f_name }}</td>
                                         <td>{{ $member->l_name }}</td>
                                         <td>{{ $member->title }}</td>
